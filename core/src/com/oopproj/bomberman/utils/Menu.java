@@ -1,24 +1,19 @@
 package com.oopproj.bomberman.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.oopproj.bomberman.data.Assets;
-import com.oopproj.bomberman.object.entity.Bomber;
+import com.oopproj.bomberman.ui.Button;
 
-public class Gameplay implements Screen {
+public class Menu implements Screen {
     private BombermanGame game;
-    private Bomber bomber;
+    Button button;
 
-    private OrthographicCamera camera;
-
-    public Gameplay(BombermanGame game) {
+    public Menu(BombermanGame game) {
         this.game = game;
-
-        bomber = new Bomber(game.assets.get(Assets.BMAN), 8, 0, 0);
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
+        Texture texture = new Texture(Gdx.files.internal("grass.png"));
+        button = new Button(texture, 50, 50);
     }
 
     @Override
@@ -27,14 +22,12 @@ public class Gameplay implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
-
-        bomber.move();
-
         game.batch.begin();
-        bomber.render(game.batch);
+        button.render(game.batch);
         game.batch.end();
+        if (button.process()) {
+            game.setScreen(new Gameplay(game));
+        }
     }
 
     @Override

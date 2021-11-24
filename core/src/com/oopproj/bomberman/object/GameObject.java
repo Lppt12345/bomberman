@@ -10,7 +10,7 @@ public abstract class GameObject implements Disposable {
     protected Rectangle pos;
     protected Texture texture;
 
-    public GameObject(Texture texture, int x, int y) {
+    public GameObject(Texture texture, float x, float y) {
         this.texture = texture;
         pos = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
     }

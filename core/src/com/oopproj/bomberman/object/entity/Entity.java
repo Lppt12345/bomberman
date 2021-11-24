@@ -18,7 +18,7 @@ public abstract class Entity extends GameObject {
     protected int currentDirection;
     protected int lastDirection = Direction.DOWN;
 
-    public Entity(Texture texture, int numberOfFrame, int x, int y) {
+    public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
         frame = TextureRegion.split(texture,
                 texture.getWidth() / numberOfFrame,
@@ -40,29 +40,34 @@ public abstract class Entity extends GameObject {
     }
 
     public void move() {
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);
+        if (currentFrame == null) {
+            currentFrame = frame[0][0];
+        }
         switch (currentDirection) {
             case Direction.UP: {
                 lastDirection = Direction.UP;
                 animation[Direction.UP].setFrameDuration(animationSpeed);
-                    pos.y += movingSpeed * Gdx.graphics.getDeltaTime();
+                pos.y += movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             case Direction.DOWN: {
                 lastDirection = Direction.DOWN;
                 animation[Direction.DOWN].setFrameDuration(animationSpeed);
-                    pos.y -= movingSpeed * Gdx.graphics.getDeltaTime();
+                pos.y -= movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             case Direction.LEFT: {
                 lastDirection = Direction.LEFT;
                 animation[Direction.LEFT].setFrameDuration(animationSpeed);
-                    pos.x -= movingSpeed * Gdx.graphics.getDeltaTime();
+                pos.x -= movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             case Direction.RIGHT: {
                 lastDirection = Direction.RIGHT;
                 animation[Direction.RIGHT].setFrameDuration(animationSpeed);
-                    pos.x += movingSpeed * Gdx.graphics.getDeltaTime();
+                pos.x += movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             default: {
@@ -77,6 +82,7 @@ public abstract class Entity extends GameObject {
     }
 
     public void render(SpriteBatch batch) {
+        batch.setColor(1, 1, 1, 1);
         batch.draw(currentFrame, pos.x, pos.y);
     }
 }

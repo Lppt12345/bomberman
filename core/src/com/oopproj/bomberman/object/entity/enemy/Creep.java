@@ -1,11 +1,12 @@
-package com.oopproj.bomberman.object.entity;
+package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.oopproj.bomberman.object.entity.Entity;
 
 public class Creep extends Entity {
-    public Creep(Texture texture, int numberOfFrame, int x, int y) {
+    public Creep(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
     }
 

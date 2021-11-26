@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.oopproj.bomberman.data.Direction;
+import com.oopproj.bomberman.data.Map;
 
 public class Bomber extends Entity {
 
@@ -12,7 +13,7 @@ public class Bomber extends Entity {
     }
 
     @Override
-    public void move() {
+    public void move(Map map) {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             currentDirection = Direction.UP;
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
@@ -24,7 +25,7 @@ public class Bomber extends Entity {
         } else {
             currentDirection = Direction.NOTMOVE;
         }
-        super.move();
+        super.move(map);
     }
 
     @Override

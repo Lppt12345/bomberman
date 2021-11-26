@@ -5,9 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.oopproj.bomberman.data.Direction;
+import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.GameObject;
+import com.oopproj.bomberman.object.ground.Grass;
+import com.oopproj.bomberman.object.ground.Wall;
 import com.oopproj.bomberman.ui.ScreenRes;
+
+import java.util.List;
+
 
 public abstract class Entity extends GameObject {
     protected TextureRegion[][] frame;
@@ -39,35 +46,198 @@ public abstract class Entity extends GameObject {
     public void setAnimationSpeed(float speed) {
         this.animationSpeed = speed;
     }
+//    public boolean checkMoveUp(Map map){
+//
+//    }
+    public boolean checkMove(Map map){
+        int posAtMap = getPositionAtMap(map);
+        int limit = ScreenRes.scale / 5;
+        Rectangle entity = null;
+        GameObject tmp1 = null , tmp2 = null ;
+        // Lay cot va hang tao bien check
+        int col = map.getColumn();
+        switch (lastDirection){
+            case Direction.UP:{
+                // Xet entity tren no 1 doan
+                entity = new Rectangle(pos.x , pos.y +=  Gdx.graphics.getDeltaTime(), ScreenRes.scale , ScreenRes.scale);
+                if (posAtMap - col < 0){
+                    return false;
+                }
+                tmp1 = map.getMap().get(posAtMap - col);
+                tmp2 = map.getMap().get(posAtMap - col + 1);
 
-    public void move() {
+                // Check va cham vs 2 khoi tren
+                // Dieu chinh actor ve chinh giua
+                // Kiem tra xem 1 co phai co
+                if (!(tmp1 instanceof Grass)){
+                    // Check di sang ben phai
+                    if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().x - entity.x) <= limit) {
+                        pos.x = tmp2.getPos().x;
+                    }else {
+                        if (entity.overlaps(tmp1.getPos()) || entity.overlaps(tmp2.getPos())){
+                            return false;
+                        }
+                    }
+                }
+                if (!(tmp2 instanceof Grass)){
+                    // Check di sang ben phai
+                    if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().x - entity.x) <= limit){
+                        pos.x = tmp1.getPos().x;
+                    }else {
+                        if (entity.overlaps(tmp1.getPos()) || entity.overlaps(tmp2.getPos())){
+                            return false;
+                        }
+                    }
+                }
+                break;
+            }
+            case Direction.DOWN:{
+                // Xet entity duoi no 1 doan
+                entity = new Rectangle(pos.x , pos.y -= Gdx.graphics.getDeltaTime(), ScreenRes.scale , ScreenRes.scale);
+                if (posAtMap + col +1 > map.getMap().size()){
+                    return false;
+                }
+                tmp1 = map.getMap().get(posAtMap + col);
+                tmp2 = map.getMap().get(posAtMap + col + 1);
+
+                // Check va cham vs 2 khoi duoi
+                // Dieu chinh actor ve chinh giua
+                // Kiem tra xem 1 co phai co
+                if (!(tmp1 instanceof Grass)){
+                    // Check di sang ben phai
+                    if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().x - entity.x) <= limit) {
+                        pos.x = tmp2.getPos().x;
+                    }else {
+                        if (entity.overlaps(tmp1.getPos()) || entity.overlaps(tmp2.getPos())){
+                            return false;
+                        }
+                  }
+                }
+                if (!(tmp2 instanceof Grass)){
+                    // Check di sang ben phai
+                    if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().x - entity.x) <= limit){
+                        pos.x = tmp1.getPos().x;
+                    }else {
+                        if (entity.overlaps(tmp1.getPos()) || entity.overlaps(tmp2.getPos())){
+                            return false;
+                        }
+                    }
+                }
+                break;
+            }
+            case Direction.LEFT:{
+                // Xet entity tren no 1 doan
+                entity = new Rectangle(pos.x -= Gdx.graphics.getDeltaTime(), pos.y , ScreenRes.scale , ScreenRes.scale);
+                if (posAtMap - col < 0){
+                    return false;
+                }
+                tmp1 = map.getMap().get(posAtMap - 1);
+                tmp2 = map.getMap().get(posAtMap -1  + col);
+
+                // Check va cham vs 2 khoi duoi
+                // Dieu chinh actor ve chinh giua
+                // Kiem tra xem 1 co phai co
+                if (!(tmp1 instanceof Grass)){
+                    // Check di sang ben phai
+                    if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().y - entity.y) <= limit) {
+                        pos.y = tmp2.getPos().y;
+                    }else {
+                        if (entity.overlaps(tmp1.getPos()) || entity.overlaps(tmp2.getPos())){
+                            return false;
+                        }
+                    }
+                }
+                if (!(tmp2 instanceof Grass)){
+                    // Check di sang ben phai
+                    if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().y - entity.y) <= limit){
+                        pos.y = tmp1.getPos().y;
+                    }else {
+                        if (entity.overlaps(tmp1.getPos()) || entity.overlaps(tmp2.getPos())){
+                            return false;
+                        }
+                    }
+                }
+                break;
+            }
+            case Direction.RIGHT:{
+                // Xet entity tren no 1 doan
+                entity = new Rectangle(pos.x += Gdx.graphics.getDeltaTime(), pos.y , ScreenRes.scale , ScreenRes.scale);
+                if (posAtMap + 1 < 0){
+                    return false;
+                }
+                tmp1 = map.getMap().get(posAtMap - 1);
+                tmp2 = map.getMap().get(posAtMap -1  + col);
+
+                // Check va cham vs 2 khoi duoi
+                // Dieu chinh actor ve chinh giua
+                // Kiem tra xem 1 co phai co
+                if (!(tmp1 instanceof Grass)){
+                    // Check di sang ben phai
+                    if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().y - entity.y) <= limit) {
+                        pos.y = tmp2.getPos().y;
+                    }else {
+                        if (entity.overlaps(tmp1.getPos()) || entity.overlaps(tmp2.getPos())){
+                            return false;
+                        }
+                    }
+                }
+                if (!(tmp2 instanceof Grass)){
+                    // Check di sang ben phai
+                    if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().y - entity.y) <= limit){
+                        pos.y = tmp1.getPos().y;
+                    }else {
+                        if (entity.overlaps(tmp1.getPos()) || entity.overlaps(tmp2.getPos())){
+                            return false;
+                        }
+                    }
+                }
+                break;
+            }
+
+        }
+        return true;
+    }
+    public void move(Map map) {
         stateTime += Gdx.graphics.getDeltaTime();
         currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);
         if (currentFrame == null) {
             currentFrame = frame[0][0];
         }
+
         switch (currentDirection) {
             case Direction.UP: {
                 lastDirection = Direction.UP;
                 animation[Direction.UP].setFrameDuration(animationSpeed);
+                if (!checkMove(map)){
+                    return;
+                }
                 pos.y += movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             case Direction.DOWN: {
                 lastDirection = Direction.DOWN;
                 animation[Direction.DOWN].setFrameDuration(animationSpeed);
+                if (!checkMove(map)){
+                    return;
+                }
                 pos.y -= movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             case Direction.LEFT: {
                 lastDirection = Direction.LEFT;
                 animation[Direction.LEFT].setFrameDuration(animationSpeed);
+                if (!checkMove(map)){
+                    return;
+                }
                 pos.x -= movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             case Direction.RIGHT: {
                 lastDirection = Direction.RIGHT;
                 animation[Direction.RIGHT].setFrameDuration(animationSpeed);
+                if (!checkMove(map)){
+                    return;
+                }
                 pos.x += movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }

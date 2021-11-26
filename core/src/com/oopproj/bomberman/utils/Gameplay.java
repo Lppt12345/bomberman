@@ -36,7 +36,7 @@ public class Gameplay implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        player.move();
+        player.move(map);
 
         game.batch.begin();
         player.render(game.batch);

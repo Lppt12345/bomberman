@@ -95,29 +95,29 @@ public class Map {
                 // Load các phần tử trong txt vao map va enermy theo vi tri render trong libgdx
                 // Chi so cac phan tu duoc danh tu duoi den tren
                 int rowM = (row - 1 - i) * Scale;
-                int colM = (column - 1 - j) * Scale;
+                int colM = j * Scale;
                 switch (check) {
                     case 'p':
                         // Need constructor
-                        player = new Bomber(assets.get(Assets.BMAN), 8, rowM, colM);
-                        obj = new Grass(assets.get(Assets.GRASS), rowM, colM);
+                        player = new Bomber(assets.get(Assets.BMAN), 8, colM, rowM);
+                        obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '#':
-                        obj = new Wall(assets.get(Assets.WALL), rowM, colM);
+                        obj = new Wall(assets.get(Assets.WALL), colM, rowM);
                         break;
                     case '1':
-                        enemy = new Creep(assets.get(Assets.CREEP), 6, rowM, colM);
-                        obj = new Grass(assets.get(Assets.GRASS), rowM, colM);
+                        enemy = new Creep(assets.get(Assets.CREEP), 6, colM, rowM);
+                        obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '2':
-                        enemy = new Oneal(assets.get(Assets.CREEP), 6, rowM, colM);
-                        obj = new Grass(assets.get(Assets.GRASS), rowM, colM);
+                        enemy = new Oneal(assets.get(Assets.CREEP), 6, colM, rowM);
+                        obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '*':
-                        obj = new Grass(assets.get(Assets.BRICK), rowM, colM);
+                        obj = new Grass(assets.get(Assets.BRICK), colM, rowM);
                         break;
                     default:
-                        obj = new Grass(assets.get(Assets.GRASS), rowM, colM);
+                        obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                 }
                 // Xử lí để add các phần tử vao mang

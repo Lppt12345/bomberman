@@ -8,7 +8,7 @@ import com.oopproj.bomberman.ui.ScreenRes;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		ScreenRes.setResolution(1920, 1080);
+		ScreenRes.setResolution(1000, 700);
 		config.width = ScreenRes.getWidth();
 		config.height = ScreenRes.getHeight();
 		config.resizable = false;

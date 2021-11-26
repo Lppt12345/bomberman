@@ -30,8 +30,6 @@ public abstract class Entity extends GameObject {
         for (int i = 0; i < 4; i++) {
             animation[i] = new Animation<TextureRegion>(animationSpeed, frame[i]);
         }
-//        pos.setWidth(texture.getWidth() / (float) numberOfFrame);
-//        pos.setHeight(texture.getHeight() / 4f);
     }
 
     public void setMovingSpeed(float speed) {
@@ -55,7 +53,7 @@ public abstract class Entity extends GameObject {
                 pos.y += movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
-            case Direction.DOWN: {
+            case Direction.DOWN{
                 lastDirection = Direction.DOWN;
                 animation[Direction.DOWN].setFrameDuration(animationSpeed);
                 pos.y -= movingSpeed * Gdx.graphics.getDeltaTime();
@@ -88,5 +86,9 @@ public abstract class Entity extends GameObject {
     public void render(SpriteBatch batch) {
         batch.setColor(1, 1, 1, 1);
         batch.draw(currentFrame, pos.x, pos.y);
+    }
+
+    public void dispose() {
+        super.dispose();
     }
 }

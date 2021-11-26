@@ -29,6 +29,6 @@ public class Bomber extends Entity {
 
     @Override
     public void dispose() {
-
+        super.dispose();
     }
 }

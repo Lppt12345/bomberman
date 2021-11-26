@@ -10,8 +10,9 @@ public class Button implements Disposable {
     private static final float DURATION = 1000;
     private long startTime;
     private long endTime;
-    private float x;
-    private float y;
+    private final float x;
+    private final float y;
+    private float currentY;
     private float alpha;
     private Texture texture;
     private boolean touched;
@@ -19,6 +20,7 @@ public class Button implements Disposable {
     public Button(Texture texture, float x, float y) {
         this.x = x;
         this.y = y;
+        currentY = y - 50;
         startTime = System.currentTimeMillis();
         System.out.println(startTime);
         this.alpha = 0;
@@ -29,10 +31,11 @@ public class Button implements Disposable {
         endTime = System.currentTimeMillis();
         long delta = endTime - startTime;
         if (delta < DURATION) {
-            alpha = (float) (((-1) / Math.pow(DURATION, 2)) * Math.pow(delta, 2) + (2 / DURATION) * delta);
+            alpha = parabol(delta);
+            currentY = y - 50 + 50 * parabol(delta);
         }
         batch.setColor(1, 1, 1, alpha);
-        batch.draw(texture, x, y);
+        batch.draw(texture, x, currentY);
     }
 
     public boolean process() {
@@ -49,5 +52,9 @@ public class Button implements Disposable {
     @Override
     public void dispose() {
         texture.dispose();
+    }
+
+    private float parabol(long delta) {
+        return (float) (((-1) / Math.pow(DURATION, 2)) * Math.pow(delta, 2) + (2 / DURATION) * delta);
     }
 }

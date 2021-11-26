@@ -13,7 +13,7 @@ public class Menu implements Screen {
     public Menu(BombermanGame game) {
         this.game = game;
         Texture texture = new Texture(Gdx.files.internal("grass.png"));
-        button = new Button(texture, 50, 50);
+        button = new Button(texture, 200, 200);
     }
 
     @Override

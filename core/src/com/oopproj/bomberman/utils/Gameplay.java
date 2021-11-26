@@ -6,17 +6,22 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.data.Assets;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.entity.Bomber;
+import com.oopproj.bomberman.ui.ScreenRes;
 
 public class Gameplay implements Screen {
     private BombermanGame game;
     private Bomber player;
     private Map map;
 
+    private int WORLD_WIDTH;
+    private int WORLD_HEIGHT;
     private OrthographicCamera camera;
 
     public Gameplay(BombermanGame game) throws Exception {
         this.game = game;
         map = new Map("maptest.txt", game.assets);
+        WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
+        WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
         player = map.getPlayer();
         camera = new OrthographicCamera();
         camera.setToOrtho(false);

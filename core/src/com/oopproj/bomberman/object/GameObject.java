@@ -23,10 +23,10 @@ public abstract class GameObject implements Disposable {
      * Tim vi tri cua phan tu tren mang 1 chieu map de anh xa
      * @return vi tri.
      */
-    public int getPositionAtMap() {
+    public int getPositionAtMap(Map map) {
         int x = (int) pos.x / ScreenRes.scale;
         int y = (int) pos.y / ScreenRes.scale;
-        return Map.getColumn() * (Map.getRow() - 1 - y) + x;
+        return map.getColumn() * (map.getRow() - 1 - y) + x;
     }
 
     public abstract void render(SpriteBatch batch);

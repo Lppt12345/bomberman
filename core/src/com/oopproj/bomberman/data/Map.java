@@ -22,8 +22,8 @@ public class Map {
     private List<GameObject> map = new ArrayList<>();
     private List<Enemy> enemies = new ArrayList<>();
     private Bomber player;
-    private static int row;
-    private static int column;
+    private int row;
+    private int column;
     public int level;
     public int Scale = ScreenRes.scale;
     public List<GameObject> getMap() {
@@ -50,20 +50,20 @@ public class Map {
         this.player = player;
     }
 
-    public static int getRow() {
-        return row;
+    public int getRow() {
+        return this.row;
     }
 
-    public static void setRow(int row) {
-        Map.row = row;
+    public void setRow(int row) {
+        this.row = row;
     }
 
-    public static int getColumn() {
-        return column;
+    public int getColumn() {
+        return this.column;
     }
 
-    public static void setColumn(int column) {
-        Map.column = column;
+    public void setColumn(int column) {
+        this.column = column;
     }
 
     public int getLevel() {

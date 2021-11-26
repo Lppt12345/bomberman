@@ -22,7 +22,7 @@ public abstract class GameObject implements Disposable {
     }
 
     public int getPositionAtMap() {
-        return ((int) pos.x) / ScreenRes.scale + ((int) pos.y / ScreenRes.scale) * Map.getColumn();
+        return ((int) pos.x) / ScreenRes.scale + ((int) pos.y / ScreenRes.scale) * Map.getRow();
     }
 
     public abstract void render(SpriteBatch batch);

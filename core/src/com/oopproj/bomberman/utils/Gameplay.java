@@ -36,6 +36,7 @@ public class Gameplay implements Screen {
         game.batch.begin();
         player.render(game.batch);
         map.render(game.batch);
+        player.render(game.batch);
         game.batch.end();
     }
 

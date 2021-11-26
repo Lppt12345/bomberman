@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.object.GameObject;
+import com.oopproj.bomberman.ui.ScreenRes;
 
 public abstract class Entity extends GameObject {
     protected TextureRegion[][] frame;
@@ -20,6 +21,8 @@ public abstract class Entity extends GameObject {
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
+        pos.width = ScreenRes.scale;
+        pos.height = ScreenRes.scale;
         frame = TextureRegion.split(texture,
                 texture.getWidth() / numberOfFrame,
                 texture.getHeight() / 4);
@@ -27,8 +30,8 @@ public abstract class Entity extends GameObject {
         for (int i = 0; i < 4; i++) {
             animation[i] = new Animation<TextureRegion>(animationSpeed, frame[i]);
         }
-        pos.setWidth(texture.getWidth() / (float) numberOfFrame);
-        pos.setHeight(texture.getHeight() / 4f);
+//        pos.setWidth(texture.getWidth() / (float) numberOfFrame);
+//        pos.setHeight(texture.getHeight() / 4f);
     }
 
     public void setMovingSpeed(float speed) {

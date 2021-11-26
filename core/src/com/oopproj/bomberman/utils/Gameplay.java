@@ -9,15 +9,15 @@ import com.oopproj.bomberman.object.entity.Bomber;
 
 public class Gameplay implements Screen {
     private BombermanGame game;
-    private Bomber bomber;
+    private Bomber player;
+    private Map map;
 
     private OrthographicCamera camera;
 
-    public Gameplay(BombermanGame game) {
+    public Gameplay(BombermanGame game) throws Exception {
         this.game = game;
-
-        bomber = new Bomber(game.assets.get(Assets.BMAN), 8, 0, 0);
-
+        map = new Map("maptest.txt", game.assets);
+        player = map.getPlayer();
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
     }
@@ -31,10 +31,11 @@ public class Gameplay implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
-        bomber.move();
+        player.move();
 
         game.batch.begin();
-        bomber.render(game.batch);
+        player.render(game.batch);
+        map.render(game.batch);
         game.batch.end();
     }
 

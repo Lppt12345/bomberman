@@ -27,7 +27,11 @@ public class Menu implements Screen {
         game.font.draw(game.batch, "BOMBERMAN", 50, 50);
         game.batch.end();
         if (button.process()) {
-            game.setScreen(new Gameplay(game));
+            try {
+                game.setScreen(new Gameplay(game));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

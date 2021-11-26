@@ -23,8 +23,7 @@ public class Gameplay implements Screen {
         WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
         WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
         player = map.getPlayer();
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
+        camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
     }
 
     @Override
@@ -33,6 +32,7 @@ public class Gameplay implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
+        camera.position.set(player.getPos().x, player.getPos().y, 0);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 

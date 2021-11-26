@@ -19,6 +19,10 @@ public abstract class GameObject implements Disposable {
         pos.setPosition(x, y);
     }
 
+    public Rectangle getPos() {
+        return pos;
+    }
+
     /**
      * Tim vi tri cua phan tu tren mang 1 chieu map de anh xa
      * @return vi tri.

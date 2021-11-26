@@ -53,7 +53,7 @@ public abstract class Entity extends GameObject {
                 pos.y += movingSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
-            case Direction.DOWN{
+            case Direction.DOWN: {
                 lastDirection = Direction.DOWN;
                 animation[Direction.DOWN].setFrameDuration(animationSpeed);
                 pos.y -= movingSpeed * Gdx.graphics.getDeltaTime();

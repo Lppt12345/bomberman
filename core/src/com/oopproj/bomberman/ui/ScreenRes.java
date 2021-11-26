@@ -17,4 +17,8 @@ public class ScreenRes {
         width = w;
         height = h;
     }
+
+    public static float getRatio() {
+        return (float) width / height;
+    }
 }

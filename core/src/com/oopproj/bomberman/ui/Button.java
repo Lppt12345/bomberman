@@ -56,4 +56,8 @@ public class Button implements Disposable {
     private float parabol(long delta) {
         return (float) (((-1) / Math.pow(DURATION, 2)) * Math.pow(delta, 2) + (2 / DURATION) * delta);
     }
+
+    public float getAlpha() {
+        return this.alpha;
+    }
 }

@@ -24,6 +24,7 @@ public class Menu implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
         game.batch.begin();
         button.render(game.batch);
+        game.font.draw(game.batch, "BOMBERMAN", 50, 50);
         game.batch.end();
         if (button.process()) {
             game.setScreen(new Gameplay(game));

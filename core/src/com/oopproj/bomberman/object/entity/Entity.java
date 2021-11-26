@@ -84,6 +84,7 @@ public abstract class Entity extends GameObject {
         }
     }
 
+
     public void render(SpriteBatch batch) {
         batch.setColor(1, 1, 1, 1);
         batch.draw(currentFrame, pos.x, pos.y);

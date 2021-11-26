@@ -11,7 +11,6 @@ import com.oopproj.bomberman.ui.ScreenRes;
 public abstract class GameObject implements Disposable {
     protected Rectangle pos;
     protected Texture texture;
-
     public GameObject(Texture texture, float x, float y) {
         this.texture = texture;
         pos = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
@@ -21,8 +20,14 @@ public abstract class GameObject implements Disposable {
         pos.setPosition(x, y);
     }
 
+    /**
+     * Tim vi tri cua phan tu tren mang 1 chieu map de anh xa
+     * @return vi tri.
+     */
     public int getPositionAtMap() {
-        return ((int) pos.x) / ScreenRes.scale + ((int) pos.y / ScreenRes.scale) * Map.getRow();
+        int x = (int) pos.x / ScreenRes.scale;
+        int y = (int) pos.y / ScreenRes.scale;
+        return Map.getColumn() * (Map.getRow() - 1 - y) + x;
     }
 
     public abstract void render(SpriteBatch batch);

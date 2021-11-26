@@ -175,24 +175,23 @@ public abstract class Entity extends GameObject {
                     if (tmp2 instanceof Grass && (tmp2.getPos().y - pos.y >= 0) && (tmp2.getPos().y - pos.y <= limit)) {
                         pos.y = tmp2.getPos().y;
                     }else {
-                        if (entity.overlaps(tmp1.getPos())){
+                        if (entity.overlaps(tmp1.getPos())) {
                             return false;
                         }
                     }
                 }
-                if (!(tmp2 instanceof Grass)){
+                if (!(tmp2 instanceof Grass)) {
                     // Check di sang ben phai
                     if (tmp1 instanceof Grass && (tmp1.getPos().y - pos.y <= 0) && (pos.y - tmp1.getPos().y <= limit)){
                         pos.y = tmp1.getPos().y;
                     }else {
-                        if (entity.overlaps(tmp2.getPos())){
+                        if (entity.overlaps(tmp2.getPos())) {
                             return false;
                         }
                     }
                 }
                 break;
             }
-
         }
         return true;
     }

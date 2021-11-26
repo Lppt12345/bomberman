@@ -45,6 +45,7 @@ public class Gameplay implements Screen {
         game.batch.begin();
         map.render(game.batch);
         player.render(game.batch);
+        creep.render(game.batch);
         game.batch.end();
     }
 

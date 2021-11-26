@@ -3,6 +3,7 @@ package com.oopproj.bomberman.object.entity.enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.entity.Entity;
 
@@ -13,13 +14,12 @@ public class Creep extends Enemy {
 
     @Override
     public void move(Map map) {
-        float time = 0;
-        if (time >= 1) {
-            currentDirection = MathUtils.random(0, 4);
-            time = 0;
-        } else {
-            time += Gdx.graphics.getDeltaTime();
-        }
+//        float time = System.currentTimeMillis() % 1000;
+//        if (time == 0) {
+//            currentDirection = MathUtils.random(0, 4);
+//            System.out.println(currentDirection);
+//        }
+        currentDirection = Direction.RIGHT;
         super.move(map);
     }
 

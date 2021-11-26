@@ -2,17 +2,19 @@ package com.oopproj.bomberman.utils;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.data.Assets;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.entity.Bomber;
+import com.oopproj.bomberman.object.entity.enemy.Creep;
 import com.oopproj.bomberman.ui.ScreenRes;
 
 public class Gameplay implements Screen {
     private BombermanGame game;
     private Bomber player;
     private Map map;
-
+    private Creep creep;
     private int WORLD_WIDTH;
     private int WORLD_HEIGHT;
     private OrthographicCamera camera;
@@ -23,6 +25,7 @@ public class Gameplay implements Screen {
         WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
         WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
         player = map.getPlayer();
+        creep = (Creep) map.getEnemies().get(0);
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
     }
 
@@ -37,9 +40,9 @@ public class Gameplay implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         player.move(map);
+        creep.move(map);
 
         game.batch.begin();
-        player.render(game.batch);
         map.render(game.batch);
         player.render(game.batch);
         game.batch.end();

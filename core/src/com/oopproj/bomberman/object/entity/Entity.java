@@ -28,8 +28,8 @@ public abstract class Entity extends GameObject {
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
-        pos.width = ScreenRes.scale;
-        pos.height = ScreenRes.scale;
+        pos.width = 47;
+        pos.height = 47;
         frame = TextureRegion.split(texture,
                 texture.getWidth() / numberOfFrame,
                 texture.getHeight() / 4);

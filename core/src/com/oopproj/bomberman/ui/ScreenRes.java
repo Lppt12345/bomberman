@@ -1,4 +1,4 @@
-package com.oopproj.bomberman.utils;
+package com.oopproj.bomberman.ui;
 
 public class ScreenRes {
     private static int width;

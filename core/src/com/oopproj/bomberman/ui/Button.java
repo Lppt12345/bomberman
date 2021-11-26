@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
-import com.oopproj.bomberman.utils.ScreenRes;
 
 public class Button implements Disposable {
     private static final float DURATION = 1000;

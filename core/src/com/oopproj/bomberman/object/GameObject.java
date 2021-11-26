@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
 import com.oopproj.bomberman.data.Assets;
+import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.ui.ScreenRes;
 
 public abstract class GameObject implements Disposable {
     protected Rectangle pos;
@@ -17,6 +19,10 @@ public abstract class GameObject implements Disposable {
 
     public void setPos(float x, float y) {
         pos.setPosition(x, y);
+    }
+
+    public int getPositionAtMap() {
+        return ((int) pos.x) / ScreenRes.scale + ((int) pos.y / ScreenRes.scale) * Map.getColumn();
     }
 
     public abstract void render(SpriteBatch batch);

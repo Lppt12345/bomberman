@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.oopproj.bomberman.object.entity.Entity;
 
-public class Creep extends Entity {
+public class Creep extends Enemy {
     public Creep(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
     }

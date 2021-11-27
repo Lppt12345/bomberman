@@ -99,7 +99,6 @@ public abstract class Entity extends GameObject {
 
                 if (!(tmp1 instanceof Grass) && entity.overlaps(tmp1.getPos())) {
                     return false;
-
                 }
                 if (!(tmp2 instanceof Grass) && entity.overlaps(tmp2.getPos())) {
                     return false;

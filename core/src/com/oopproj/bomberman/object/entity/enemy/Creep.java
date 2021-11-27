@@ -8,18 +8,19 @@ import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.entity.Entity;
 
 public class Creep extends Enemy {
+    // Xet huong mac dinh la sang trai gap cot thi doi huong ngau nhien
     public Creep(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
+        movingSpeed = 150;
+        score = 100;
+        currentDirection = Direction.LEFT;
     }
 
     @Override
     public void move(Map map) {
-//        float time = System.currentTimeMillis() % 1000;
-//        if (time == 0) {
-//            currentDirection = MathUtils.random(0, 4);
-//            System.out.println(currentDirection);
-//        }
-        currentDirection = Direction.RIGHT;
+        if (!checkMove(map , lastDirection)){
+            randomDir();
+        }
         super.move(map);
     }
 

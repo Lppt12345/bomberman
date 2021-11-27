@@ -7,6 +7,7 @@ import com.oopproj.bomberman.object.entity.*;
 import com.oopproj.bomberman.object.entity.enemy.Creep;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.object.entity.enemy.Oneal;
+import com.oopproj.bomberman.object.entity.enemy.SpeedCreep;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.ground.Wall;
@@ -113,6 +114,10 @@ public class Map {
                         break;
                     case '2':
                         enemy = new Oneal(assets.get(Assets.CREEP), 6, colM, rowM);
+                        obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
+                        break;
+                    case '3':
+                        enemy = new SpeedCreep(assets.get(Assets.CREEP), 6, colM, rowM);
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '*':

@@ -2,19 +2,23 @@ package com.oopproj.bomberman.utils;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.data.Assets;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.object.entity.enemy.Creep;
+import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.ui.ScreenRes;
+
+import java.util.List;
 
 public class Gameplay implements Screen {
     private BombermanGame game;
     private Bomber player;
     private Map map;
-    private Creep creep;
+    private List<Enemy> enemyList;
     private int WORLD_WIDTH;
     private int WORLD_HEIGHT;
     private OrthographicCamera camera;
@@ -25,7 +29,7 @@ public class Gameplay implements Screen {
         WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
         WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
         player = map.getPlayer();
-        creep = (Creep) map.getEnemies().get(0);
+        enemyList = map.getEnemies();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
     }
 
@@ -41,12 +45,16 @@ public class Gameplay implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         player.move(map);
-        creep.move(map);
+        for (Enemy a : enemyList){
+            a.move(map);
+        }
 
         game.batch.begin();
         map.render(game.batch);
         player.render(game.batch);
-        creep.render(game.batch);
+        for (Enemy a : enemyList){
+            a.render(game.batch);
+        }
         game.batch.end();
     }
 

@@ -14,8 +14,5 @@ public class Wall extends GameObject {
         batch.draw(texture, pos.x, pos.y);
     }
 
-    @Override
-    public void dispose() {
 
-    }
 }

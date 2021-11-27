@@ -15,8 +15,5 @@ public class Grass extends GameObject {
         batch.draw(texture, pos.x, pos.y);
     }
 
-    @Override
-    public void dispose() {
-        texture.dispose();
-    }
+
 }

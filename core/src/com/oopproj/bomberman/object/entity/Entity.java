@@ -48,12 +48,12 @@ public abstract class Entity extends GameObject {
         this.animationSpeed = speed;
     }
 
-    public boolean checkMove(Map map) {
+    public boolean checkMove(Map map, int direction) {
         int posAtMap = getPositionAtMap(map);
         Rectangle entity = null;
         GameObject tmp1 = null, tmp2 = null;
         int col = map.getColumn();
-        switch (lastDirection) {
+        switch (direction) {
             case Direction.UP: {
                 entity = new Rectangle(pos.x, pos.y + movingSpeed * Gdx.graphics.getDeltaTime(), pos.width, pos.height);
                 if (posAtMap - col < 0) {
@@ -131,12 +131,11 @@ public abstract class Entity extends GameObject {
         if (currentFrame == null) {
             currentFrame = frame[0][0];
         }
-
         switch (currentDirection) {
             case Direction.UP: {
                 lastDirection = Direction.UP;
                 animation[Direction.UP].setFrameDuration(animationSpeed);
-                if (!checkMove(map)) {
+                if (!checkMove(map, lastDirection)) {
                     return;
                 }
                 pos.y += movingSpeed * Gdx.graphics.getDeltaTime();
@@ -145,7 +144,7 @@ public abstract class Entity extends GameObject {
             case Direction.DOWN: {
                 lastDirection = Direction.DOWN;
                 animation[Direction.DOWN].setFrameDuration(animationSpeed);
-                if (!checkMove(map)) {
+                if (!checkMove(map, lastDirection)) {
                     return;
                 }
                 pos.y -= movingSpeed * Gdx.graphics.getDeltaTime();
@@ -154,7 +153,7 @@ public abstract class Entity extends GameObject {
             case Direction.LEFT: {
                 lastDirection = Direction.LEFT;
                 animation[Direction.LEFT].setFrameDuration(animationSpeed);
-                if (!checkMove(map)) {
+                if (!checkMove(map, lastDirection)) {
                     return;
                 }
                 pos.x -= movingSpeed * Gdx.graphics.getDeltaTime();
@@ -163,7 +162,7 @@ public abstract class Entity extends GameObject {
             case Direction.RIGHT: {
                 lastDirection = Direction.RIGHT;
                 animation[Direction.RIGHT].setFrameDuration(animationSpeed);
-                if (!checkMove(map)) {
+                if (!checkMove(map, lastDirection)) {
                     return;
                 }
                 pos.x += movingSpeed * Gdx.graphics.getDeltaTime();

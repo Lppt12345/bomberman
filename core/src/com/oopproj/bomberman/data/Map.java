@@ -27,6 +27,7 @@ public class Map {
     private int column;
     public int level;
     public int Scale = ScreenRes.scale;
+
     public List<GameObject> getMap() {
         return map;
     }

@@ -25,7 +25,7 @@ public class Bomber extends Entity {
         } else {
             currentDirection = Direction.NOTMOVE;
         }
-        super.move(map);
+        super.move2(map);
     }
 
     @Override

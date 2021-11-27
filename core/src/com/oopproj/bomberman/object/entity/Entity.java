@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.GameObject;
+import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.ground.Wall;
 import com.oopproj.bomberman.ui.ScreenRes;
@@ -20,7 +21,7 @@ public abstract class Entity extends GameObject {
     protected TextureRegion[][] frame;
     protected TextureRegion currentFrame;
     protected Animation[] animation;
-    protected float animationSpeed = 0.1f;
+    protected float animationSpeed = 0.05f;
     protected float movingSpeed = 200;
     protected float stateTime = 0f;
     protected int currentDirection;
@@ -28,8 +29,8 @@ public abstract class Entity extends GameObject {
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
-        pos.width = 50;
-        pos.height = 50;
+        pos.width = (float) texture.getWidth() / numberOfFrame;
+        pos.height = (float) texture.getWidth() / numberOfFrame;
         frame = TextureRegion.split(texture,
                 texture.getWidth() / numberOfFrame,
                 texture.getHeight() / 4);
@@ -46,7 +47,8 @@ public abstract class Entity extends GameObject {
     public void setAnimationSpeed(float speed) {
         this.animationSpeed = speed;
     }
-    public boolean checkMove(Map map){
+
+    public boolean checkMove(Map map) {
         int posAtMap = getPositionAtMap(map);
         double limit = (double)   ScreenRes.scale / 5;
         Rectangle entity = null;
@@ -185,6 +187,7 @@ public abstract class Entity extends GameObject {
         }
         return true;
     }
+
     public void move(Map map) {
         stateTime += Gdx.graphics.getDeltaTime();
         currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);
@@ -240,6 +243,81 @@ public abstract class Entity extends GameObject {
         }
     }
 
+    private void checkMove2(Map map) {
+        int playerIndex = getPosAtMap(map);
+        GameObject upObject = map.getMap().get(playerIndex - map.getColumn());
+        GameObject downObject = map.getMap().get(playerIndex + map.getColumn());
+        GameObject leftObject = map.getMap().get(playerIndex - 1);
+        GameObject rightObject = map.getMap().get(playerIndex + 1);
+
+        if (upObject instanceof Brick || upObject instanceof Wall) {
+            if (this.pos.y + this.pos.height > upObject.getPos().y) {
+                this.pos.y = upObject.getPos().y - this.pos.height;
+            }
+        }
+
+        if (downObject instanceof Brick || downObject instanceof Wall) {
+            if (this.pos.y < downObject.getPos().y + downObject.getPos().height) {
+                this.pos.y = downObject.getPos().y + downObject.getPos().height;
+            }
+        }
+
+        if (leftObject instanceof Brick || leftObject instanceof Wall) {
+            if (this.pos.x < leftObject.getPos().x + leftObject.getPos().width) {
+                this.pos.x = leftObject.getPos().x + leftObject.getPos().width;
+            }
+        }
+
+        if (rightObject instanceof Brick || rightObject instanceof  Wall) {
+            if (this.pos.x + this.pos.width > rightObject.getPos().x) {
+                this.pos.x = rightObject.getPos().x - this.pos.width;
+            }
+        }
+    }
+
+    public void move2(Map map) {
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);
+        if (currentFrame == null) {
+            currentFrame = frame[0][0];
+        }
+
+        switch (currentDirection) {
+            case Direction.UP: {
+                lastDirection = Direction.UP;
+                animation[Direction.UP].setFrameDuration(animationSpeed);
+                pos.y += movingSpeed * Gdx.graphics.getDeltaTime();
+                break;
+            }
+            case Direction.DOWN: {
+                lastDirection = Direction.DOWN;
+                animation[Direction.DOWN].setFrameDuration(animationSpeed);
+                pos.y -= movingSpeed * Gdx.graphics.getDeltaTime();
+                break;
+            }
+            case Direction.LEFT: {
+                lastDirection = Direction.LEFT;
+                animation[Direction.LEFT].setFrameDuration(animationSpeed);
+                pos.x -= movingSpeed * Gdx.graphics.getDeltaTime();
+                break;
+            }
+            case Direction.RIGHT: {
+                lastDirection = Direction.RIGHT;
+                animation[Direction.RIGHT].setFrameDuration(animationSpeed);
+                pos.x += movingSpeed * Gdx.graphics.getDeltaTime();
+                break;
+            }
+            default: {
+                animation[0].setFrameDuration(0);
+                animation[1].setFrameDuration(0);
+                animation[2].setFrameDuration(0);
+                animation[3].setFrameDuration(0);
+                currentFrame = frame[lastDirection][0];
+                break;
+            }
+        }
+        checkMove2(map);
+    }
 
     public void render(SpriteBatch batch) {
         batch.setColor(1, 1, 1, 1);

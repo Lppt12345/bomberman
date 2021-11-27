@@ -28,8 +28,8 @@ public abstract class Entity extends GameObject {
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
-        pos.width = 40;
-        pos.height = 40;
+        pos.width = 50;
+        pos.height = 50;
         frame = TextureRegion.split(texture,
                 texture.getWidth() / numberOfFrame,
                 texture.getHeight() / 4);
@@ -46,10 +46,6 @@ public abstract class Entity extends GameObject {
     public void setAnimationSpeed(float speed) {
         this.animationSpeed = speed;
     }
-//    public void checkMoveUpAndDown(Map map, GameObject tmp1, GameObject tmp2, Rectangle entity){
-//
-//    }
-
     public boolean checkMove(Map map){
         int posAtMap = getPositionAtMap(map);
         double limit = (double)   ScreenRes.scale / 5;
@@ -67,12 +63,10 @@ public abstract class Entity extends GameObject {
                 tmp1 = map.getMap().get(posAtMap - col);
                 tmp2 = map.getMap().get(posAtMap - col + 1);
 
-                // Check va cham vs 2 khoi tren
-                // Dieu chinh actor ve chinh giua
-                // Kiem tra xem 1 co phai co
+                // Check va cham vs 2 khoi tren bang cach kiem tra lan luot tung khoi
                 if (!(tmp1 instanceof Grass)){
-                    // Check di sang ben phai
-                    if (tmp2 instanceof Grass && (tmp2.getPos().x - pos.x >= 0) && (tmp2.getPos().x - pos.x <= limit)) {
+                    // Check di sang ben phai va Dieu chinh actor ve chinh giua
+                    if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().x - pos.x)  <= limit) {
                         pos.x = tmp2.getPos().x;
                     }else {
                         if (entity.overlaps(tmp1.getPos())){
@@ -82,7 +76,7 @@ public abstract class Entity extends GameObject {
                 }
                 if (!(tmp2 instanceof Grass)){
                     // Check di sang ben phai
-                    if (tmp1 instanceof Grass && (tmp1.getPos().x - pos.x <= 0) && (pos.x - tmp1.getPos().x <= limit)){
+                    if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().x - pos.x)  <= limit){
                         pos.x = tmp1.getPos().x;
                     }else {
                         if (entity.overlaps(tmp2.getPos())){
@@ -102,11 +96,9 @@ public abstract class Entity extends GameObject {
                 tmp2 = map.getMap().get(posAtMap + col + 1);
 
                 // Check va cham vs 2 khoi duoi
-                // Dieu chinh actor ve chinh giua
-                // Kiem tra xem 1 co phai co
                 if (!(tmp1 instanceof Grass)){
                     // Check di sang ben phai
-                    if (tmp2 instanceof Grass && (tmp2.getPos().x - pos.x >= 0) && (tmp2.getPos().x - pos.x <= limit)) {
+                    if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().x - pos.x)  <= limit) {
                         pos.x = tmp2.getPos().x;
                     }else {
                         if (entity.overlaps(tmp1.getPos())){
@@ -115,8 +107,8 @@ public abstract class Entity extends GameObject {
                   }
                 }
                 if (!(tmp2 instanceof Grass)){
-                    // Check di sang ben phai
-                    if (tmp1 instanceof Grass && (tmp1.getPos().x - pos.x <= 0) && (pos.x - tmp1.getPos().x <= limit)){
+                    // Check di sang ben trai
+                    if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().x - pos.x)  <= limit){
                         pos.x = tmp1.getPos().x;
                     }else {
                         if (entity.overlaps(tmp2.getPos())){
@@ -129,18 +121,16 @@ public abstract class Entity extends GameObject {
             case Direction.LEFT:{
                 // Xet entity tren no 1 doan
                 entity = new Rectangle(pos.x - movingSpeed* Gdx.graphics.getDeltaTime(), pos.y , pos.width , pos.height);
-                if (posAtMap - 1 < 0 || posAtMap - 1 + col >= map.getMap().size()){
+                if (posAtMap - 1 -col < 0){
                     return false;
                 }
                 tmp1 = map.getMap().get(posAtMap - 1);
-                tmp2 = map.getMap().get(posAtMap - 1  + col);
+                tmp2 = map.getMap().get(posAtMap - 1  - col);
 
                 // Check va cham vs 2 khoi duoi
-                // Dieu chinh actor ve chinh giua
-                // Kiem tra xem 1 co phai co
                 if (!(tmp1 instanceof Grass)){
                     // Check di sang ben phai
-                    if (tmp2 instanceof Grass && (tmp2.getPos().y - pos.y >= 0) && (tmp2.getPos().y - pos.y <= limit)) {
+                    if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().y - pos.y)  <= limit) {
                         pos.y = tmp2.getPos().y;
                     }else {
                         if (entity.overlaps(tmp1.getPos())){
@@ -149,8 +139,7 @@ public abstract class Entity extends GameObject {
                     }
                 }
                 if (!(tmp2 instanceof Grass)){
-                    // Check di sang ben phai
-                    if (tmp1 instanceof Grass && (tmp1.getPos().y - pos.y <= 0) && (pos.y - tmp1.getPos().y <= limit)){
+                    if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().y - pos.y)  <= limit){
                         pos.y = tmp1.getPos().y;
                     }else {
                         if (entity.overlaps(tmp2.getPos())){
@@ -164,18 +153,16 @@ public abstract class Entity extends GameObject {
             case Direction.RIGHT:{
                 // Xet entity tren no 1 doan
                 entity = new Rectangle(pos.x + movingSpeed * Gdx.graphics.getDeltaTime(), pos.y , pos.width , pos.height);
-                if (posAtMap + 1 < 0 || posAtMap + col + 1 >= map.getMap().size()){
+                if (posAtMap + 1 - col < 0){
                     return false;
                 }
                 tmp1 = map.getMap().get(posAtMap + 1);
-                tmp2 = map.getMap().get(posAtMap + 1  + col);
+                tmp2 = map.getMap().get(posAtMap + 1  - col);
 
                 // Check va cham vs 2 khoi duoi
-                // Dieu chinh actor ve chinh giua
-                // Kiem tra xem 1 co phai co
                 if (!(tmp1 instanceof Grass)){
                     // Check di sang ben phai
-                    if (tmp2 instanceof Grass && (tmp2.getPos().y - pos.y >= 0) && (tmp2.getPos().y - pos.y <= limit)) {
+                    if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().y - pos.y)  <= limit) {
                         pos.y = tmp2.getPos().y;
                     }else {
                         if (entity.overlaps(tmp1.getPos())) {
@@ -185,7 +172,7 @@ public abstract class Entity extends GameObject {
                 }
                 if (!(tmp2 instanceof Grass)) {
                     // Check di sang ben phai
-                    if (tmp1 instanceof Grass && (tmp1.getPos().y - pos.y <= 0) && (pos.y - tmp1.getPos().y <= limit)){
+                    if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().y - pos.y) <= limit){
                         pos.y = tmp1.getPos().y;
                     }else {
                         if (entity.overlaps(tmp2.getPos())) {

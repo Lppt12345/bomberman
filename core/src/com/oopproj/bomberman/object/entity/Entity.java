@@ -244,7 +244,7 @@ public abstract class Entity extends GameObject {
     }
 
     private void checkMove2(Map map) {
-        int playerIndex = getPosAtMap(map);
+        int playerIndex = getPositionAtMap(map);
         GameObject upObject = map.getMap().get(playerIndex - map.getColumn());
         GameObject downObject = map.getMap().get(playerIndex + map.getColumn());
         GameObject leftObject = map.getMap().get(playerIndex - 1);

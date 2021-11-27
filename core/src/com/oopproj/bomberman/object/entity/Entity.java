@@ -28,8 +28,8 @@ public abstract class Entity extends GameObject {
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
-        pos.width = 47;
-        pos.height = 47;
+        pos.width = 40;
+        pos.height = 40;
         frame = TextureRegion.split(texture,
                 texture.getWidth() / numberOfFrame,
                 texture.getHeight() / 4);
@@ -46,6 +46,9 @@ public abstract class Entity extends GameObject {
     public void setAnimationSpeed(float speed) {
         this.animationSpeed = speed;
     }
+//    public void checkMoveUpAndDown(Map map, GameObject tmp1, GameObject tmp2, Rectangle entity){
+//
+//    }
 
     public boolean checkMove(Map map){
         int posAtMap = getPositionAtMap(map);
@@ -57,7 +60,7 @@ public abstract class Entity extends GameObject {
         switch (lastDirection){
             case Direction.UP:{
                 // Xet entity tren no 1 doan
-                entity = new Rectangle(pos.x , pos.y + movingSpeed * Gdx.graphics.getDeltaTime(), ScreenRes.scale , ScreenRes.scale);
+                entity = new Rectangle(pos.x , pos.y + movingSpeed * Gdx.graphics.getDeltaTime(), pos.width , pos.height);
                 if (posAtMap - col < 0){
                     return false;
                 }
@@ -91,7 +94,7 @@ public abstract class Entity extends GameObject {
             }
             case Direction.DOWN:{
                 // Xet entity duoi no 1 doan
-                entity = new Rectangle(pos.x , pos.y - movingSpeed * Gdx.graphics.getDeltaTime(), ScreenRes.scale , ScreenRes.scale);
+                entity = new Rectangle(pos.x , pos.y - movingSpeed * Gdx.graphics.getDeltaTime(), pos.width , pos.height);
                 if (posAtMap + col +1 > map.getMap().size()){
                     return false;
                 }
@@ -125,7 +128,7 @@ public abstract class Entity extends GameObject {
             }
             case Direction.LEFT:{
                 // Xet entity tren no 1 doan
-                entity = new Rectangle(pos.x - movingSpeed* Gdx.graphics.getDeltaTime(), pos.y , ScreenRes.scale , ScreenRes.scale);
+                entity = new Rectangle(pos.x - movingSpeed* Gdx.graphics.getDeltaTime(), pos.y , pos.width , pos.height);
                 if (posAtMap - 1 < 0 || posAtMap - 1 + col >= map.getMap().size()){
                     return false;
                 }
@@ -160,7 +163,7 @@ public abstract class Entity extends GameObject {
             }
             case Direction.RIGHT:{
                 // Xet entity tren no 1 doan
-                entity = new Rectangle(pos.x + movingSpeed * Gdx.graphics.getDeltaTime(), pos.y , ScreenRes.scale , ScreenRes.scale);
+                entity = new Rectangle(pos.x + movingSpeed * Gdx.graphics.getDeltaTime(), pos.y , pos.width , pos.height);
                 if (posAtMap + 1 < 0 || posAtMap + col + 1 >= map.getMap().size()){
                     return false;
                 }

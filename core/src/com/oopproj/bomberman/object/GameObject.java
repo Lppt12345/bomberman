@@ -30,12 +30,6 @@ public abstract class GameObject implements Disposable {
         return map.getColumn() * (map.getRow() - 1 - y) + x;
     }
 
-    public int getPosAtMap(Map map) {
-        int x = (int) (pos.x + pos.width / 2) / ScreenRes.scale;
-        int y = (int) (pos.y + pos.height / 2) / ScreenRes.scale;
-        return map.getColumn() * (map.getRow() - 1 - y) + x;
-    }
-
     public abstract void render(SpriteBatch batch);
 
     public void dispose() {

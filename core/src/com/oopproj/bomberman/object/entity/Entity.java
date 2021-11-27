@@ -69,7 +69,7 @@ public abstract class Entity extends GameObject {
                 if (!(tmp1 instanceof Grass)){
                     // Check di sang ben phai va Dieu chinh actor ve chinh giua
                     if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().x - pos.x)  <= limit) {
-                        pos.x = tmp2.getPos().x;
+//                        pos.x = tmp2.getPos().x;
                     }else {
                         if (entity.overlaps(tmp1.getPos())){
                             return false;
@@ -79,7 +79,7 @@ public abstract class Entity extends GameObject {
                 if (!(tmp2 instanceof Grass)){
                     // Check di sang ben phai
                     if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().x - pos.x)  <= limit){
-                        pos.x = tmp1.getPos().x;
+//                        pos.x = tmp1.getPos().x;
                     }else {
                         if (entity.overlaps(tmp2.getPos())){
                             return false;
@@ -101,7 +101,7 @@ public abstract class Entity extends GameObject {
                 if (!(tmp1 instanceof Grass)){
                     // Check di sang ben phai
                     if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().x - pos.x)  <= limit) {
-                        pos.x = tmp2.getPos().x;
+//                        pos.x = tmp2.getPos().x;
                     }else {
                         if (entity.overlaps(tmp1.getPos())){
                             return false;
@@ -111,7 +111,7 @@ public abstract class Entity extends GameObject {
                 if (!(tmp2 instanceof Grass)){
                     // Check di sang ben trai
                     if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().x - pos.x)  <= limit){
-                        pos.x = tmp1.getPos().x;
+//                        pos.x = tmp1.getPos().x;
                     }else {
                         if (entity.overlaps(tmp2.getPos())){
                             return false;
@@ -133,7 +133,7 @@ public abstract class Entity extends GameObject {
                 if (!(tmp1 instanceof Grass)){
                     // Check di sang ben phai
                     if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().y - pos.y)  <= limit) {
-                        pos.y = tmp2.getPos().y;
+//                        pos.y = tmp2.getPos().y;
                     }else {
                         if (entity.overlaps(tmp1.getPos())){
                             return false;
@@ -142,7 +142,7 @@ public abstract class Entity extends GameObject {
                 }
                 if (!(tmp2 instanceof Grass)){
                     if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().y - pos.y)  <= limit){
-                        pos.y = tmp1.getPos().y;
+//                        pos.y = tmp1.getPos().y;
                     }else {
                         if (entity.overlaps(tmp2.getPos())){
                             return false;
@@ -165,7 +165,7 @@ public abstract class Entity extends GameObject {
                 if (!(tmp1 instanceof Grass)){
                     // Check di sang ben phai
                     if (tmp2 instanceof Grass && Math.abs(tmp2.getPos().y - pos.y)  <= limit) {
-                        pos.y = tmp2.getPos().y;
+//                        pos.y = tmp2.getPos().y;
                     }else {
                         if (entity.overlaps(tmp1.getPos())) {
                             return false;
@@ -175,7 +175,7 @@ public abstract class Entity extends GameObject {
                 if (!(tmp2 instanceof Grass)) {
                     // Check di sang ben phai
                     if (tmp1 instanceof Grass && Math.abs(tmp1.getPos().y - pos.y) <= limit){
-                        pos.y = tmp1.getPos().y;
+//                        pos.y = tmp1.getPos().y;
                     }else {
                         if (entity.overlaps(tmp2.getPos())) {
                             return false;

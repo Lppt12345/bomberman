@@ -24,8 +24,4 @@ public class Creep extends Enemy {
         super.move(map);
     }
 
-    @Override
-    public void dispose() {
-
-    }
 }

@@ -40,7 +40,11 @@ public class Gameplay implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
-        camera.position.set(player.getPos().x, player.getPos().y, 0);
+        camera.position.set(
+                MathUtils.clamp(player.getPos().x, camera.viewportWidth / 2f, WORLD_WIDTH - camera.viewportWidth / 2f),
+                MathUtils.clamp(player.getPos().y, camera.viewportHeight / 2f, WORLD_HEIGHT - camera.viewportHeight / 2f),
+                0
+        );
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 

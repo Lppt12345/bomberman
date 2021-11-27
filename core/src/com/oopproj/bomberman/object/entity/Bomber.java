@@ -10,6 +10,7 @@ public class Bomber extends Entity {
 
     public Bomber(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
+        movingSpeed = 200;
     }
 
     @Override
@@ -28,8 +29,5 @@ public class Bomber extends Entity {
         super.move(map);
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
+
 }

@@ -11,6 +11,8 @@ public class DesktopLauncher {
 		ScreenRes.setResolution(1000, 700);
 		config.width = ScreenRes.getWidth();
 		config.height = ScreenRes.getHeight();
+		config.title = "Bomberman";
+		config.undecorated = false;
 		config.resizable = false;
 		new LwjglApplication(new BombermanGame(), config);
 	}

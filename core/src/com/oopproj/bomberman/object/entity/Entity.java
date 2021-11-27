@@ -22,7 +22,7 @@ public abstract class Entity extends GameObject {
     protected TextureRegion currentFrame;
     protected Animation[] animation;
     protected float animationSpeed = 0.05f;
-    protected float movingSpeed = 200;
+    protected float movingSpeed;
     protected float stateTime = 0f;
     protected int currentDirection;
     protected int lastDirection = Direction.DOWN;
@@ -182,9 +182,5 @@ public abstract class Entity extends GameObject {
     public void render(SpriteBatch batch) {
         batch.setColor(1, 1, 1, 1);
         batch.draw(currentFrame, pos.x, pos.y);
-    }
-
-    public void dispose() {
-        super.dispose();
     }
 }

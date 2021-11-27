@@ -30,7 +30,7 @@ public abstract class Entity extends GameObject {
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
         pos.width = (float) texture.getWidth() / numberOfFrame;
-        pos.height = (float) texture.getWidth() / numberOfFrame;
+        pos.height = (float) texture.getWidth() / numberOfFrame - 15;
         frame = TextureRegion.split(texture,
                 texture.getWidth() / numberOfFrame,
                 texture.getHeight() / 4);

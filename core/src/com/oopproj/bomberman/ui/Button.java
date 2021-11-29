@@ -23,6 +23,7 @@ public class Button implements Disposable {
         startTime = System.currentTimeMillis();
         this.alpha = 0;
         this.texture = texture;
+        touched = false;
     }
 
     public void render(SpriteBatch batch) {
@@ -75,6 +76,10 @@ public class Button implements Disposable {
 
     private double parabol(long delta) {
         return (((-1) / Math.pow(DURATION, 2)) * Math.pow(delta, 2) + ((double) 2 / DURATION) * delta);
+    }
+
+    private float invertParabol(long delta) {
+        return (float) ((1 / Math.pow(DURATION, 2)) * Math.pow(delta, 2) - (2 / DURATION) * delta) + 1;
     }
 
     public float getAlpha() {

@@ -9,6 +9,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		ScreenRes.setResolution(1000, 700);
+		config.title = "Bomberman";
+		config.undecorated = false;
 		config.width = ScreenRes.getWidth();
 		config.height = ScreenRes.getHeight();
 		config.title = "Bomberman";

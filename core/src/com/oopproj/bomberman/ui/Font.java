@@ -3,6 +3,7 @@ package com.oopproj.bomberman.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Disposable;
@@ -27,7 +28,8 @@ public class Font implements Disposable {
     }
 
     public void draw(SpriteBatch batch, String text, float x, float y) {
-        font.draw(batch, text, x, y);
+        GlyphLayout gl = new GlyphLayout(this.font, text);
+        font.draw(batch, text, x - gl.width / 2, y - gl.height / 2);
     }
 
     @Override

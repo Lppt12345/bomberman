@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.ui.Button;
+import com.oopproj.bomberman.ui.ScreenRes;
 
 public class Menu implements Screen {
     private BombermanGame game;
@@ -12,8 +13,8 @@ public class Menu implements Screen {
 
     public Menu(BombermanGame game) {
         this.game = game;
-        Texture texture = new Texture(Gdx.files.internal("grass.png"));
-        button = new Button(texture, 200, 200);
+        Texture texture = new Texture(Gdx.files.internal("buttons/play.png"));
+        button = new Button(texture, ScreenRes.getWidth() / 2, 100);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class Menu implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
         game.batch.begin();
         button.render(game.batch);
-        game.font.draw(game.batch, "BOMBERMAN", 50, 50);
+        game.font.draw(game.batch, "BOMBERMAN", ScreenRes.getWidth() / 2, ScreenRes.getHeight() - 50);
         game.batch.end();
         if (button.process()) {
             try {

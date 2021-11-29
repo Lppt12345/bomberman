@@ -14,7 +14,7 @@ public class BombermanGame extends Game {
     public void create() {
         batch = new SpriteBatch();
         assets = new Assets();
-        font = new Font("whitrabt.ttf", 50);
+        font = new Font("whitrabt.ttf", 75);
         this.setScreen(new Menu(this));
     }
 

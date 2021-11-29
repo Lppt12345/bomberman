@@ -17,8 +17,8 @@ public class Button implements Disposable {
     private boolean touched;
 
     public Button(Texture texture, float x, float y) {
-        this.x = x;
-        this.y = y;
+        this.x = x - (float) texture.getWidth() / 2;
+        this.y = y - (float) texture.getHeight() / 2;
         currentY = y - 50;
         startTime = System.currentTimeMillis();
         this.alpha = 0;
@@ -61,11 +61,15 @@ public class Button implements Disposable {
         if (Gdx.input.isTouched()) {
             int mouseX = Gdx.input.getX();
             int mouseY = ScreenRes.getHeight() - Gdx.input.getY();
-            startTime = System.currentTimeMillis();
-            touched = x <= mouseX && mouseX <= x + texture.getWidth()
-                    && y <= mouseY && mouseY <= y + texture.getHeight();
-        }
 
+            if (this.x <= mouseX && mouseX <= this.x + texture.getWidth()
+             && this.y <= mouseY && mouseY <= this.y + texture.getHeight()) {
+                startTime = System.currentTimeMillis();
+                touched = true;
+            } else {
+                touched = false;
+            }
+        }
         return false;
     }
 
@@ -84,5 +88,13 @@ public class Button implements Disposable {
 
     public float getAlpha() {
         return this.alpha;
+    }
+
+    public float getWidth() {
+        return texture.getWidth();
+    }
+
+    public float getHeight() {
+        return texture.getHeight();
     }
 }

@@ -78,7 +78,7 @@ public class Button implements Disposable {
         texture.dispose();
     }
 
-    private double parabol(long delta) {
+    public double parabol(long delta) {
         return (((-1) / Math.pow(DURATION, 2)) * Math.pow(delta, 2) + ((double) 2 / DURATION) * delta);
     }
 

@@ -10,11 +10,12 @@ import com.oopproj.bomberman.ui.ScreenRes;
 public class Menu implements Screen {
     private BombermanGame game;
     Button button;
+    Texture background;
 
     public Menu(BombermanGame game) {
         this.game = game;
-        Texture texture = new Texture(Gdx.files.internal("buttons/play.png"));
-        button = new Button(texture, ScreenRes.getWidth() / 2, 100);
+        background = new Texture(Gdx.files.internal("ui/background.png"));
+        button = new Button(new Texture(Gdx.files.internal("ui/play.png")), ScreenRes.getWidth() / 2, 100);
     }
 
     @Override
@@ -25,8 +26,8 @@ public class Menu implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         game.batch.begin();
+        game.batch.draw(background, 0, 0);
         button.render(game.batch);
-        game.font.draw(game.batch, "BOMBERMAN", ScreenRes.getWidth() / 2, ScreenRes.getHeight() - 50);
         game.batch.end();
         if (button.process()) {
             try {

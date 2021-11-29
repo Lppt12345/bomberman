@@ -1,5 +1,6 @@
 package com.oopproj.bomberman.utils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
@@ -21,8 +22,10 @@ public class Gameplay implements Screen {
     private int WORLD_WIDTH;
     private int WORLD_HEIGHT;
     private OrthographicCamera camera;
+    private float renderAlpha;
 
     public Gameplay(BombermanGame game) throws Exception {
+        renderAlpha = 0;
         this.game = game;
         map = new Map("maptest.txt", game.assets);
         WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
@@ -39,6 +42,11 @@ public class Gameplay implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
+        game.batch.setColor(1, 1, 1, renderAlpha);
+        if (renderAlpha < 1) {
+            renderAlpha = MathUtils.clamp(renderAlpha + Gdx.graphics.getDeltaTime(), 0, 1);
+        }
+
         camera.position.set(
                 MathUtils.clamp(player.getPos().x, camera.viewportWidth / 2f, WORLD_WIDTH - camera.viewportWidth / 2f),
                 MathUtils.clamp(player.getPos().y, camera.viewportHeight / 2f, WORLD_HEIGHT - camera.viewportHeight / 2f),

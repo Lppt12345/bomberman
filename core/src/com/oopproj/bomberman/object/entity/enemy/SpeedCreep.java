@@ -23,7 +23,6 @@ public class SpeedCreep extends Enemy {
         }
         if (time == 0){
             movingSpeed = changeSpeed();
-            System.out.println(movingSpeed);
         }
         super.move(map);
         if (time == 0){

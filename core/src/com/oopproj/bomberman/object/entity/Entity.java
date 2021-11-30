@@ -12,6 +12,7 @@ import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.ground.Wall;
+import com.oopproj.bomberman.object.item.Bomb;
 import com.oopproj.bomberman.ui.ScreenRes;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public abstract class Entity extends GameObject {
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
         pos.width = (float) texture.getWidth() / numberOfFrame;
-        pos.height = (float) texture.getWidth() / numberOfFrame - 15;
+        pos.height = (float) texture.getWidth() / numberOfFrame;
         frame = TextureRegion.split(texture,
                 texture.getWidth() / numberOfFrame,
                 texture.getHeight() / 4);
@@ -56,7 +57,7 @@ public abstract class Entity extends GameObject {
         int col = map.getColumn();
         switch (direction) {
             case Direction.UP: {
-                entity = new Rectangle(pos.x, pos.y + movingSpeed * Gdx.graphics.getDeltaTime(), pos.width, pos.height);
+                entity = getRec(direction);
                 if (posAtMap - col < 0) {
                     return false;
                 }
@@ -75,7 +76,7 @@ public abstract class Entity extends GameObject {
                 break;
             }
             case Direction.DOWN: {
-                entity = new Rectangle(pos.x, pos.y - movingSpeed * Gdx.graphics.getDeltaTime(), pos.width, pos.height);
+                entity = getRec(direction);
                 if (posAtMap + col + 1 > map.getMap().size()) {
                     return false;
                 }
@@ -91,7 +92,7 @@ public abstract class Entity extends GameObject {
                 break;
             }
             case Direction.LEFT: {
-                entity = new Rectangle(pos.x - movingSpeed * Gdx.graphics.getDeltaTime(), pos.y, pos.width, pos.height);
+                entity = getRec(direction);
                 if (posAtMap - 1 - col < 0) {
                     return false;
                 }
@@ -107,7 +108,7 @@ public abstract class Entity extends GameObject {
                 break;
             }
             case Direction.RIGHT: {
-                entity = new Rectangle(pos.x + movingSpeed * Gdx.graphics.getDeltaTime(), pos.y, pos.width, pos.height);
+                entity = getRec(direction);
                 if (posAtMap + 1 - col < 0) {
                     return false;
                 }
@@ -123,7 +124,34 @@ public abstract class Entity extends GameObject {
                 break;
             }
         }
+
+        // Check va cham vs bom
+        for (Bomb bomb :  map.getPlayer().bombList){
+            if (!bomb.getPos().overlaps(getPos())){
+                Rectangle tmp = getRec(direction);
+                if (tmp.overlaps(bomb.getPos())){
+                    return false;
+                }
+            }
+        }
         return true;
+    }
+    public Rectangle getRec(int direction){
+        switch (direction){
+            case Direction.UP:{
+                return new Rectangle(pos.x, pos.y + movingSpeed * Gdx.graphics.getDeltaTime(), pos.width, pos.height);
+            }
+            case Direction.DOWN:{
+                return new Rectangle(pos.x, pos.y - movingSpeed * Gdx.graphics.getDeltaTime(), pos.width, pos.height);
+            }
+            case Direction.LEFT:{
+                return new Rectangle(pos.x - movingSpeed * Gdx.graphics.getDeltaTime(), pos.y, pos.width, pos.height);
+            }
+            case Direction.RIGHT:{
+                return new Rectangle(pos.x + movingSpeed * Gdx.graphics.getDeltaTime(), pos.y, pos.width, pos.height);
+            }
+        }
+        return null;
     }
 
     public void move(Map map) {

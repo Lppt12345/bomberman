@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.oopproj.bomberman.data.Assets;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.GameObject;
@@ -44,6 +43,7 @@ public class Bomber extends Entity {
         pos.x = startX;
         pos.y = startY;
         currentDirection = Direction.RIGHT;
+        sizeFlame = 3;
         bombList.clear();
     }
 
@@ -61,7 +61,7 @@ public class Bomber extends Entity {
             // vi tri bomb:
             float bombX = grass.getPos().x + Math.abs((grass.getPos().getWidth() - (float) t.getWidth() / 3) / 2);
             float bombY = grass.getPos().y + Math.abs((grass.getPos().getHeight() - t.getHeight()) / 2);
-            Bomb bomb = new Bomb(t , bombX, bombY);
+            Bomb bomb = new Bomb(t , bombX, bombY , sizeFlame , map);
             bombList.add(bomb);
         }
     }

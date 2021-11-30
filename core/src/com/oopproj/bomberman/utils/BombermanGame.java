@@ -9,9 +9,11 @@ public class BombermanGame extends Game {
     public SpriteBatch batch;
     public Assets assets;
     public Font font;
+    public float renderAlpha;
 
     @Override
     public void create() {
+        renderAlpha = 0;
         batch = new SpriteBatch();
         assets = new Assets();
         font = new Font("whitrabt.ttf", 75);

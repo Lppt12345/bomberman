@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.data.State;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.object.entity.enemy.Creep;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
@@ -22,11 +23,11 @@ public class Gameplay implements Screen {
     private int WORLD_WIDTH;
     private int WORLD_HEIGHT;
     private OrthographicCamera camera;
-    private float renderAlpha;
+    private State state;
 
     public Gameplay(BombermanGame game) throws Exception {
-        renderAlpha = 0;
         this.game = game;
+        state = State.FADEIN;
         map = new Map("maptest.txt", game.assets);
         WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
         WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
@@ -41,11 +42,17 @@ public class Gameplay implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1);
-        game.batch.setColor(1, 1, 1, renderAlpha);
-        if (renderAlpha < 1) {
-            renderAlpha = MathUtils.clamp(renderAlpha + Gdx.graphics.getDeltaTime(), 0, 1);
+        if (state == State.FADEIN) {
+            game.renderAlpha = MathUtils.clamp(game.renderAlpha + Gdx.graphics.getDeltaTime(), 0, 1);
+            if (game.renderAlpha == 1) {state = State.STATIC;}
         }
+        if (state == State.FADEOUT) {
+            game.renderAlpha = MathUtils.clamp(game.renderAlpha - Gdx.graphics.getDeltaTime(), 0, 1);
+            if (game.renderAlpha == 0) {state = State.DISAPPEARED;}
+        }
+
+        ScreenUtils.clear(0, 0, 0, 1);
+        game.batch.setColor(1, 1, 1, game.renderAlpha);
 
         camera.position.set(
                 MathUtils.clamp(player.getPos().x, camera.viewportWidth / 2f, WORLD_WIDTH - camera.viewportWidth / 2f),

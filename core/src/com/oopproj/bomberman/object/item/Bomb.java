@@ -10,6 +10,8 @@ import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Grass;
+import com.oopproj.bomberman.ui.GameSound;
+import com.oopproj.bomberman.ui.ScreenRes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class Bomb extends GameObject {
 
     private float timeToExplode = 3;
     private boolean isExploded = false;
-    private List<Flame> flameUp;
+    private List<Flame> flameUp = new ArrayList<>();
     private List<Flame> flameDown = new ArrayList<>();
     private List<Flame> flameLeft = new ArrayList<>();
     private List<Flame> flameRight = new ArrayList<>();
@@ -45,6 +47,7 @@ public class Bomb extends GameObject {
         animation = new Animation<TextureRegion>((float) timeToExplode / 3, frame);
         stateTime = 0f;
         state = BombState.PLACED;
+        setFlame(map,sizeFlame);
     }
 
     public double getTimeToExplore() {
@@ -56,17 +59,17 @@ public class Bomb extends GameObject {
     }
     public void setFlame(Map map , int sizeFlame){
         Texture t = new Texture(Gdx.files.internal("flame.png"));
-        for (int i = 0; i < getLengthFlame(map, Direction.UP, sizeFlame)){
-            flameUp.add(new Flame(t, pos.x , pos.y + ))
+        for (int i = 0; i <= getLengthFlame(map, Direction.UP, sizeFlame) ; i++){
+            flameUp.add(new Flame(t, pos.x , pos.y + ScreenRes.scale * i));
         }
-        for (int i = 0; i < getLengthFlame(map, Direction.DOWN, sizeFlame)){
-            flameUp.add(new Flame(t, ))
+        for (int i = 0; i < getLengthFlame(map, Direction.DOWN, sizeFlame); i++){
+            flameDown.add(new Flame(t, pos.x , pos.y - ScreenRes.scale * (i+1)));
         }
-        for (int i = 0; i < getLengthFlame(map, Direction.LEFT, sizeFlame)){
-            flameUp.add(new Flame(t, ))
+        for (int i = 0; i < getLengthFlame(map, Direction.LEFT, sizeFlame); i++){
+            flameLeft.add(new Flame(t, pos.x - ScreenRes.scale * (i+1) , pos.y));
         }
-        for (int i = 0; i < getLengthFlame(map, Direction.RIGHT, sizeFlame)){
-            flameUp.add(new Flame(t, ))
+        for (int i = 0; i < getLengthFlame(map, Direction.RIGHT, sizeFlame); i++){
+            flameRight.add(new Flame(t, pos.x  + ScreenRes.scale * (i+1) , pos.y));
         }
     }
 
@@ -76,13 +79,12 @@ public class Bomb extends GameObject {
         int col = map.getColumn();
         switch (direction){
             case Direction.UP:{ // tinh tu vi tri bom di ra
-                for (int i = 0; i <= sizeFlame; i++){
+                for (int i = 1; i <= sizeFlame; i++){
                     if (!(map.getMap().get(pos - i * col ) instanceof Grass)){
-                        return i + 1;
+                        return i - 1;
                     }
                 }
-                return sizeFlame + 1;
-                break;
+                return sizeFlame;
             }
             case Direction.DOWN:{
                 for (int i = 1; i<= sizeFlame; i++){
@@ -91,7 +93,6 @@ public class Bomb extends GameObject {
                     }
                 }
                 return sizeFlame;
-                break;
             }
             case Direction.LEFT:{
                 for (int i = 1; i <= sizeFlame; i++){
@@ -100,7 +101,6 @@ public class Bomb extends GameObject {
                     }
                 }
                 return sizeFlame;
-                break;
             }
             case Direction.RIGHT:{
                 for (int i = 1; i<= sizeFlame; i++){
@@ -109,9 +109,9 @@ public class Bomb extends GameObject {
                     }
                 }
                 return sizeFlame;
-                break;
             }
         }
+        return sizeFlame;
     }
     @Override
     public void render(SpriteBatch batch) {

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Map {
 
-    private List<GameObject> map = new ArrayList<>();
+    private List<GameObject> map = new ArrayList<>(); // nhung doi tuong tinh
     private List<Enemy> enemies = new ArrayList<>();
     private Bomber player;
     private int row;

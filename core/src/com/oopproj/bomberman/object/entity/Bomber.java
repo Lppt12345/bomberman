@@ -110,6 +110,7 @@ public class Bomber extends Entity {
                     resetPlayer(life );
                 }else {
                     isAlive = false;
+                    // them phuong thuc xu li khi bi chet het mang
                     resetPlayer(3);
                 }
             }

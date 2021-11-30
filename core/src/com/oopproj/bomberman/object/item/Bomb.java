@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends GameObject {
+    public enum BombState {
+        PLACED, BURNING, DISAPPEARED
+    }
+
     private float timeToExplode = 3;
     private boolean isExploded = false;
     private List<Flame> flameUp;
@@ -25,6 +29,7 @@ public class Bomb extends GameObject {
     private TextureRegion currentFrame;
     private Animation<TextureRegion> animation;
     private float stateTime;
+    private BombState state;
 
     public Bomb(Texture texture, float x, float y, int sizeFlame, Map map) {
         super(texture, x, y);
@@ -39,6 +44,7 @@ public class Bomb extends GameObject {
         }
         animation = new Animation<TextureRegion>((float) timeToExplode / 3, frame);
         stateTime = 0f;
+        state = BombState.PLACED;
     }
 
     public double getTimeToExplore() {
@@ -109,12 +115,42 @@ public class Bomb extends GameObject {
     }
     @Override
     public void render(SpriteBatch batch) {
-        if (stateTime > timeToExplode) {
-            isExploded = true;
-        }
         stateTime += Gdx.graphics.getDeltaTime();
-        currentFrame = animation.getKeyFrame(stateTime, false);
-        batch.draw(currentFrame, pos.x, pos.y);
+        switch (state) {
+            case PLACED: {
+                if (stateTime > timeToExplode) {
+                    state = BombState.BURNING;
+                    stateTime = 0;
+                }
+                currentFrame = animation.getKeyFrame(stateTime, false);
+                batch.draw(currentFrame, pos.x, pos.y);
+                break;
+            }
+            case BURNING: {
+                if (stateTime > timeToExplode) {
+                    state = BombState.DISAPPEARED;
+                    stateTime = 0;
+                }
+                // render flame here
+                for (Flame a: flameUp){
+                    a.render(batch);
+                }
+                for (Flame a: flameDown){
+                    a.render(batch);
+                }
+                for (Flame a: flameLeft){
+                    a.render(batch);
+                }
+                for (Flame a: flameRight){
+                    a.render(batch);
+                }
+                break;
+            }
+            case DISAPPEARED: {
+                isExploded = true;
+                break;
+            }
+        }
     }
 
     public boolean isExploded() {

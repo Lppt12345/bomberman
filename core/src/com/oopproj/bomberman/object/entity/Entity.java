@@ -19,6 +19,10 @@ import java.util.List;
 
 
 public abstract class Entity extends GameObject {
+    public enum EntityState {
+        ALIVE, DEAD, MOVING, BURNING
+    }
+
     protected TextureRegion[][] frame;
     protected TextureRegion currentFrame;
     protected Animation[] animation;
@@ -28,6 +32,7 @@ public abstract class Entity extends GameObject {
     protected int currentDirection;
     protected int lastDirection = Direction.DOWN;
     protected boolean isAlive = true;
+    protected EntityState state;
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
@@ -40,6 +45,7 @@ public abstract class Entity extends GameObject {
         for (int i = 0; i < 4; i++) {
             animation[i] = new Animation<TextureRegion>(animationSpeed, frame[i]);
         }
+        this.state = EntityState.ALIVE;
     }
 
     public void setMovingSpeed(float speed) {
@@ -211,4 +217,6 @@ public abstract class Entity extends GameObject {
     public void render(SpriteBatch batch) {
         batch.draw(currentFrame, pos.x, pos.y);
     }
+
+
 }

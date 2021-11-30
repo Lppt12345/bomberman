@@ -17,13 +17,13 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Bomber extends Entity {
-
-
     protected List<Bomb> bombList = new ArrayList<>();
     protected int bomRate = 4;
     private int life = 3;
     private final float startX; // hoi sinh tai x,y
     private final float startY;
+    private int sizeFlame = 3;
+
     public Bomber(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         pos.width = (float) texture.getWidth() / numberOfFrame;

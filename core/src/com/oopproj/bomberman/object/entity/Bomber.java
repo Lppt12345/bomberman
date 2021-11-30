@@ -3,6 +3,8 @@ package com.oopproj.bomberman.object.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.oopproj.bomberman.data.Assets;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
@@ -25,6 +27,8 @@ public class Bomber extends Entity {
     private final float startY;
     public Bomber(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
+        pos.width = (float) texture.getWidth() / numberOfFrame;
+        pos.height = (float) texture.getWidth() / numberOfFrame - 15;
         movingSpeed = 200;
         startX = x;
         startY = y;

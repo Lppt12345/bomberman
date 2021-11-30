@@ -11,6 +11,7 @@ import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.item.Bomb;
+import com.oopproj.bomberman.ui.GameSound;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -99,6 +100,7 @@ public class Bomber extends Entity {
             currentDirection = Direction.NOTMOVE;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            GameSound.playPlaceBomb();
             placeBomB(pos.x , pos.y , map);
         }
         destroyBomb();
@@ -108,6 +110,7 @@ public class Bomber extends Entity {
                 life --;
                 if (life != 0){
                     resetPlayer(life );
+                    GameSound.playPlayerDeath();
                 }else {
                     isAlive = false;
                     // them phuong thuc xu li khi bi chet het mang

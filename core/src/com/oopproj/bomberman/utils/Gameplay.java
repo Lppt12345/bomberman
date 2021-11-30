@@ -34,6 +34,7 @@ public class Gameplay implements Screen {
         player = map.getPlayer();
         enemyList = map.getEnemies();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
+        game.sound.playLevel1();
     }
 
     @Override

@@ -32,6 +32,7 @@ public class Menu implements Screen {
                 add(button_exit);
             }
         };
+        game.sound.playMainMenu();
     }
 
     @Override
@@ -62,6 +63,7 @@ public class Menu implements Screen {
                     this.state = State.FADEOUT;
                 }
                 if (this.state == State.DISAPPEARED) {
+                    game.sound.stopMainMenu();
                     game.setScreen(new Gameplay(game));
                 }
             } catch (Exception e) {

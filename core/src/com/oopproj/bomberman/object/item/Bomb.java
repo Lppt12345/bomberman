@@ -118,7 +118,9 @@ public class Bomb extends GameObject {
         stateTime += Gdx.graphics.getDeltaTime();
         switch (state) {
             case PLACED: {
+                GameSound.playBombTick();
                 if (stateTime > timeToExplode) {
+                    GameSound.playExplosion();
                     state = BombState.BURNING;
                     stateTime = 0;
                 }

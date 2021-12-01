@@ -232,7 +232,12 @@ public abstract class Entity extends GameObject {
         }
     }
 
-    public boolean collisonWithBomb (Map map){
+    /**
+     * Check va chạm với lửa
+     * @param map Map ánh xạ
+     * @return nếu va chạm thì true không thì flase
+     */
+    public boolean collisonWithFlame(Map map){
         for (Bomb bomb : map.getPlayer().bombList){
             if (bomb.getState() == Bomb.BombState.BURNING) {
                 for (Flame flame : bomb.getFlames()) {

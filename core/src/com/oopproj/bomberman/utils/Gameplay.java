@@ -4,13 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.data.State;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.object.entity.Entity;
-import com.oopproj.bomberman.object.entity.enemy.Creep;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.ui.ScreenRes;
 
@@ -78,10 +76,11 @@ public class Gameplay implements Screen {
         }
         game.batch.end();
     }
+    // Cap nhat map lien tuc
     public void updateMap(Map map){
         for (Iterator <Enemy> iter = map.getEnemies().iterator(); iter.hasNext();){
             Enemy enemy = iter.next();
-            if (enemy.collisonWithBomb(map)){
+            if (enemy.collisonWithFlame(map)){
                 enemy.setState(Entity.EntityState.DEAD);
                 iter.remove();
             }

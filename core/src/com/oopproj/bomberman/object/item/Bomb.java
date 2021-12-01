@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.GameObject;
+import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
@@ -23,7 +24,10 @@ public class Bomb extends GameObject {
     private float timeToExplode = 3;
     private boolean isExploded = false;
     private List<Flame> flames = new ArrayList<>();
-
+    private int flameUpLength;
+    private int flameDownLength;
+    private int flameLeftLength;
+    private int flameRightLength;
     private TextureRegion[] frame;
     private TextureRegion currentFrame;
     private Animation<TextureRegion> animation;
@@ -78,16 +82,20 @@ public class Bomb extends GameObject {
      */
     public void setLengthFlame(Map map , int sizeFlame){
         Texture t = new Texture(Gdx.files.internal("flame.png"));
-        for (int i = 0; i <= findLengthFlame(map, Direction.UP, sizeFlame) ; i++){
+        flameUpLength = findLengthFlame(map, Direction.UP, sizeFlame);
+        flameDownLength = findLengthFlame(map, Direction.DOWN, sizeFlame);
+        flameLeftLength = findLengthFlame(map, Direction.LEFT, sizeFlame);
+        flameRightLength =  findLengthFlame(map, Direction.RIGHT, sizeFlame);
+        for (int i = 0; i <= flameUpLength ; i++){
             flames.add(new Flame(t, pos.x , pos.y + ScreenRes.scale * i));
         }
-        for (int i = 0; i < findLengthFlame(map, Direction.DOWN, sizeFlame); i++){
+        for (int i = 0; i < flameDownLength; i++){
             flames.add(new Flame(t, pos.x , pos.y - ScreenRes.scale * (i+1)));
         }
-        for (int i = 0; i < findLengthFlame(map, Direction.LEFT, sizeFlame); i++){
+        for (int i = 0; i < flameLeftLength ; i++){
             flames.add(new Flame(t, pos.x - ScreenRes.scale * (i+1) , pos.y));
         }
-        for (int i = 0; i < findLengthFlame(map, Direction.RIGHT, sizeFlame); i++){
+        for (int i = 0; i < flameRightLength; i++){
             flames.add(new Flame(t, pos.x  + ScreenRes.scale * (i+1) , pos.y));
         }
     }
@@ -138,6 +146,28 @@ public class Bomb extends GameObject {
         }
         return sizeFlame;
     }
+    public void checkCollisionWithBrick(Map map){
+        List <GameObject> tmpMap = map.getMap();
+        GameObject obj;
+        int col = map.getColumn();
+        if (tmpMap.get(getPositionAtMap(map) - col * (flameUpLength + 1)) instanceof Brick){
+            ((Brick) tmpMap.get(getPositionAtMap(map) - col * (flameUpLength + 1))).setState(Brick.BrickState.DESTROYED);
+             map.setMap(tmpMap);
+        }
+        if (tmpMap.get(getPositionAtMap(map) + col * (flameDownLength + 1)) instanceof Brick){
+            ((Brick) tmpMap.get(getPositionAtMap(map) + col * (flameDownLength + 1))).setState(Brick.BrickState.DESTROYED);
+            map.setMap(tmpMap);
+        }
+        if (tmpMap.get(getPositionAtMap(map) - (flameLeftLength+ 1)) instanceof Brick){
+            ((Brick) tmpMap.get(getPositionAtMap(map) -  (flameLeftLength + 1))).setState(Brick.BrickState.DESTROYED);
+            map.setMap(tmpMap);
+        }
+        if (tmpMap.get(getPositionAtMap(map) +  (flameRightLength + 1)) instanceof Brick){
+            ((Brick) tmpMap.get(getPositionAtMap(map) + (flameRightLength + 1))).setState(Brick.BrickState.DESTROYED);
+            map.setMap(tmpMap);
+        }
+    }
+
     @Override
     public void render(SpriteBatch batch) {
         stateTime += Gdx.graphics.getDeltaTime();

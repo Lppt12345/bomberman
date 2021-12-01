@@ -3,13 +3,20 @@ package com.oopproj.bomberman.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.data.State;
+import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.object.entity.Entity;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
+import com.oopproj.bomberman.object.ground.Brick;
+import com.oopproj.bomberman.object.ground.Grass;
+import com.oopproj.bomberman.object.item.Bomb;
+import com.oopproj.bomberman.object.item.Flame;
 import com.oopproj.bomberman.ui.ScreenRes;
 
 import java.util.Iterator;
@@ -83,6 +90,23 @@ public class Gameplay implements Screen {
             if (enemy.collisonWithFlame(map)){
                 enemy.setState(Entity.EntityState.DEAD);
                 iter.remove();
+            }
+        }
+        for (Bomb bomb : map.getPlayer().getBombList()){
+            if (bomb.getState() == Bomb.BombState.BURNING) {
+               bomb.checkCollisionWithBrick(map);
+            }
+        }
+        for (Iterator <GameObject> iter = map.getMap().iterator(); iter.hasNext();){
+            GameObject obj = iter.next();
+            if (obj instanceof Brick){
+                Brick tmp = (Brick) obj;
+                if (tmp.getState() == Brick.BrickState.DESTROYED){
+//                    iter.remove();
+                    Texture texture = new Texture(Gdx.files.internal("grass.png"));
+                    Grass grass = new Grass(texture , tmp.getPos().x , tmp.getPos().y);
+                    map.getMap().set(grass.getPositionAtMap(map) , grass);
+                }
             }
         }
     }

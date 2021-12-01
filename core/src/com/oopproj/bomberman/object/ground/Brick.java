@@ -9,6 +9,15 @@ public class Brick extends GameObject {
         DESTROYED, NORMAL
     }
     private BrickState state = BrickState.NORMAL;
+
+    public BrickState getState() {
+        return state;
+    }
+
+    public void setState(BrickState state) {
+        this.state = state;
+    }
+
     public Brick(Texture texture, int x, int y) {
         super(texture, x, y);
     }

@@ -120,6 +120,14 @@ public class Bomber extends Entity {
         }
     }
 
+    public List<Bomb> getBombList() {
+        return bombList;
+    }
+
+    public void setBombList(List<Bomb> bombList) {
+        this.bombList = bombList;
+    }
+
     @Override
     public void render(SpriteBatch batch) {
         for (Bomb bomb : bombList){

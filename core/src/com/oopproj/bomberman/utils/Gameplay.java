@@ -85,6 +85,7 @@ public class Gameplay implements Screen {
     }
     // Cap nhat map lien tuc
     public void updateMap(Map map){
+        // Xoa enemy neu no cham lua
         for (Iterator <Enemy> iter = map.getEnemies().iterator(); iter.hasNext();){
             Enemy enemy = iter.next();
             if (enemy.collisonWithFlame(map)){
@@ -92,17 +93,18 @@ public class Gameplay implements Screen {
                 iter.remove();
             }
         }
+        // Khi no chay thi check va cham brick
         for (Bomb bomb : map.getPlayer().getBombList()){
             if (bomb.getState() == Bomb.BombState.BURNING) {
                bomb.checkCollisionWithBrick(map);
             }
         }
+        // Xem gach bi xoa chua
         for (Iterator <GameObject> iter = map.getMap().iterator(); iter.hasNext();){
             GameObject obj = iter.next();
             if (obj instanceof Brick){
                 Brick tmp = (Brick) obj;
                 if (tmp.getState() == Brick.BrickState.DESTROYED){
-//                    iter.remove();
                     Texture texture = new Texture(Gdx.files.internal("grass.png"));
                     Grass grass = new Grass(texture , tmp.getPos().x , tmp.getPos().y);
                     map.getMap().set(grass.getPositionAtMap(map) , grass);

@@ -13,8 +13,10 @@ import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.ground.Wall;
 import com.oopproj.bomberman.object.item.Bomb;
+import com.oopproj.bomberman.object.item.Flame;
 import com.oopproj.bomberman.ui.ScreenRes;
 
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -56,6 +58,12 @@ public abstract class Entity extends GameObject {
         this.animationSpeed = speed;
     }
 
+    /**
+     * Hàm kiểm tra xem có di chuyển được hay không
+     * @param map Đối tượng map ánh xạ
+     * @param direction Hướng di chuyển
+     * @return Nếu di chuyển được thì trả về true và ngược lại trả về false
+     */
     public boolean checkMove(Map map, int direction) {
         int posAtMap = getPositionAtMap(map);
         Rectangle entity = null;
@@ -142,6 +150,12 @@ public abstract class Entity extends GameObject {
         }
         return true;
     }
+
+    /**
+     * Hàm xác định khối chữ nhật tiếp theo tùy vào hướng di chuyển
+     * @param direction Hướng di chuyển
+     * @return
+     */
     public Rectangle getRec(int direction){
         switch (direction){
             case Direction.UP:{
@@ -160,6 +174,10 @@ public abstract class Entity extends GameObject {
         return null;
     }
 
+    /**
+     * Hàm di chuyển trên map
+     * @param map Map ánh xạ
+     */
     public void move(Map map) {
         stateTime += Gdx.graphics.getDeltaTime();
         currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);
@@ -212,6 +230,28 @@ public abstract class Entity extends GameObject {
                 break;
             }
         }
+    }
+
+    public boolean collisonWithBomb (Map map){
+        for (Bomb bomb : map.getPlayer().bombList){
+            if (bomb.getState() == Bomb.BombState.BURNING) {
+                for (Flame flame : bomb.getFlames()) {
+                    Rectangle entity = new Rectangle(pos.x, pos.y, pos.width, pos.height);
+                    if (entity.overlaps(flame.getPos())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public EntityState getState() {
+        return state;
+    }
+
+    public void setState(EntityState state) {
+        this.state = state;
     }
 
     public void render(SpriteBatch batch) {

@@ -9,10 +9,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.data.State;
 import com.oopproj.bomberman.object.entity.Bomber;
+import com.oopproj.bomberman.object.entity.Entity;
 import com.oopproj.bomberman.object.entity.enemy.Creep;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.ui.ScreenRes;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class Gameplay implements Screen {
@@ -67,7 +69,7 @@ public class Gameplay implements Screen {
         for (Enemy a : enemyList){
             a.move(map);
         }
-
+        updateMap(map);
         game.batch.begin();
         map.render(game.batch);
         player.render(game.batch);
@@ -76,7 +78,15 @@ public class Gameplay implements Screen {
         }
         game.batch.end();
     }
-
+    public void updateMap(Map map){
+        for (Iterator <Enemy> iter = map.getEnemies().iterator(); iter.hasNext();){
+            Enemy enemy = iter.next();
+            if (enemy.collisonWithBomb(map)){
+                enemy.setState(Entity.EntityState.DEAD);
+                iter.remove();
+            }
+        }
+    }
     @Override
     public void resize(int width, int height) {
 

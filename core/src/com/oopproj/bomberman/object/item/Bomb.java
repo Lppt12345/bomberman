@@ -1,7 +1,6 @@
 package com.oopproj.bomberman.object.item;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,10 +22,8 @@ public class Bomb extends GameObject {
 
     private float timeToExplode = 3;
     private boolean isExploded = false;
-    private List<Flame> flameUp = new ArrayList<>();
-    private List<Flame> flameDown = new ArrayList<>();
-    private List<Flame> flameLeft = new ArrayList<>();
-    private List<Flame> flameRight = new ArrayList<>();
+    private List<Flame> flames = new ArrayList<>();
+
     private TextureRegion[] frame;
     private TextureRegion currentFrame;
     private Animation<TextureRegion> animation;
@@ -47,7 +44,23 @@ public class Bomb extends GameObject {
         animation = new Animation<TextureRegion>((float) timeToExplode / 3, frame);
         stateTime = 0f;
         state = BombState.PLACED;
-        setFlame(map,sizeFlame);
+        setLengthFlame(map,sizeFlame);
+    }
+
+    public BombState getState() {
+        return state;
+    }
+
+    public void setState(BombState state) {
+        this.state = state;
+    }
+
+    public List<Flame> getFlames() {
+        return flames;
+    }
+
+    public void setFlames(List<Flame> flames) {
+        this.flames = flames;
     }
 
     public double getTimeToExplore() {
@@ -57,24 +70,36 @@ public class Bomb extends GameObject {
     public void setTimeToExplore(float timeToExplore) {
         this.timeToExplode = timeToExplore;
     }
-    public void setFlame(Map map , int sizeFlame){
+
+    /**
+     * Hàm đặt chiều dài cho lửa sau khi tìm được chiều dài thực tế
+     * @param map Map đối tượng tĩnh
+     * @param sizeFlame độ dài ngọn lửa nếu MAX
+     */
+    public void setLengthFlame(Map map , int sizeFlame){
         Texture t = new Texture(Gdx.files.internal("flame.png"));
-        for (int i = 0; i <= getLengthFlame(map, Direction.UP, sizeFlame) ; i++){
-            flameUp.add(new Flame(t, pos.x , pos.y + ScreenRes.scale * i));
+        for (int i = 0; i <= findLengthFlame(map, Direction.UP, sizeFlame) ; i++){
+            flames.add(new Flame(t, pos.x , pos.y + ScreenRes.scale * i));
         }
-        for (int i = 0; i < getLengthFlame(map, Direction.DOWN, sizeFlame); i++){
-            flameDown.add(new Flame(t, pos.x , pos.y - ScreenRes.scale * (i+1)));
+        for (int i = 0; i < findLengthFlame(map, Direction.DOWN, sizeFlame); i++){
+            flames.add(new Flame(t, pos.x , pos.y - ScreenRes.scale * (i+1)));
         }
-        for (int i = 0; i < getLengthFlame(map, Direction.LEFT, sizeFlame); i++){
-            flameLeft.add(new Flame(t, pos.x - ScreenRes.scale * (i+1) , pos.y));
+        for (int i = 0; i < findLengthFlame(map, Direction.LEFT, sizeFlame); i++){
+            flames.add(new Flame(t, pos.x - ScreenRes.scale * (i+1) , pos.y));
         }
-        for (int i = 0; i < getLengthFlame(map, Direction.RIGHT, sizeFlame); i++){
-            flameRight.add(new Flame(t, pos.x  + ScreenRes.scale * (i+1) , pos.y));
+        for (int i = 0; i < findLengthFlame(map, Direction.RIGHT, sizeFlame); i++){
+            flames.add(new Flame(t, pos.x  + ScreenRes.scale * (i+1) , pos.y));
         }
     }
 
-    // xet chieu dai lua co  the render
-    public int getLengthFlame(Map map , int direction , int sizeFlame){
+    /**
+     * Tìm chiều dài thực tế của lửa theo 4 hướng
+     * @param map Map đối tượng tĩnh
+     * @param direction hướng của ngọn lửa
+     * @param sizeFlame độ dài ngọn lửa nếu MAX
+     * @return độ dài ngọn lửa thực tế
+     */
+    public int findLengthFlame(Map map , int direction , int sizeFlame){
         int pos = getPositionAtMap(map);
         int col = map.getColumn();
         switch (direction){
@@ -134,16 +159,7 @@ public class Bomb extends GameObject {
                     stateTime = 0;
                 }
                 // render flame here
-                for (Flame a: flameUp){
-                    a.render(batch);
-                }
-                for (Flame a: flameDown){
-                    a.render(batch);
-                }
-                for (Flame a: flameLeft){
-                    a.render(batch);
-                }
-                for (Flame a: flameRight){
+                for (Flame a: flames){
                     a.render(batch);
                 }
                 break;

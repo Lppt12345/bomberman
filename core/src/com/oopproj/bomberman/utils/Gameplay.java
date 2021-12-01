@@ -77,10 +77,10 @@ public class Gameplay implements Screen {
         }
         updateMap(map);
         game.batch.begin();
-        map.render(game.batch);
         for (GameObject a : itemList){
             a.render(game.batch);
         }
+        map.render(game.batch);
         player.render(game.batch);
         for (Enemy a : enemyList){
             a.render(game.batch);

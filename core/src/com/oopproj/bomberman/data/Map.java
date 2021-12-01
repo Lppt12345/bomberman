@@ -11,6 +11,9 @@ import com.oopproj.bomberman.object.entity.enemy.SpeedCreep;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.ground.Wall;
+import com.oopproj.bomberman.object.item.BombItem;
+import com.oopproj.bomberman.object.item.FlameItem;
+import com.oopproj.bomberman.object.item.SpeedItem;
 import com.oopproj.bomberman.ui.ScreenRes;
 
 
@@ -23,6 +26,7 @@ public class Map {
 
     private List<GameObject> map = new ArrayList<>(); // nhung doi tuong tinh
     private List<Enemy> enemies = new ArrayList<>();
+    private List<GameObject> items = new ArrayList<>();
     private Bomber player;
     private int row;
     private int column;
@@ -77,6 +81,14 @@ public class Map {
         this.level = level;
     }
 
+    public List<GameObject> getItems() {
+        return items;
+    }
+
+    public void setItems(List<GameObject> items) {
+        this.items = items;
+    }
+
     /**
      * Tao map dươc lay tu file txt
      */
@@ -121,6 +133,18 @@ public class Map {
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '*':
+                        obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
+                        break;
+                    case 'b':
+                        items.add(new BombItem(assets.get(Assets.BOMB_ITEM), colM, rowM));
+                        obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
+                        break;
+                    case 'f':
+                        items.add(new FlameItem(assets.get(Assets.FLAME_ITEM), colM, rowM));
+                        obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
+                        break;
+                    case 's':
+                        items.add(new SpeedItem(assets.get(Assets.SPEED_ITEM), colM, rowM));
                         obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
                         break;
                     default:

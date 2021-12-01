@@ -31,7 +31,7 @@ public class Gameplay implements Screen {
     private int WORLD_HEIGHT;
     private OrthographicCamera camera;
     private State state;
-
+    private List <GameObject> itemList;
     public Gameplay(BombermanGame game) throws Exception {
         this.game = game;
         state = State.FADEIN;
@@ -40,6 +40,7 @@ public class Gameplay implements Screen {
         WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
         player = map.getPlayer();
         enemyList = map.getEnemies();
+        itemList = map.getItems();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
         game.sound.playLevel1();
     }
@@ -77,6 +78,9 @@ public class Gameplay implements Screen {
         updateMap(map);
         game.batch.begin();
         map.render(game.batch);
+        for (GameObject a : itemList){
+            a.render(game.batch);
+        }
         player.render(game.batch);
         for (Enemy a : enemyList){
             a.render(game.batch);

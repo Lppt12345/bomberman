@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Bomber extends Entity {
     protected List<Bomb> bombList = new ArrayList<>();
-    protected int bomRate = 2;
+    protected int bomRate = 1;
     private int life = 3;
     private final float startX; // hoi sinh tai x,y
     private final float startY;
@@ -129,11 +129,15 @@ public class Bomber extends Entity {
     }
 
     float deltaTime = 0;
+    float blinkDuration = 0.1f;
     @Override
     public void render(SpriteBatch batch) {
+        for (Bomb bomb : bombList) {
+            bomb.render(batch);
+        }
         if (state == EntityState.PROTECTED) {
             deltaTime += Gdx.graphics.getDeltaTime();
-            if (Math.sin(deltaTime * Math.PI / 0.2) > 0) {
+            if (Math.sin(deltaTime * Math.PI / (2 * blinkDuration)) > 0) {
                 super.render(batch);
             }
             if (deltaTime >= 3) {
@@ -142,9 +146,6 @@ public class Bomber extends Entity {
             }
         } else {
             super.render(batch);
-        }
-        for (Bomb bomb : bombList) {
-            bomb.render(batch);
         }
     }
 

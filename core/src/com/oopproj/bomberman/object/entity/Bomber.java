@@ -129,14 +129,12 @@ public class Bomber extends Entity {
     }
 
     float deltaTime = 0;
-    float blinkTime = 0;
     @Override
     public void render(SpriteBatch batch) {
         if (state == EntityState.PROTECTED) {
             deltaTime += Gdx.graphics.getDeltaTime();
-            if (deltaTime > blinkTime) {
+            if (Math.sin(deltaTime * Math.PI / 0.2) > 0) {
                 super.render(batch);
-                blinkTime += 0.2;
             }
             if (deltaTime >= 3) {
                 state = EntityState.ALIVE;

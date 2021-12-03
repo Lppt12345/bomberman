@@ -16,23 +16,24 @@ public class Ballom extends  Enemy{
     public void move(Map map) {
         if (!checkMove(map, lastDirection)) {
             randomDir();
-        }else {
-            if (pos.x > map.getPlayer().getPos().x){
-                currentDirection = Direction.LEFT;
-            }else {
-                if (pos.x < map.getPlayer().getPos().x){
-                    currentDirection = Direction.RIGHT;
-                }
-            }
-
-            if (pos.y > map.getPlayer().getPos().y){
-                currentDirection = Direction.DOWN;
-            }else {
-                if (pos.y < map.getPlayer().getPos().y){
-                    currentDirection = Direction.UP;
-                }
-            }
         }
+//        }else {
+//            if (pos.x > map.getPlayer().getPos().x){
+//                currentDirection = Direction.LEFT;
+//            }else {
+//                if (pos.x < map.getPlayer().getPos().x){
+//                    currentDirection = Direction.RIGHT;
+//                }
+//            }
+//
+//            if (pos.y > map.getPlayer().getPos().y){
+//                currentDirection = Direction.DOWN;
+//            }else {
+//                if (pos.y < map.getPlayer().getPos().y){
+//                    currentDirection = Direction.UP;
+//                }
+//            }
+//        }
         super.move(map);
     }
 

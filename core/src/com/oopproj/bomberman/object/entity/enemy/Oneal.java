@@ -12,6 +12,7 @@ public class Oneal extends Enemy {
     public Oneal(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         movingSpeed = 100;
+        score = 200;
         time = 60;
     }
 

@@ -30,9 +30,18 @@ public class Map {
     private List<Item> items = new ArrayList<>();
     private Bomber player;
     private int row;
+    private long score = 0;
     private int column;
     public int level;
     public int Scale = ScreenRes.scale;
+
+    public long getScore() {
+        return score;
+    }
+
+    public void setScore(long score) {
+        this.score = score;
+    }
 
     public List<GameObject> getMap() {
         return map;
@@ -173,6 +182,7 @@ public class Map {
             bomber.setState(Entity.EntityState.DEAD);;
             // them phuong thuc xu li khi bi chet het mang
             bomber.resetPlayer(3);
+            GameSound.playPlayerDeath();
         }
     }
     // Cap nhat this lien tuc
@@ -181,6 +191,8 @@ public class Map {
         for (Iterator<Enemy> iter = enemies.iterator(); iter.hasNext(); ) {
             Enemy enemy = iter.next();
             if (enemy.collisionWithFlame(this)) {
+                score += enemy.getScore();
+                System.out.println("DIEM: " + score + " " + enemy.toString());
                 enemy.setState(Entity.EntityState.DEAD);
                 iter.remove();
             }

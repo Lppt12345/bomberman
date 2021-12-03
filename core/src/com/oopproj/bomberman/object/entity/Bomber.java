@@ -83,7 +83,7 @@ public class Bomber extends Entity {
     }
 
     public void increaseSpeed() {
-        movingSpeed += 200;
+        movingSpeed += 50;
     }
 
     public void increaseFlameLength(){

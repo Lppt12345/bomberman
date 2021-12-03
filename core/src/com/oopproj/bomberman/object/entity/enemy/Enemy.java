@@ -10,7 +10,6 @@ import java.util.Random;
 
 public abstract class Enemy extends Entity {
     protected int score;
-
     public void switchDir() {
         switch (lastDirection) {
             case Direction.UP:
@@ -29,6 +28,11 @@ public abstract class Enemy extends Entity {
                 break;
         }
     }
+
+    public int getScore() {
+        return score;
+    }
+
 
     public void randomDir() {
 //        Random random =new Random();

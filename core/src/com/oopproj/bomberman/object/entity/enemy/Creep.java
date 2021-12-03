@@ -1,11 +1,8 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
-import com.oopproj.bomberman.object.entity.Entity;
 
 public class Creep extends Enemy {
     // Xet huong mac dinh la sang trai gap cot thi doi huong ngau nhien

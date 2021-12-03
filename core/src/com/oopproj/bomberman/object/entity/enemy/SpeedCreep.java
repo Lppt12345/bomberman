@@ -10,6 +10,7 @@ public class SpeedCreep extends Enemy {
     public SpeedCreep(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         movingSpeed = 50;
+        score = 150;
     }
 
     public int changeSpeed() {

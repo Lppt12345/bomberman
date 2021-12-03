@@ -3,29 +3,29 @@ package com.oopproj.bomberman.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.data.State;
-import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.entity.Bomber;
-import com.oopproj.bomberman.object.entity.Entity;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
-import com.oopproj.bomberman.object.ground.Brick;
-import com.oopproj.bomberman.object.ground.Grass;
-import com.oopproj.bomberman.object.item.Bomb;
-import com.oopproj.bomberman.object.item.Flame;
 import com.oopproj.bomberman.object.item.Item;
-import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
 
-import java.util.Iterator;
 import java.util.List;
 
 public class Gameplay implements Screen {
     private BombermanGame game;
+    private Long score = (long) 1;
+
+    public Long getScore() {
+        return score;
+    }
+
+    public void setScore(Long score) {
+        this.score = score;
+    }
+
     private Bomber player;
     private Map map;
     private List<Enemy> enemyList;

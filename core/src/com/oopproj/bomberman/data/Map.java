@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.entity.*;
-import com.oopproj.bomberman.object.entity.enemy.Creep;
-import com.oopproj.bomberman.object.entity.enemy.Enemy;
-import com.oopproj.bomberman.object.entity.enemy.Oneal;
-import com.oopproj.bomberman.object.entity.enemy.SpeedCreep;
+import com.oopproj.bomberman.object.entity.enemy.*;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.ground.Wall;
@@ -142,6 +139,10 @@ public class Map {
                         enemy = new SpeedCreep(assets.get(Assets.CREEP), 6, colM, rowM);
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
+                    case '4':
+                        enemy = new Ballom(assets.get(Assets.CREEP), 6, colM, rowM);
+                        obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
+                        break;
                     case '*':
                         obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
                         break;
@@ -196,11 +197,11 @@ public class Map {
                 enemy.setState(Entity.EntityState.DEAD);
                 iter.remove();
             }
-            if (enemy.getPos().overlaps(player.getPos())){
+            if (enemy.getPos().overlaps(player.getPos()) && player.getState() == Entity.EntityState.ALIVE){
                 resetPlayer(player);
             }
         }
-        if (player.collisionWithFlame(this)){
+        if (player.collisionWithFlame(this) && player.getState() == Entity.EntityState.ALIVE){
             resetPlayer(player);
         }
         // Khi no chay thi check va cham brick

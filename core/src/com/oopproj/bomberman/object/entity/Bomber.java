@@ -48,7 +48,7 @@ public class Bomber extends Entity {
     }
 
     public void placeBomB(float x, float y, Map map) {
-        if (state == EntityState.ALIVE && bombList.size() <= bomRate) {
+        if ((state == EntityState.PROTECTED || state == EntityState.ALIVE) && bombList.size() <= bomRate) {
             Rectangle bomTmp = new Rectangle(x, y, pos.width, pos.height);
             for (Bomb bomb : bombList) {
                 if (bomb.getPos().overlaps(bomTmp)) {

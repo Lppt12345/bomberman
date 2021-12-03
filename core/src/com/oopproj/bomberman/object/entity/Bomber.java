@@ -40,7 +40,7 @@ public class Bomber extends Entity {
         this.life = life;
         movingSpeed = 200;
         bomRate = 1;
-        state = EntityState.ALIVE;
+        state = EntityState.PROTECTED;
         pos.x = startX;
         pos.y = startY;
         currentDirection = Direction.RIGHT;
@@ -128,12 +128,26 @@ public class Bomber extends Entity {
         this.bombList = bombList;
     }
 
+    float deltaTime = 0;
+    float blinkTime = 0;
     @Override
     public void render(SpriteBatch batch) {
+        if (state == EntityState.PROTECTED) {
+            deltaTime += Gdx.graphics.getDeltaTime();
+            if (deltaTime > blinkTime) {
+                super.render(batch);
+                blinkTime += 0.2;
+            }
+            if (deltaTime >= 3) {
+                state = EntityState.ALIVE;
+                deltaTime = 0;
+            }
+        } else {
+            super.render(batch);
+        }
         for (Bomb bomb : bombList) {
             bomb.render(batch);
         }
-        super.render(batch);
     }
 
 }

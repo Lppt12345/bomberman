@@ -22,7 +22,7 @@ import java.util.List;
 
 public abstract class Entity extends GameObject {
     public enum EntityState {
-        ALIVE, DEAD, MOVING, BURNING
+        PROTECTED, ALIVE, DEAD, MOVING, BURNING
     }
 
     protected TextureRegion[][] frame;

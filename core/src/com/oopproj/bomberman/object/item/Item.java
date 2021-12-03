@@ -6,6 +6,7 @@ import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
+import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
 
 public abstract class Item extends GameObject {
@@ -54,6 +55,8 @@ public abstract class Item extends GameObject {
             batch.draw(texture , pos.x , pos.y);
         }
     }
-    public abstract void powerUp(Map map);
+    public void powerUp(Map map) {
+        GameSound.playPowerUp();
+    }
 
 }

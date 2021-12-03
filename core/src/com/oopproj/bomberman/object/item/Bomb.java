@@ -57,6 +57,7 @@ public class Bomb extends GameObject {
 
     public void setState(BombState state) {
         this.state = state;
+        stateTime = 0;
     }
 
     public List<Flame> getFlames() {

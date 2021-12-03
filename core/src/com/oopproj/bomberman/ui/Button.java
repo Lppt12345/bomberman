@@ -14,22 +14,20 @@ import java.util.List;
 public class Button implements Disposable {
     private static final double DURATION = 0.5;
     private double delta;
-    private final float x;
-    private final float y;
-    private float currentY;
     private float alpha;
     private Texture texture;
     private Rectangle rect;
+    private Rectangle origin;
     private SpriteBatch batch;
     private State state;
     private boolean isTouched;
     private boolean doneRendering;
 
     public Button(Texture texture, float x, float y) {
-        rect = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
-        this.x = x - (float) texture.getWidth() / 2;
-        this.y = y - (float) texture.getHeight() / 2;
-        this.currentY = y - 50;
+        rect = new Rectangle(x - texture.getWidth() / 2, y - texture.getHeight() / 2, texture.getWidth(), texture.getHeight());
+        origin = new Rectangle(rect);
+        origin.x = x - origin.width / 2;
+        origin.y = y - origin.height / 2;
         this.doneRendering = false;
         this.alpha = 0;
         this.texture = texture;
@@ -42,12 +40,11 @@ public class Button implements Disposable {
     public void render() {
         batch.setColor(1, 1, 1, alpha);
         batch.begin();
-//        batch.draw(texture,
-//                x,
-//                currentY);
         batch.draw(texture,
-                rect.x - rect.width / 2,
-                rect.y - rect.height / 2);
+                rect.x,
+                rect.y,
+                rect.width,
+                rect.height);
         batch.end();
     }
 
@@ -56,8 +53,7 @@ public class Button implements Disposable {
             case SLIDEIN: {
                 delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), 0, DURATION);
                 alpha = (float) parabol(delta);
-                currentY = (float) (y - 50 + 50 * parabol(delta));
-                rect.y = (float) (rect.y - 50 + 50 * parabol(delta));
+                rect.y = (float) (origin.y - 50 + 50 * parabol(delta));
                 if (delta == DURATION) {
                     state = State.STATIC;
                     delta = 0;
@@ -68,7 +64,7 @@ public class Button implements Disposable {
             case SLIDEOUT: {
                 delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), DURATION, DURATION * 2);
                 alpha = (float) parabol(delta);
-                currentY = (float) (y - 50 + 50 * parabol(delta));
+                rect.y = (float) (origin.y - 50 + 50 * parabol(delta));
                 for (Button button : buttons) {
                     if (button != this) {
                         button.setAlpha(this.getAlpha());
@@ -93,18 +89,51 @@ public class Button implements Disposable {
             case STATIC: {
                 int mouseX = Gdx.input.getX();
                 int mouseY = ScreenRes.getHeight() - Gdx.input.getY();
-                if (this.x <= mouseX && mouseX <= this.x + texture.getWidth()
-                        && this.y <= mouseY && mouseY <= this.y + texture.getHeight()) {
-                    if (Gdx.input.justTouched()) {
-                        state = State.SLIDEOUT;
-                        delta = 0;
-                    } else {
-                        // state = State.HOVER;
+                if (this.origin.x <= mouseX && mouseX <= this.origin.x + texture.getWidth()
+                        && this.origin.y <= mouseY && mouseY <= this.origin.y + texture.getHeight()) {
+                    state = State.HOVER;
+                    delta = 0;
+                } else {
+                    if (rect.x < origin.x) {
+                        rect.x += 1;
+                    }
+                    if (rect.y < origin.y) {
+                        rect.y += 1;
+                    }
+                    if (rect.width > origin.width) {
+                        rect.width -= 2;
+                    }
+                    if (rect.height > origin.height) {
+                        rect.height -= 2;
                     }
                 }
                 break;
             }
             case HOVER: {
+                int mouseX = Gdx.input.getX();
+                int mouseY = ScreenRes.getHeight() - Gdx.input.getY();
+                if (this.origin.x <= mouseX && mouseX <= this.origin.x + texture.getWidth()
+                        && this.origin.y <= mouseY && mouseY <= this.origin.y + texture.getHeight()) {
+                    if (rect.x > origin.x - 5) {
+                        rect.x -= 1;
+                    }
+                    if (rect.y > origin.y - 5) {
+                        rect.y -= 1;
+                    }
+                    if (rect.width < origin.width + 10) {
+                        rect.width += 2;
+                    }
+                    if (rect.height < origin.height + 10) {
+                        rect.height += 2;
+                    }
+                    if (Gdx.input.justTouched()) {
+                        state = State.SLIDEOUT;
+                        delta = 0;
+                    }
+                } else {
+                    state = State.STATIC;
+                    delta = 0;
+                }
                 break;
             }
         }

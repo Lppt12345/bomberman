@@ -95,16 +95,16 @@ public class Button implements Disposable {
                     delta = 0;
                 } else {
                     if (rect.x < origin.x) {
-                        rect.x += 1;
+                        rect.x += origin.width * 0.01;
                     }
                     if (rect.y < origin.y) {
-                        rect.y += 1;
+                        rect.y += origin.height * 0.01;
                     }
                     if (rect.width > origin.width) {
-                        rect.width -= 2;
+                        rect.width -= origin.width * 0.02;
                     }
                     if (rect.height > origin.height) {
-                        rect.height -= 2;
+                        rect.height -= origin.height * 0.02;
                     }
                 }
                 break;
@@ -114,17 +114,17 @@ public class Button implements Disposable {
                 int mouseY = ScreenRes.getHeight() - Gdx.input.getY();
                 if (this.origin.x <= mouseX && mouseX <= this.origin.x + texture.getWidth()
                         && this.origin.y <= mouseY && mouseY <= this.origin.y + texture.getHeight()) {
-                    if (rect.x > origin.x - 5) {
-                        rect.x -= 1;
+                    if (rect.x > origin.x - origin.width * 0.05) {
+                        rect.x -= origin.width * 0.01;
                     }
-                    if (rect.y > origin.y - 5) {
-                        rect.y -= 1;
+                    if (rect.y > origin.y - origin.height * 0.05) {
+                        rect.y -= origin.height * 0.01;
                     }
-                    if (rect.width < origin.width + 10) {
-                        rect.width += 2;
+                    if (rect.width < origin.width + origin.width * 0.1) {
+                        rect.width += origin.width * 0.02;
                     }
-                    if (rect.height < origin.height + 10) {
-                        rect.height += 2;
+                    if (rect.height < origin.height + origin.height * 0.1) {
+                        rect.height += origin.height * 0.02;
                     }
                     if (Gdx.input.justTouched()) {
                         state = State.SLIDEOUT;

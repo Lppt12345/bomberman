@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
@@ -252,6 +253,14 @@ public abstract class Entity extends GameObject {
             }
         }
         return false;
+    }
+
+    public int getCurrentDirection() {
+        return currentDirection;
+    }
+
+    public int getLastDirection() {
+        return lastDirection;
     }
 
     public EntityState getState() {

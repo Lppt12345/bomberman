@@ -6,5 +6,4 @@ public class Ballom extends  Enemy{
     public Ballom(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
     }
-
 }

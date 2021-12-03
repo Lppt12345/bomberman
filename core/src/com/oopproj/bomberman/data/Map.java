@@ -180,7 +180,7 @@ public class Map {
         // Xoa enemy neu no cham lua va va cham vs nguoi choi
         for (Iterator<Enemy> iter = enemies.iterator(); iter.hasNext(); ) {
             Enemy enemy = iter.next();
-            if (enemy.collisonWithFlame(this)) {
+            if (enemy.collisionWithFlame(this)) {
                 enemy.setState(Entity.EntityState.DEAD);
                 iter.remove();
             }
@@ -188,7 +188,7 @@ public class Map {
                 resetPlayer(player);
             }
         }
-        if (player.collisonWithFlame(this)){
+        if (player.collisionWithFlame(this)){
             resetPlayer(player);
         }
         // Khi no chay thi check va cham brick
@@ -216,6 +216,10 @@ public class Map {
             if (item.isDestroyed()){
                 iter.remove();
             }
+        }
+        for (Iterator<Bomb> iter = player.getBombList().iterator(); iter.hasNext(); ) {
+            Bomb bomb = iter.next();
+            bomb.collisionWithFlame(this);
         }
     }
 

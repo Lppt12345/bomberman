@@ -98,6 +98,7 @@ public class Bomber extends Entity {
         this.life = life;
     }
 
+
     @Override
     public void move(Map map) {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {

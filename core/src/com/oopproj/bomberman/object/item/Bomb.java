@@ -170,6 +170,17 @@ public class Bomb extends GameObject {
         }
     }
 
+    public void collisionWithFlame(Map map) {
+        for (Bomb bomb : map.getPlayer().getBombList()) {
+            if (bomb.getState() == Bomb.BombState.BURNING) {
+                for (Flame flame : bomb.getFlames()) {
+                    if (getPos().overlaps(flame.getPos()) && getState() == BombState.PLACED) {
+                        setState(BombState.BURNING);
+                    }
+                }
+            }
+        }
+    }
     int secondCounter = 0;
     @Override
     public void render(SpriteBatch batch) {

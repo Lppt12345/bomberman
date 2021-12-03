@@ -12,6 +12,7 @@ public class FlameItem extends Item {
 
     @Override
     public void powerUp(Map map) {
+        super.powerUp(map);
         map.getPlayer().increaseFlameLength();
     }
 

@@ -22,8 +22,8 @@ public class GameSound {
     private static Sound playerDeath = Gdx.audio.newSound(Gdx.files.internal("sounds/player_death.wav"));
     private static Sound powerUp = Gdx.audio.newSound(Gdx.files.internal("sounds/powerup.wav"));
 
-    private static float musicVolume = 0;
-    private static float soundVolume = 0;
+    private static float musicVolume = 0.5f;
+    private static float soundVolume = 0.5f;
 
     public static void playMainMenu() {
         mainMenu.setLooping(true);

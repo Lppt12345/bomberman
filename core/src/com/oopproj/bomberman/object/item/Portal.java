@@ -11,6 +11,7 @@ public class Portal extends Item{
 
     @Override
     public void powerUp(Map map) {
+        super.powerUp(map);
     }
 
 }

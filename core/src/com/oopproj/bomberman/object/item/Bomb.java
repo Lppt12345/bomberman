@@ -48,7 +48,7 @@ public class Bomb extends GameObject {
         animation = new Animation<TextureRegion>((float) timeToExplode / 3, frame);
         stateTime = 0f;
         state = BombState.PLACED;
-        setLengthFlame(map,sizeFlame);
+        setLengthFlame(map, sizeFlame);
     }
 
     public BombState getState() {
@@ -77,68 +77,70 @@ public class Bomb extends GameObject {
 
     /**
      * Hàm đặt chiều dài cho lửa sau khi tìm được chiều dài thực tế
-     * @param map Map đối tượng tĩnh
+     *
+     * @param map       Map đối tượng tĩnh
      * @param sizeFlame độ dài ngọn lửa nếu MAX
      */
-    public void setLengthFlame(Map map , int sizeFlame){
+    public void setLengthFlame(Map map, int sizeFlame) {
         Texture t = new Texture(Gdx.files.internal("flame.png"));
         flameUpLength = findLengthFlame(map, Direction.UP, sizeFlame);
         flameDownLength = findLengthFlame(map, Direction.DOWN, sizeFlame);
         flameLeftLength = findLengthFlame(map, Direction.LEFT, sizeFlame);
-        flameRightLength =  findLengthFlame(map, Direction.RIGHT, sizeFlame);
-        for (int i = 0; i <= flameUpLength ; i++){
-            flames.add(new Flame(t, pos.x , pos.y + ScreenRes.scale * i));
+        flameRightLength = findLengthFlame(map, Direction.RIGHT, sizeFlame);
+        for (int i = 0; i <= flameUpLength; i++) {
+            flames.add(new Flame(t, pos.x, pos.y + ScreenRes.scale * i));
         }
-        for (int i = 0; i < flameDownLength; i++){
-            flames.add(new Flame(t, pos.x , pos.y - ScreenRes.scale * (i+1)));
+        for (int i = 0; i < flameDownLength; i++) {
+            flames.add(new Flame(t, pos.x, pos.y - ScreenRes.scale * (i + 1)));
         }
-        for (int i = 0; i < flameLeftLength ; i++){
-            flames.add(new Flame(t, pos.x - ScreenRes.scale * (i+1) , pos.y));
+        for (int i = 0; i < flameLeftLength; i++) {
+            flames.add(new Flame(t, pos.x - ScreenRes.scale * (i + 1), pos.y));
         }
-        for (int i = 0; i < flameRightLength; i++){
-            flames.add(new Flame(t, pos.x  + ScreenRes.scale * (i+1) , pos.y));
+        for (int i = 0; i < flameRightLength; i++) {
+            flames.add(new Flame(t, pos.x + ScreenRes.scale * (i + 1), pos.y));
         }
     }
 
     /**
      * Tìm chiều dài thực tế của lửa theo 4 hướng
-     * @param map Map đối tượng tĩnh
+     *
+     * @param map       Map đối tượng tĩnh
      * @param direction hướng của ngọn lửa
      * @param sizeFlame độ dài ngọn lửa nếu MAX
      * @return độ dài ngọn lửa thực tế
      */
-    public int findLengthFlame(Map map , int direction , int sizeFlame){
+    public int findLengthFlame(Map map, int direction, int sizeFlame) {
         int pos = getPositionAtMap(map);
         int col = map.getColumn();
-        switch (direction){
-            case Direction.UP:{ // tinh tu vi tri bom di ra
-                for (int i = 1; i <= sizeFlame; i++){
-                    if (!(map.getMap().get(pos - i * col ) instanceof Grass)){
+        switch (direction) {
+            case Direction.UP: { // tinh tu vi tri bom di ra
+                for (int i = 1; i <= sizeFlame; i++) {
+                    if (!(map.getMap().get(pos - i * col) instanceof Grass)) {
                         return i - 1;
                     }
                 }
                 return sizeFlame;
             }
-            case Direction.DOWN:{
-                for (int i = 1; i<= sizeFlame; i++){
-                    if (!(map.getMap().get(pos + i * col ) instanceof Grass)){
-                        return i - 1 ;
-                    }
-                }
-                return sizeFlame;
-            }
-            case Direction.LEFT:{
-                for (int i = 1; i <= sizeFlame; i++){
-                    if (!(map.getMap().get(pos - i) instanceof Grass)){
+            case Direction.DOWN: {
+                for (int i = 1; i <= sizeFlame; i++) {
+                    if (!(map.getMap().get(pos + i * col) instanceof Grass)) {
                         return i - 1;
                     }
                 }
                 return sizeFlame;
             }
-            case Direction.RIGHT:{
-                for (int i = 1; i<= sizeFlame; i++){
-                    if (!(map.getMap().get(pos + i ) instanceof Grass)){
-                        return i -1 ;
+            case Direction.LEFT: {
+                for (int i = 1; i <= sizeFlame; i++) {
+                    if (!(map.getMap().get(pos - i) instanceof Grass)) {
+                        return i - 1;
+                    }
+                }
+                return sizeFlame;
+            }
+            case Direction.RIGHT: {
+                for (int i = 1; i <= sizeFlame; i++) {
+                    if (!(map.getMap().get(pos + i) instanceof Grass)) {
+                        return i - 1;
                     }
                 }
                 return sizeFlame;
@@ -146,23 +148,23 @@ public class Bomb extends GameObject {
         }
         return sizeFlame;
     }
-    public void checkCollisionWithBrick(Map map){
-        List <GameObject> tmpMap = map.getMap();
-        GameObject obj;
+
+    public void checkCollisionWithBrick(Map map) {
+        List<GameObject> tmpMap = map.getMap();
         int col = map.getColumn();
-        if (tmpMap.get(getPositionAtMap(map) - col * (flameUpLength + 1)) instanceof Brick){
+        if (tmpMap.get(getPositionAtMap(map) - col * (flameUpLength + 1)) instanceof Brick) {
             ((Brick) tmpMap.get(getPositionAtMap(map) - col * (flameUpLength + 1))).setState(Brick.BrickState.DESTROYED);
-             map.setMap(tmpMap);
+            map.setMap(tmpMap);
         }
-        if (tmpMap.get(getPositionAtMap(map) + col * (flameDownLength + 1)) instanceof Brick){
+        if (tmpMap.get(getPositionAtMap(map) + col * (flameDownLength + 1)) instanceof Brick) {
             ((Brick) tmpMap.get(getPositionAtMap(map) + col * (flameDownLength + 1))).setState(Brick.BrickState.DESTROYED);
             map.setMap(tmpMap);
         }
-        if (tmpMap.get(getPositionAtMap(map) - (flameLeftLength+ 1)) instanceof Brick){
-            ((Brick) tmpMap.get(getPositionAtMap(map) -  (flameLeftLength + 1))).setState(Brick.BrickState.DESTROYED);
+        if (tmpMap.get(getPositionAtMap(map) - (flameLeftLength + 1)) instanceof Brick) {
+            ((Brick) tmpMap.get(getPositionAtMap(map) - (flameLeftLength + 1))).setState(Brick.BrickState.DESTROYED);
             map.setMap(tmpMap);
         }
-        if (tmpMap.get(getPositionAtMap(map) +  (flameRightLength + 1)) instanceof Brick){
+        if (tmpMap.get(getPositionAtMap(map) + (flameRightLength + 1)) instanceof Brick) {
             ((Brick) tmpMap.get(getPositionAtMap(map) + (flameRightLength + 1))).setState(Brick.BrickState.DESTROYED);
             map.setMap(tmpMap);
         }
@@ -189,7 +191,7 @@ public class Bomb extends GameObject {
                     stateTime = 0;
                 }
                 // render flame here
-                for (Flame a: flames){
+                for (Flame a : flames) {
                     a.render(batch);
                 }
                 break;

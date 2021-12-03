@@ -73,7 +73,7 @@ public class Button implements Disposable {
                 break;
             }
             case FADEOUT: {
-                delta = MathUtils.clamp( delta + Gdx.graphics.getDeltaTime(), DURATION, DURATION * 2);
+                delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), DURATION, DURATION * 2);
                 alpha = (float) parabol(delta);
                 if (delta == DURATION * 2) {
                     state = State.DISAPPEARED;

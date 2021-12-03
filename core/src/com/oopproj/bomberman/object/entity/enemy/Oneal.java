@@ -8,6 +8,7 @@ import com.oopproj.bomberman.object.entity.Entity;
 
 public class Oneal extends Enemy {
     protected int time;
+
     public Oneal(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         movingSpeed = 100;
@@ -15,13 +16,13 @@ public class Oneal extends Enemy {
     }
 
     @Override
-    public void move(Map map){
-        time --;
-        if (time == 0 || !checkMove(map , lastDirection) ){
+    public void move(Map map) {
+        time--;
+        if (time == 0 || !checkMove(map, lastDirection)) {
             randomDir();
         }
         super.move(map);
-        if (time == 0){
+        if (time == 0) {
             time = 60;
         }
     }

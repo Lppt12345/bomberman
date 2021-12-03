@@ -23,7 +23,7 @@ public class Bomber extends Entity {
     private int life = 3;
     private final float startX; // hoi sinh tai x,y
     private final float startY;
-    private int sizeFlame = 3;
+    private int flameLength = 3;
 
     public Bomber(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
@@ -35,7 +35,7 @@ public class Bomber extends Entity {
         currentDirection = Direction.RIGHT;
     }
 
-    public void resetPlayer(int life){
+    public void resetPlayer(int life) {
         System.out.println("MANG HIEN TAI: " + life);
         this.life = life;
         movingSpeed = 200;
@@ -44,25 +44,27 @@ public class Bomber extends Entity {
         pos.x = startX;
         pos.y = startY;
         currentDirection = Direction.RIGHT;
-        sizeFlame = 3;
+        flameLength = 3;
         bombList.clear();
     }
 
-    public void placeBomB (float x , float y, Map map){
-        if (isAlive && bombList.size() <= bomRate){
-            Rectangle bomTmp = new Rectangle(x , y , pos.width , pos.height);
-            for (Bomb bomb : bombList){
-                if (bomb.getPos().overlaps(bomTmp)){
+    public void placeBomB(float x, float y, Map map) {
+        if (isAlive && bombList.size() <= bomRate) {
+            Rectangle bomTmp = new Rectangle(x, y, pos.width, pos.height);
+            for (Bomb bomb : bombList) {
+                if (bomb.getPos().overlaps(bomTmp)) {
+                    GameSound.playPlaceBomb();
                     return;
                 }
             }
             Texture t = new Texture(Gdx.files.internal("bomb.png"));
-            GameObject tmp = new Grass(t , pos.x + pos.width/2 , pos.y + pos.height / 2 );
+            // Tim o ma 1/2 nguoi dang dung
+            GameObject tmp = new Grass(t, pos.x + pos.width / 2, pos.y + pos.height / 2);
             GameObject grass = map.getMap().get(tmp.getPositionAtMap(map)); // co chua bom trong class
             // vi tri bomb:
             float bombX = grass.getPos().x + Math.abs((grass.getPos().getWidth() - (float) t.getWidth() / 3) / 2);
             float bombY = grass.getPos().y + Math.abs((grass.getPos().getHeight() - t.getHeight()) / 2);
-            Bomb bomb = new Bomb(t , bombX, bombY , sizeFlame , map);
+            Bomb bomb = new Bomb(t, bombX, bombY, flameLength, map);
             bombList.add(bomb);
         }
     }
@@ -70,22 +72,24 @@ public class Bomber extends Entity {
     /**
      * Xoa bom neu no qua gio
      */
-    public void destroyBomb(){
+    public void destroyBomb() {
         for (Iterator<Bomb> iter = bombList.iterator(); iter.hasNext(); ) {
             Bomb bomb = iter.next();
-            if(bomb.isExploded()) iter.remove();
+            if (bomb.isExploded()) iter.remove();
         }
     }
 
-    public void increaseBomb(){
-        bomRate ++;
+    public void increaseBomb() {
+        bomRate++;
     }
 
-    public void increaseSpeed(){
+    public void increaseSpeed() {
         movingSpeed += 20;
     }
 
-
+    public void increaseFlameLength(){
+        flameLength++;
+    }
     @Override
     public void move(Map map) {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
@@ -105,13 +109,13 @@ public class Bomber extends Entity {
         }
         destroyBomb();
         super.move(map);
-        for (Enemy enemy : map.getEnemies()){
-            if (pos.overlaps(enemy.getPos())){
-                life --;
-                if (life != 0){
-                    resetPlayer(life );
+        for (Enemy enemy : map.getEnemies()) {
+            if (pos.overlaps(enemy.getPos())) {
+                life--;
+                if (life != 0) {
+                    resetPlayer(life);
                     GameSound.playPlayerDeath();
-                }else {
+                } else {
                     isAlive = false;
                     // them phuong thuc xu li khi bi chet het mang
                     resetPlayer(3);
@@ -130,7 +134,7 @@ public class Bomber extends Entity {
 
     @Override
     public void render(SpriteBatch batch) {
-        for (Bomb bomb : bombList){
+        for (Bomb bomb : bombList) {
             bomb.render(batch);
         }
         super.render(batch);

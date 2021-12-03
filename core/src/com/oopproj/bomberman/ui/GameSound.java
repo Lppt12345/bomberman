@@ -22,14 +22,15 @@ public class GameSound {
     private static Sound playerDeath = Gdx.audio.newSound(Gdx.files.internal("sounds/player_death.wav"));
     private static Sound powerUp = Gdx.audio.newSound(Gdx.files.internal("sounds/powerup.wav"));
 
-    private static float musicVolume = 1;
-    private static float soundVolume = 1;
+    private static float musicVolume = 0;
+    private static float soundVolume = 0;
 
     public static void playMainMenu() {
         mainMenu.setLooping(true);
         mainMenu.setVolume(musicVolume);
         mainMenu.play();
     }
+
     public static void stopMainMenu() {
         mainMenu.stop();
     }
@@ -39,6 +40,7 @@ public class GameSound {
         level1.setVolume(musicVolume);
         level1.play();
     }
+
     public static void stopLevel1() {
         level1.stop();
     }
@@ -48,6 +50,7 @@ public class GameSound {
         level2.setVolume(musicVolume);
         level2.play();
     }
+
     public static void stopLevel2() {
         level2.stop();
     }
@@ -57,6 +60,7 @@ public class GameSound {
         level3.setVolume(musicVolume);
         level3.play();
     }
+
     public static void stopLevel3() {
         level3.stop();
     }
@@ -65,6 +69,7 @@ public class GameSound {
         gameOver.setVolume(soundVolume);
         gameOver.play();
     }
+
     public static void stopGameOver() {
         gameOver.stop();
     }
@@ -73,6 +78,7 @@ public class GameSound {
         gameWin.setVolume(soundVolume);
         gameWin.play();
     }
+
     public static void stopGameWin() {
         gameWin.stop();
     }
@@ -82,6 +88,7 @@ public class GameSound {
         subMenu.setVolume(musicVolume);
         subMenu.play();
     }
+
     public static void stopSubMenu() {
         subMenu.stop();
     }

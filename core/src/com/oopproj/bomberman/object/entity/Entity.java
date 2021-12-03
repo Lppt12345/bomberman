@@ -60,7 +60,8 @@ public abstract class Entity extends GameObject {
 
     /**
      * Hàm kiểm tra xem có di chuyển được hay không
-     * @param map Đối tượng map ánh xạ
+     *
+     * @param map       Đối tượng map ánh xạ
      * @param direction Hướng di chuyển
      * @return Nếu di chuyển được thì trả về true và ngược lại trả về false
      */
@@ -140,10 +141,10 @@ public abstract class Entity extends GameObject {
         }
 
         // Check va cham vs bom
-        for (Bomb bomb :  map.getPlayer().bombList){
-            if (!bomb.getPos().overlaps(getPos())){
+        for (Bomb bomb : map.getPlayer().bombList) {
+            if (!bomb.getPos().overlaps(getPos())) {
                 Rectangle tmp = getRec(direction);
-                if (tmp.overlaps(bomb.getPos())){
+                if (tmp.overlaps(bomb.getPos())) {
                     return false;
                 }
             }
@@ -153,21 +154,22 @@ public abstract class Entity extends GameObject {
 
     /**
      * Hàm xác định khối chữ nhật tiếp theo tùy vào hướng di chuyển
+     *
      * @param direction Hướng di chuyển
      * @return
      */
-    public Rectangle getRec(int direction){
-        switch (direction){
-            case Direction.UP:{
+    public Rectangle getRec(int direction) {
+        switch (direction) {
+            case Direction.UP: {
                 return new Rectangle(pos.x, pos.y + movingSpeed * Gdx.graphics.getDeltaTime(), pos.width, pos.height);
             }
-            case Direction.DOWN:{
+            case Direction.DOWN: {
                 return new Rectangle(pos.x, pos.y - movingSpeed * Gdx.graphics.getDeltaTime(), pos.width, pos.height);
             }
-            case Direction.LEFT:{
+            case Direction.LEFT: {
                 return new Rectangle(pos.x - movingSpeed * Gdx.graphics.getDeltaTime(), pos.y, pos.width, pos.height);
             }
-            case Direction.RIGHT:{
+            case Direction.RIGHT: {
                 return new Rectangle(pos.x + movingSpeed * Gdx.graphics.getDeltaTime(), pos.y, pos.width, pos.height);
             }
         }
@@ -176,6 +178,7 @@ public abstract class Entity extends GameObject {
 
     /**
      * Hàm di chuyển trên map
+     *
      * @param map Map ánh xạ
      */
     public void move(Map map) {
@@ -234,15 +237,16 @@ public abstract class Entity extends GameObject {
 
     /**
      * Check va chạm với lửa
+     *
      * @param map Map ánh xạ
      * @return nếu va chạm thì true không thì flase
      */
-    public boolean collisonWithFlame(Map map){
-        for (Bomb bomb : map.getPlayer().bombList){
+    public boolean collisonWithFlame(Map map) {
+        for (Bomb bomb : map.getPlayer().bombList) {
             if (bomb.getState() == Bomb.BombState.BURNING) {
                 for (Flame flame : bomb.getFlames()) {
-                    Rectangle entity = new Rectangle(pos.x, pos.y, pos.width, pos.height);
-                    if (entity.overlaps(flame.getPos())) {
+//                    Rectangle entity = new Rectangle(pos.x, pos.y, pos.width, pos.height);
+                    if (getPos().overlaps(flame.getPos())) {
                         return true;
                     }
                 }

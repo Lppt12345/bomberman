@@ -11,21 +11,22 @@ public class SpeedCreep extends Enemy {
         super(texture, numberOfFrame, x, y);
         movingSpeed = 50;
     }
-    public int changeSpeed(){
+
+    public int changeSpeed() {
         return MathUtils.random(50, 200);
     }
 
     @Override
-    public void move(Map map){
-        time --;
-        if (time == 0 || !checkMove(map , lastDirection) ){
+    public void move(Map map) {
+        time--;
+        if (time == 0 || !checkMove(map, lastDirection)) {
             randomDir();
         }
-        if (time == 0){
+        if (time == 0) {
             movingSpeed = changeSpeed();
         }
         super.move(map);
-        if (time == 0){
+        if (time == 0) {
             time = 200;
         }
     }

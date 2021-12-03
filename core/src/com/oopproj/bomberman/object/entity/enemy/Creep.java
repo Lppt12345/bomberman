@@ -18,7 +18,7 @@ public class Creep extends Enemy {
 
     @Override
     public void move(Map map) {
-        if (!checkMove(map , lastDirection)){
+        if (!checkMove(map, lastDirection)) {
             randomDir();
         }
         super.move(map);

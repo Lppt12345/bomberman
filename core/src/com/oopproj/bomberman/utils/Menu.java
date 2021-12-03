@@ -36,17 +36,22 @@ public class Menu implements Screen {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+    }
 
     @Override
     public void render(float delta) {
         if (this.state == State.FADEIN) {
             game.renderAlpha = MathUtils.clamp(game.renderAlpha + Gdx.graphics.getDeltaTime(), 0, 1);
-            if (game.renderAlpha == 1) {this.state = State.STATIC;}
+            if (game.renderAlpha == 1) {
+                this.state = State.STATIC;
+            }
         }
         if (this.state == State.FADEOUT) {
             game.renderAlpha = MathUtils.clamp(game.renderAlpha - Gdx.graphics.getDeltaTime(), 0, 1);
-            if (game.renderAlpha == 0) {this.state = State.DISAPPEARED;}
+            if (game.renderAlpha == 0) {
+                this.state = State.DISAPPEARED;
+            }
         }
 
         ScreenUtils.clear(0, 0, 0, 1);
@@ -85,7 +90,8 @@ public class Menu implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+    }
 
     @Override
     public void pause() {

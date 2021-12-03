@@ -17,6 +17,7 @@ import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.item.Bomb;
 import com.oopproj.bomberman.object.item.Flame;
+import com.oopproj.bomberman.object.item.Item;
 import com.oopproj.bomberman.ui.ScreenRes;
 
 import java.util.Iterator;
@@ -53,11 +54,15 @@ public class Gameplay implements Screen {
     public void render(float delta) {
         if (state == State.FADEIN) {
             game.renderAlpha = MathUtils.clamp(game.renderAlpha + Gdx.graphics.getDeltaTime(), 0, 1);
-            if (game.renderAlpha == 1) {state = State.STATIC;}
+            if (game.renderAlpha == 1) {
+                state = State.STATIC;
+            }
         }
         if (state == State.FADEOUT) {
             game.renderAlpha = MathUtils.clamp(game.renderAlpha - Gdx.graphics.getDeltaTime(), 0, 1);
-            if (game.renderAlpha == 0) {state = State.DISAPPEARED;}
+            if (game.renderAlpha == 0) {
+                state = State.DISAPPEARED;
+            }
         }
 
         ScreenUtils.clear(0, 0, 0, 1);
@@ -72,50 +77,60 @@ public class Gameplay implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         player.move(map);
-        for (Enemy a : enemyList){
+        for (Enemy a : enemyList) {
             a.move(map);
         }
         updateMap(map);
         game.batch.begin();
-        for (GameObject a : itemList){
-            a.render(game.batch);
-        }
         map.render(game.batch);
         player.render(game.batch);
-        for (Enemy a : enemyList){
+        for (Enemy a : enemyList) {
+            a.render(game.batch);
+        }
+        for (Item a : itemList) {
             a.render(game.batch);
         }
         game.batch.end();
     }
+
     // Cap nhat map lien tuc
-    public void updateMap(Map map){
+    public void updateMap(Map map) {
         // Xoa enemy neu no cham lua
-        for (Iterator <Enemy> iter = map.getEnemies().iterator(); iter.hasNext();){
+        for (Iterator<Enemy> iter = map.getEnemies().iterator(); iter.hasNext(); ) {
             Enemy enemy = iter.next();
-            if (enemy.collisonWithFlame(map)){
+            if (enemy.collisonWithFlame(map)) {
                 enemy.setState(Entity.EntityState.DEAD);
                 iter.remove();
             }
         }
         // Khi no chay thi check va cham brick
-        for (Bomb bomb : map.getPlayer().getBombList()){
+        for (Bomb bomb : map.getPlayer().getBombList()) {
             if (bomb.getState() == Bomb.BombState.BURNING) {
-               bomb.checkCollisionWithBrick(map);
+                bomb.checkCollisionWithBrick(map);
             }
         }
-        // Xem gach bi xoa chua
-        for (Iterator <GameObject> iter = map.getMap().iterator(); iter.hasNext();){
+        // Them co vao neu gach bi xoa
+        for (Iterator<GameObject> iter = map.getMap().iterator(); iter.hasNext(); ) {
             GameObject obj = iter.next();
-            if (obj instanceof Brick){
+            if (obj instanceof Brick) {
                 Brick tmp = (Brick) obj;
-                if (tmp.getState() == Brick.BrickState.DESTROYED){
+                if (tmp.getState() == Brick.BrickState.DESTROYED) {
                     Texture texture = new Texture(Gdx.files.internal("grass.png"));
-                    Grass grass = new Grass(texture , tmp.getPos().x , tmp.getPos().y);
-                    map.getMap().set(grass.getPositionAtMap(map) , grass);
+                    Grass grass = new Grass(texture, tmp.getPos().x, tmp.getPos().y);
+                    map.getMap().set(grass.getPositionAtMap(map), grass);
                 }
             }
         }
+        for (Iterator<Item> iter = map.getItems().iterator(); iter.hasNext(); ) {
+            Item item = iter.next();
+            item.collisionWithBomBer(map);
+            if (item.getState() == Item.ItemState.DESTROY){
+                iter.remove();
+            }
+        }
+
     }
+
     @Override
     public void resize(int width, int height) {
 

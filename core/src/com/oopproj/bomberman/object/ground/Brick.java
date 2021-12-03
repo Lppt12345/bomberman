@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.object.GameObject;
 
 public class Brick extends GameObject {
-    public enum BrickState{
+    public enum BrickState {
         DESTROYED, NORMAL
     }
+
     private BrickState state = BrickState.NORMAL;
 
     public BrickState getState() {

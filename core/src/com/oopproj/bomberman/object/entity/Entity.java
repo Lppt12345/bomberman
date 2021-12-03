@@ -176,11 +176,8 @@ public abstract class Entity extends GameObject {
         return null;
     }
 
-    /**
-     * Hàm di chuyển trên map
-     *
-     * @param map Map ánh xạ
-     */
+    private float currentSpeed = 0;
+    private float accelerate = 400;
     public void move(Map map) {
         stateTime += Gdx.graphics.getDeltaTime();
         currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);
@@ -189,39 +186,43 @@ public abstract class Entity extends GameObject {
         }
         switch (currentDirection) {
             case Direction.UP: {
+                currentSpeed = MathUtils.clamp(currentSpeed + accelerate * Gdx.graphics.getDeltaTime(), 0, movingSpeed);
                 lastDirection = Direction.UP;
                 animation[Direction.UP].setFrameDuration(animationSpeed);
                 if (!checkMove(map, lastDirection)) {
                     return;
                 }
-                pos.y += movingSpeed * Gdx.graphics.getDeltaTime();
+                pos.y += currentSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             case Direction.DOWN: {
+                currentSpeed = MathUtils.clamp(currentSpeed + accelerate * Gdx.graphics.getDeltaTime(), 0, movingSpeed);
                 lastDirection = Direction.DOWN;
                 animation[Direction.DOWN].setFrameDuration(animationSpeed);
                 if (!checkMove(map, lastDirection)) {
                     return;
                 }
-                pos.y -= movingSpeed * Gdx.graphics.getDeltaTime();
+                pos.y -= currentSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             case Direction.LEFT: {
+                currentSpeed = MathUtils.clamp(currentSpeed + accelerate * Gdx.graphics.getDeltaTime(), 0, movingSpeed);
                 lastDirection = Direction.LEFT;
                 animation[Direction.LEFT].setFrameDuration(animationSpeed);
                 if (!checkMove(map, lastDirection)) {
                     return;
                 }
-                pos.x -= movingSpeed * Gdx.graphics.getDeltaTime();
+                pos.x -= currentSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             case Direction.RIGHT: {
+                currentSpeed = MathUtils.clamp(currentSpeed + accelerate * Gdx.graphics.getDeltaTime(), 0, movingSpeed);
                 lastDirection = Direction.RIGHT;
                 animation[Direction.RIGHT].setFrameDuration(animationSpeed);
                 if (!checkMove(map, lastDirection)) {
                     return;
                 }
-                pos.x += movingSpeed * Gdx.graphics.getDeltaTime();
+                pos.x += currentSpeed * Gdx.graphics.getDeltaTime();
                 break;
             }
             default: {
@@ -230,6 +231,37 @@ public abstract class Entity extends GameObject {
                 animation[2].setFrameDuration(0);
                 animation[3].setFrameDuration(0);
                 currentFrame = frame[lastDirection][0];
+                currentSpeed = MathUtils.clamp(currentSpeed - accelerate * Gdx.graphics.getDeltaTime(), 0, movingSpeed);
+                switch (lastDirection) {
+                    case Direction.UP: {
+                        if (!checkMove(map, lastDirection)) {
+                            return;
+                        }
+                        pos.y += currentSpeed * Gdx.graphics.getDeltaTime();
+                        break;
+                    }
+                    case Direction.DOWN: {
+                        if (!checkMove(map, lastDirection)) {
+                            return;
+                        }
+                        pos.y -= currentSpeed * Gdx.graphics.getDeltaTime();
+                        break;
+                    }
+                    case Direction.LEFT: {
+                        if (!checkMove(map, lastDirection)) {
+                            return;
+                        }
+                        pos.x -= currentSpeed * Gdx.graphics.getDeltaTime();
+                        break;
+                    }
+                    case Direction.RIGHT: {
+                        if (!checkMove(map, lastDirection)) {
+                            return;
+                        }
+                        pos.x += currentSpeed * Gdx.graphics.getDeltaTime();
+                        break;
+                    }
+                }
                 break;
             }
         }

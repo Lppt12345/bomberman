@@ -23,6 +23,14 @@ public abstract class Item extends GameObject {
         state = ItemState.HIDE;
     }
 
+    public boolean isDestroyed(){
+        return destroyed;
+    }
+
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
+    }
+
     public void collisionWithBomBer(Map map){
         if (getPos().overlaps(map.getPlayer().getPos())){
             powerUp(map);

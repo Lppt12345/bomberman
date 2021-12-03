@@ -18,6 +18,7 @@ import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.item.Bomb;
 import com.oopproj.bomberman.object.item.Flame;
 import com.oopproj.bomberman.object.item.Item;
+import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
 
 import java.util.Iterator;
@@ -81,7 +82,7 @@ public class Gameplay implements Screen {
         for (Enemy a : enemyList) {
             a.move(map);
         }
-        updateMap(map);
+        map.updateMap();
         game.batch.begin();
         map.render(game.batch);
         player.render(game.batch);
@@ -92,44 +93,6 @@ public class Gameplay implements Screen {
             a.render(game.batch);
         }
         game.batch.end();
-    }
-
-    // Cap nhat map lien tuc
-    public void updateMap(Map map) {
-        // Xoa enemy neu no cham lua
-        for (Iterator<Enemy> iter = map.getEnemies().iterator(); iter.hasNext(); ) {
-            Enemy enemy = iter.next();
-            if (enemy.collisonWithFlame(map)) {
-                enemy.setState(Entity.EntityState.DEAD);
-                iter.remove();
-            }
-        }
-        // Khi no chay thi check va cham brick
-        for (Bomb bomb : map.getPlayer().getBombList()) {
-            if (bomb.getState() == Bomb.BombState.BURNING) {
-                bomb.checkCollisionWithBrick(map);
-            }
-        }
-        // Them co vao neu gach bi xoa
-        for (Iterator<GameObject> iter = map.getMap().iterator(); iter.hasNext(); ) {
-            GameObject obj = iter.next();
-            if (obj instanceof Brick) {
-                Brick tmp = (Brick) obj;
-                if (tmp.getState() == Brick.BrickState.DESTROYED) {
-                    Texture texture = new Texture(Gdx.files.internal("grass.png"));
-                    Grass grass = new Grass(texture, tmp.getPos().x, tmp.getPos().y);
-                    map.getMap().set(grass.getPositionAtMap(map), grass);
-                }
-            }
-        }
-        for (Iterator<Item> iter = map.getItems().iterator(); iter.hasNext(); ) {
-            Item item = iter.next();
-            item.collisionWithBomBer(map);
-            if (item.getState() == Item.ItemState.DESTROY){
-                iter.remove();
-            }
-        }
-
     }
 
     @Override

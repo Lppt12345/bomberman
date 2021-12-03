@@ -19,11 +19,11 @@ import java.util.List;
 
 public class Bomber extends Entity {
     protected List<Bomb> bombList = new ArrayList<>();
-    protected int bomRate = 4;
+    protected int bomRate = 2;
     private int life = 3;
     private final float startX; // hoi sinh tai x,y
     private final float startY;
-    private int flameLength = 3;
+    private int flameLength = 2;
 
     public Bomber(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
@@ -40,16 +40,15 @@ public class Bomber extends Entity {
         this.life = life;
         movingSpeed = 200;
         bomRate = 1;
-        isAlive = true;
+        state = EntityState.ALIVE;
         pos.x = startX;
         pos.y = startY;
         currentDirection = Direction.RIGHT;
-        flameLength = 3;
-        bombList.clear();
+        flameLength = 2;
     }
 
     public void placeBomB(float x, float y, Map map) {
-        if (isAlive && bombList.size() <= bomRate) {
+        if (state == EntityState.ALIVE && bombList.size() <= bomRate) {
             Rectangle bomTmp = new Rectangle(x, y, pos.width, pos.height);
             for (Bomb bomb : bombList) {
                 if (bomb.getPos().overlaps(bomTmp)) {
@@ -84,12 +83,21 @@ public class Bomber extends Entity {
     }
 
     public void increaseSpeed() {
-        movingSpeed += 20;
+        movingSpeed += 200;
     }
 
     public void increaseFlameLength(){
         flameLength++;
     }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
     @Override
     public void move(Map map) {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
@@ -109,19 +117,6 @@ public class Bomber extends Entity {
         }
         destroyBomb();
         super.move(map);
-        for (Enemy enemy : map.getEnemies()) {
-            if (pos.overlaps(enemy.getPos())) {
-                life--;
-                if (life != 0) {
-                    resetPlayer(life);
-                    GameSound.playPlayerDeath();
-                } else {
-                    isAlive = false;
-                    // them phuong thuc xu li khi bi chet het mang
-                    resetPlayer(3);
-                }
-            }
-        }
     }
 
     public List<Bomb> getBombList() {

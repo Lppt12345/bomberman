@@ -33,7 +33,6 @@ public abstract class Entity extends GameObject {
     protected float stateTime = 0f;
     protected int currentDirection;
     protected int lastDirection = Direction.DOWN;
-    protected boolean isAlive = true;
     protected EntityState state;
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {

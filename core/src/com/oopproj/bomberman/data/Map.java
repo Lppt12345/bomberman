@@ -1,5 +1,6 @@
 package com.oopproj.bomberman.data;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.object.GameObject;
@@ -11,16 +12,15 @@ import com.oopproj.bomberman.object.entity.enemy.SpeedCreep;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.ground.Wall;
-import com.oopproj.bomberman.object.item.BombItem;
-import com.oopproj.bomberman.object.item.FlameItem;
-import com.oopproj.bomberman.object.item.Item;
-import com.oopproj.bomberman.object.item.SpeedItem;
+import com.oopproj.bomberman.object.item.*;
+import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
 
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Map {
@@ -149,7 +149,7 @@ public class Map {
                         obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
                         break;
                     case 'x':
-                        items.add(new SpeedItem(assets.get(Assets.PORTAL), colM, rowM));
+                        items.add(new Portal(assets.get(Assets.PORTAL), colM, rowM));
                         obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
                         break;
                     default:
@@ -162,6 +162,60 @@ public class Map {
                 System.out.print(check);
             }
             System.out.println();
+        }
+    }
+    public void resetPlayer (Bomber bomber){
+        bomber.setLife(bomber.getLife() - 1);
+        if (bomber.getLife() != 0) {
+            bomber.resetPlayer(bomber.getLife());
+            GameSound.playPlayerDeath();
+        } else {
+            bomber.setState(Entity.EntityState.DEAD);;
+            // them phuong thuc xu li khi bi chet het mang
+            bomber.resetPlayer(3);
+        }
+    }
+    // Cap nhat this lien tuc
+    public void updateMap() {
+        // Xoa enemy neu no cham lua va va cham vs nguoi choi
+        for (Iterator<Enemy> iter = enemies.iterator(); iter.hasNext(); ) {
+            Enemy enemy = iter.next();
+            if (enemy.collisonWithFlame(this)) {
+                enemy.setState(Entity.EntityState.DEAD);
+                iter.remove();
+            }
+            if (enemy.getPos().overlaps(player.getPos())){
+                resetPlayer(player);
+            }
+        }
+        if (player.collisonWithFlame(this)){
+            resetPlayer(player);
+        }
+        // Khi no chay thi check va cham brick
+        for (Bomb bomb : player.getBombList()) {
+            if (bomb.getState() == Bomb.BombState.BURNING) {
+                bomb.checkCollisionWithBrick(this);
+            }
+        }
+        // Them co vao neu gach bi xoa
+        for (Iterator<GameObject> iter = map.iterator(); iter.hasNext(); ) {
+            GameObject obj = iter.next();
+            if (obj instanceof Brick) {
+                Brick tmp = (Brick) obj;
+                if (tmp.getState() == Brick.BrickState.DESTROYED) {
+                    Texture texture = new Texture(Gdx.files.internal("grass.png"));
+                    Grass grass = new Grass(texture, tmp.getPos().x, tmp.getPos().y);
+                    map.set(grass.getPositionAtMap(this), grass);
+                }
+            }
+        }
+        // check an item
+        for (Iterator<Item> iter = this.getItems().iterator(); iter.hasNext(); ) {
+            Item item = iter.next();
+            item.collisionWithBomBer(this);
+            if (item.isDestroyed()){
+                iter.remove();
+            }
         }
     }
 

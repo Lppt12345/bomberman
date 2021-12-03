@@ -32,7 +32,8 @@ public class Gameplay implements Screen {
     private int WORLD_HEIGHT;
     private OrthographicCamera camera;
     private State state;
-    private List <GameObject> itemList;
+    private List<Item> itemList;
+
     public Gameplay(BombermanGame game) throws Exception {
         this.game = game;
         state = State.FADEIN;

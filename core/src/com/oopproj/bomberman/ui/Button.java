@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
 import com.oopproj.bomberman.data.State;
 
@@ -18,12 +19,14 @@ public class Button implements Disposable {
     private float currentY;
     private float alpha;
     private Texture texture;
+    private Rectangle rect;
     private SpriteBatch batch;
     private State state;
     private boolean isTouched;
     private boolean doneRendering;
 
     public Button(Texture texture, float x, float y) {
+        rect = new Rectangle(x, y, texture.getWidth(), texture.getHeight());
         this.x = x - (float) texture.getWidth() / 2;
         this.y = y - (float) texture.getHeight() / 2;
         this.currentY = y - 50;
@@ -39,7 +42,12 @@ public class Button implements Disposable {
     public void render() {
         batch.setColor(1, 1, 1, alpha);
         batch.begin();
-        batch.draw(texture, x, currentY);
+//        batch.draw(texture,
+//                x,
+//                currentY);
+        batch.draw(texture,
+                rect.x - rect.width / 2,
+                rect.y - rect.height / 2);
         batch.end();
     }
 
@@ -49,6 +57,7 @@ public class Button implements Disposable {
                 delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), 0, DURATION);
                 alpha = (float) parabol(delta);
                 currentY = (float) (y - 50 + 50 * parabol(delta));
+                rect.y = (float) (rect.y - 50 + 50 * parabol(delta));
                 if (delta == DURATION) {
                     state = State.STATIC;
                     delta = 0;
@@ -82,16 +91,20 @@ public class Button implements Disposable {
                 break;
             }
             case STATIC: {
-                if (Gdx.input.isTouched()) {
-                    int mouseX = Gdx.input.getX();
-                    int mouseY = ScreenRes.getHeight() - Gdx.input.getY();
-
-                    if (this.x <= mouseX && mouseX <= this.x + texture.getWidth()
-                            && this.y <= mouseY && mouseY <= this.y + texture.getHeight()) {
+                int mouseX = Gdx.input.getX();
+                int mouseY = ScreenRes.getHeight() - Gdx.input.getY();
+                if (this.x <= mouseX && mouseX <= this.x + texture.getWidth()
+                        && this.y <= mouseY && mouseY <= this.y + texture.getHeight()) {
+                    if (Gdx.input.justTouched()) {
                         state = State.SLIDEOUT;
                         delta = 0;
+                    } else {
+                        // state = State.HOVER;
                     }
                 }
+                break;
+            }
+            case HOVER: {
                 break;
             }
         }

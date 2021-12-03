@@ -103,9 +103,9 @@ public class Bomber extends Entity {
         } else {
             currentDirection = Direction.NOTMOVE;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             GameSound.playPlaceBomb();
-            placeBomB(pos.x , pos.y , map);
+            placeBomB(pos.x, pos.y, map);
         }
         destroyBomb();
         super.move(map);

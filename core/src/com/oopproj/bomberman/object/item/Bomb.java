@@ -170,12 +170,16 @@ public class Bomb extends GameObject {
         }
     }
 
+    int secondCounter = 0;
     @Override
     public void render(SpriteBatch batch) {
         stateTime += Gdx.graphics.getDeltaTime();
         switch (state) {
             case PLACED: {
-                GameSound.playBombTick();
+                if (stateTime > secondCounter) {
+                    GameSound.playBombTick();
+                    secondCounter++;
+                }
                 if (stateTime > timeToExplode) {
                     GameSound.playExplosion();
                     state = BombState.BURNING;

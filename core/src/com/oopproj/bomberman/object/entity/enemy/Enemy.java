@@ -1,12 +1,8 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
-import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.object.entity.Entity;
-
-import java.util.Random;
 
 public abstract class Enemy extends Entity {
     protected int score;

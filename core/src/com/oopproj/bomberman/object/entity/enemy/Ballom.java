@@ -1,11 +1,9 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.entity.ai.AiLow;
-
 
 public class Ballom extends  Enemy{
     private int time ;
@@ -14,7 +12,6 @@ public class Ballom extends  Enemy{
         super(texture, numberOfFrame, x, y);
         movingSpeed = 150;
         score = 100;
-        time = 100;
         currentDirection = Direction.LEFT;
     }
     public void switchDir() {
@@ -37,12 +34,6 @@ public class Ballom extends  Enemy{
     }
     @Override
     public void move(Map map) {
-        time --;
-        aiLow = new AiLow(map , this);
-        if (time == 0) {
-            currentDirection = aiLow.calculateDir(map, this);
-            time = 100;
-        }
         if (!checkMove(map, lastDirection)){
             switchDir();
         }

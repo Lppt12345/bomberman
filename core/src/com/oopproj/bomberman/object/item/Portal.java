@@ -1,7 +1,6 @@
 package com.oopproj.bomberman.object.item;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.data.Map;
 
 public class Portal extends Item{

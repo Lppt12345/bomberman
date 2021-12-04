@@ -5,11 +5,6 @@ import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class AiLow extends AI{
     /**
      * Random huong di

@@ -10,15 +10,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.GameObject;
-import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
-import com.oopproj.bomberman.object.ground.Wall;
 import com.oopproj.bomberman.object.item.Bomb;
 import com.oopproj.bomberman.object.item.Flame;
-import com.oopproj.bomberman.ui.ScreenRes;
-
-import java.util.Iterator;
-import java.util.List;
 
 
 public abstract class Entity extends GameObject {
@@ -78,15 +72,11 @@ public abstract class Entity extends GameObject {
                 }
                 tmp1 = map.getMap().get(posAtMap - col);
                 tmp2 = map.getMap().get(posAtMap - col + 1);
-                if (!(tmp1 instanceof Grass)) {
-                    if (entity.overlaps(tmp1.getPos())) {
-                        return false;
-                    }
+                if (!(tmp1 instanceof Grass) && entity.overlaps(tmp1.getPos())) {
+                    return false;
                 }
-                if (!(tmp2 instanceof Grass)) {
-                    if (entity.overlaps(tmp2.getPos())) {
-                        return false;
-                    }
+                if (!(tmp2 instanceof Grass) && entity.overlaps(tmp2.getPos())) {
+                    return false;
                 }
                 break;
             }
@@ -177,7 +167,7 @@ public abstract class Entity extends GameObject {
     }
 
     private float currentSpeed = 0;
-    private float accelerate = 400;
+    private float accelerate = 450;
     public void move(Map map) {
         stateTime += Gdx.graphics.getDeltaTime();
         currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);

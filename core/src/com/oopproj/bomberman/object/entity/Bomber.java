@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.oopproj.bomberman.data.Direction;
 import com.oopproj.bomberman.data.Map;
 import com.oopproj.bomberman.object.GameObject;
-import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.item.Bomb;
 import com.oopproj.bomberman.ui.GameSound;

@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Disposable;
 import com.oopproj.bomberman.data.State;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Button implements Disposable {

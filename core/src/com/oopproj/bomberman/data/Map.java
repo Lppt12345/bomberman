@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.object.GameObject;
-import com.oopproj.bomberman.object.entity.*;
+import com.oopproj.bomberman.object.entity.Bomber;
+import com.oopproj.bomberman.object.entity.Entity;
 import com.oopproj.bomberman.object.entity.enemy.*;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
@@ -12,7 +13,6 @@ import com.oopproj.bomberman.object.ground.Wall;
 import com.oopproj.bomberman.object.item.*;
 import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
-
 
 import java.io.BufferedReader;
 import java.io.FileReader;

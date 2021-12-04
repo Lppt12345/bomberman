@@ -1,7 +1,5 @@
 package com.oopproj.bomberman.data;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;

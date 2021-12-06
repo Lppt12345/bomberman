@@ -7,8 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.oopproj.bomberman.data.Direction;
-import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.utils.Assets;
+import com.oopproj.bomberman.utils.Direction;
+import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.item.Bomb;
@@ -29,6 +30,7 @@ public abstract class Entity extends GameObject {
     protected int currentDirection;
     protected int lastDirection = Direction.DOWN;
     protected EntityState state;
+    protected Assets assets;
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
@@ -42,6 +44,7 @@ public abstract class Entity extends GameObject {
             animation[i] = new Animation<TextureRegion>(animationSpeed, frame[i]);
         }
         this.state = EntityState.ALIVE;
+        assets = Assets.getInstance();
     }
 
     public void setMovingSpeed(float speed) {

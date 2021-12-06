@@ -1,4 +1,4 @@
-package com.oopproj.bomberman.data;
+package com.oopproj.bomberman.utils;
 
 public enum State {
     SLIDEIN, SLIDEOUT,

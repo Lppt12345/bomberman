@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.oopproj.bomberman.data.Direction;
-import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.utils.Assets;
+import com.oopproj.bomberman.utils.Direction;
+import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
@@ -83,7 +84,7 @@ public class Bomb extends GameObject {
      * @param sizeFlame độ dài ngọn lửa nếu MAX
      */
     public void setLengthFlame(Map map, int sizeFlame) {
-        Texture t = new Texture(Gdx.files.internal("flame.png"));
+        Texture t = assets.get(Assets.FLAME);
         flameUpLength = findLengthFlame(map, Direction.UP, sizeFlame);
         flameDownLength = findLengthFlame(map, Direction.DOWN, sizeFlame);
         flameLeftLength = findLengthFlame(map, Direction.LEFT, sizeFlame);

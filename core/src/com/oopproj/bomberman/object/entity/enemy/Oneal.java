@@ -1,7 +1,7 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.utils.Map;
 
 
 public class Oneal extends Enemy {

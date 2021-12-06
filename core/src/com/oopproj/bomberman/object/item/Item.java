@@ -2,7 +2,8 @@ package com.oopproj.bomberman.object.item;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.utils.Assets;
+import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
@@ -13,15 +14,17 @@ public abstract class Item extends GameObject {
     public enum ItemState {
         HIDE, SHOW , DESTROY
     }
-    private boolean isShow = false;
-    private boolean destroyed = false;
+    protected boolean destroyed = false;
     private ItemState state;
+    protected Assets assets;
+
     public Item(Texture texture, float x, float y) {
         super(texture, x + Math.abs(ScreenRes.scale - (float) texture.getHeight()) / 2
                 , y + Math.abs(ScreenRes.scale - (float) texture.getHeight()) / 2);
 //      pos.x = x +  Math.abs(ScreenRes.scale - (float) texture.getHeight()) / 2;
 //      pos.y  = y +  Math.abs(ScreenRes.scale - (float) texture.getHeight()) / 2 ;
         state = ItemState.HIDE;
+        assets = Assets.getInstance();
     }
 
     public boolean isDestroyed(){

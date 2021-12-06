@@ -1,12 +1,13 @@
-package com.oopproj.bomberman.utils;
+package com.oopproj.bomberman.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.oopproj.bomberman.data.Map;
-import com.oopproj.bomberman.data.State;
+import com.oopproj.bomberman.ui.GameSound;
+import com.oopproj.bomberman.utils.Map;
+import com.oopproj.bomberman.utils.State;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.object.item.Item;
@@ -38,14 +39,14 @@ public class Gameplay implements Screen {
     public Gameplay(BombermanGame game) throws Exception {
         this.game = game;
         state = State.FADEIN;
-        map = new Map("maptest.txt", game.assets);
+        map = new Map("maptest.txt");
         WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
         WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
         player = map.getPlayer();
         enemyList = map.getEnemies();
         itemList = map.getItems();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
-        game.sound.playLevel1();
+        GameSound.playLevel1();
     }
 
     @Override

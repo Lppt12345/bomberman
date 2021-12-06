@@ -1,4 +1,4 @@
-package com.oopproj.bomberman.data;
+package com.oopproj.bomberman.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Map {
-
+    private Assets assets;
     private List<GameObject> map = new ArrayList<>(); // nhung doi tuong tinh
     private List<Enemy> enemies = new ArrayList<>();
     private List<Item> items = new ArrayList<>();
@@ -99,7 +99,8 @@ public class Map {
     /**
      * Tao map dươc lay tu file txt
      */
-    public Map(String mapFile, Assets assets) throws Exception {
+    public Map(String mapFile) throws Exception {
+        assets = Assets.getInstance();
         FileReader fis = new FileReader(mapFile);
         BufferedReader br = new BufferedReader(fis);
         String[] line = br.readLine().split(" ");
@@ -216,7 +217,7 @@ public class Map {
             if (obj instanceof Brick) {
                 Brick tmp = (Brick) obj;
                 if (tmp.getState() == Brick.BrickState.DESTROYED) {
-                    Texture texture = new Texture(Gdx.files.internal("grass.png"));
+                    Texture texture = assets.get(Assets.GRASS);
                     Grass grass = new Grass(texture, tmp.getPos().x, tmp.getPos().y);
                     map.set(grass.getPositionAtMap(this), grass);
                 }

@@ -1,6 +1,6 @@
 package com.oopproj.bomberman.object.entity.ai;
 
-import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 
 public abstract class AI {

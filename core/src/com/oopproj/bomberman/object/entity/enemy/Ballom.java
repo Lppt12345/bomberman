@@ -1,8 +1,8 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.oopproj.bomberman.data.Direction;
-import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.utils.Direction;
+import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.entity.ai.AiLow;
 
 public class Ballom extends  Enemy{

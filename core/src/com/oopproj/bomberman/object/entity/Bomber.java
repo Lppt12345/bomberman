@@ -5,8 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.oopproj.bomberman.data.Direction;
-import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.utils.Assets;
+import com.oopproj.bomberman.utils.Direction;
+import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.item.Bomb;
@@ -55,7 +56,7 @@ public class Bomber extends Entity {
                     return;
                 }
             }
-            Texture t = new Texture(Gdx.files.internal("bomb.png"));
+            Texture t = assets.get(Assets.BOMB);
             // Tim o ma 1/2 nguoi dang dung
             GameObject tmp = new Grass(t, pos.x + pos.width / 2, pos.y + pos.height / 2);
             GameObject grass = map.getMap().get(tmp.getPositionAtMap(map)); // co chua bom trong class

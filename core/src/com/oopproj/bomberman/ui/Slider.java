@@ -2,28 +2,47 @@ package com.oopproj.bomberman.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Disposable;
 import com.oopproj.bomberman.utils.State;
 
 import java.util.List;
-public class Button extends UIElement {
-    private Texture texture;
-    private boolean isTouched;
 
-    public Button(Texture texture, float x, float y) {
-        this.x = x - (float) texture.getWidth() / 2;
-        this.y = y - (float) texture.getHeight() / 2;
+public class Slider extends UIElement {
+    private Texture slideBar;
+    private Texture slider;
+    private float sliderX;
+    private float sliderY;
+
+    public Slider(Texture slideBar, Texture slider, float x, float y, float value) {
+        this.slider = slider;
+        this.slideBar = slideBar;
+        this.x = x - (float) slideBar.getWidth() / 2;
+        this.y = y - (float) slideBar.getHeight() / 2;
+        this.sliderX = MathUtils.clamp(
+                this.x + 4 + (slideBar.getWidth() - 4 * 2) * value,
+                this.x + 4,
+                this.x + slideBar.getWidth() - 14
+        );
+        this.sliderY = y - 7;
         this.currentY = y - 50;
-        this.texture = texture;
-        this.isTouched = false;
     }
+
+    @Override
+    public void dispose() {
+
+    }
+
+    @Override
     public void render() {
         batch.setColor(1, 1, 1, alpha);
         batch.begin();
-        batch.draw(texture, x, currentY);
+        batch.draw(slideBar, x, currentY);
+        batch.draw(slider, sliderX, currentY - 7);
         batch.end();
     }
+
+    @Override
     public Object process(List<UIElement> uiElements) {
         switch (state) {
             case SLIDEIN: {
@@ -34,22 +53,6 @@ public class Button extends UIElement {
                     state = State.STATIC;
                     delta = 0;
                     doneRendering = true;
-                }
-                break;
-            }
-            case SLIDEOUT: {
-                delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), DURATION, DURATION * 2);
-                alpha = (float) parabol(delta);
-                currentY = (float) (y - 50 + 50 * parabol(delta));
-                for (UIElement element : uiElements) {
-                    if (element != this) {
-                        element.setAlpha(this.getAlpha());
-                    }
-                }
-                if (delta == DURATION * 2) {
-                    state = State.DISAPPEARED;
-                    delta = 0;
-                    isTouched = true;
                 }
                 break;
             }
@@ -66,35 +69,31 @@ public class Button extends UIElement {
                 if (Gdx.input.isTouched()) {
                     int mouseX = Gdx.input.getX();
                     int mouseY = ScreenRes.getHeight() - Gdx.input.getY();
-                    if (this.x <= mouseX && mouseX <= this.x + texture.getWidth()
-                            && this.y <= mouseY && mouseY <= this.y + texture.getHeight()) {
-                        state = State.SLIDEOUT;
-                        delta = 0;
+                    if ((this.x <= mouseX && mouseX <= this.x + slideBar.getWidth()
+                            && this.y <= mouseY && mouseY <= this.y + slideBar.getHeight())
+                        || sliderX <= mouseX && mouseX <= sliderX + slider.getWidth()
+                            && sliderY <= mouseY && mouseY <= sliderY + slider.getHeight()) {
+                        sliderX = MathUtils.clamp(mouseX - 5, x + 4, x + slideBar.getWidth() - 14);
                     }
                 }
                 break;
             }
         }
-        return isTouched;
+        return (sliderX - (x + 4)) / (slideBar.getWidth() - 14);
     }
 
     @Override
     public float getWidth() {
-        return texture.getWidth();
+        return slideBar.getWidth();
     }
 
     @Override
     public float getHeight() {
-        return texture.getHeight();
+        return slider.getHeight();
     }
 
     @Override
     public float getX() {
-        return this.x + (float) texture.getWidth() / 2;
-    }
-
-    @Override
-    public void dispose() {
-        texture.dispose();
+        return this.x + (float) slideBar.getWidth() / 2;
     }
 }

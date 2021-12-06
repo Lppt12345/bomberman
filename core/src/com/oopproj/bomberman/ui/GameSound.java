@@ -4,7 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 public class GameSound {
+    private static final int MUSIC = 0;
+    private static final int SOUND = 1;
+    
     private static Music mainMenu = Gdx.audio.newMusic(Gdx.files.internal("sounds/01_music.wav"));
     private static Music level1 = Gdx.audio.newMusic(Gdx.files.internal("sounds/02_music.wav"));
     private static Music level2 = Gdx.audio.newMusic(Gdx.files.internal("sounds/03_music.wav"));
@@ -22,12 +31,49 @@ public class GameSound {
     private static Sound playerDeath = Gdx.audio.newSound(Gdx.files.internal("sounds/player_death.wav"));
     private static Sound powerUp = Gdx.audio.newSound(Gdx.files.internal("sounds/powerup.wav"));
 
-    private static float musicVolume = 0.5f;
-    private static float soundVolume = 0.5f;
+    private static float[] volume = new float[] {1f, 1f};
+    
+    public static void readSettings() {
+        File file = new File("settings.ini");
+        try {
+            Scanner scan = new Scanner(file);
+            String[] line = new String[2];
+            for (int i = 0; i < 2; i++) {
+                line[i] = scan.nextLine();
+                line[i] = line[i].replace("\n", "");
+                if (line[i].isEmpty()) {
+                    switch (i) {
+                        case MUSIC: {
+                            line[i] = "music_volume = " + volume[MUSIC];
+                            break;
+                        }
+                        case SOUND: {
+                            line[i] = "sound_volume = " + volume[SOUND];
+                            break;
+                        }
+                    }
+                }
+                volume[i] = Float.parseFloat(line[i].split(" ")[2]);
+            }
+        } catch (FileNotFoundException e) {
+            writeSettings();
+        }
+    }
+
+    public static void writeSettings() {
+        FileWriter file;
+        try {
+            file = new FileWriter("settings.ini");
+            file.write("music_volume = " + volume[MUSIC] + "\n");
+            file.write("sound_volume = " + volume[SOUND] + "\n");
+        } catch (IOException ex) {
+            System.out.println("cannot create settings file");
+        }
+    }
 
     public static void playMainMenu() {
         mainMenu.setLooping(true);
-        mainMenu.setVolume(musicVolume);
+        mainMenu.setVolume(volume[MUSIC]);
         mainMenu.play();
     }
 
@@ -37,7 +83,7 @@ public class GameSound {
 
     public static void playLevel1() {
         level1.setLooping(true);
-        level1.setVolume(musicVolume);
+        level1.setVolume(volume[MUSIC]);
         level1.play();
     }
 
@@ -47,7 +93,7 @@ public class GameSound {
 
     public static void playLevel2() {
         level2.setLooping(true);
-        level2.setVolume(musicVolume);
+        level2.setVolume(volume[MUSIC]);
         level2.play();
     }
 
@@ -57,7 +103,7 @@ public class GameSound {
 
     public static void playLevel3() {
         level3.setLooping(true);
-        level3.setVolume(musicVolume);
+        level3.setVolume(volume[MUSIC]);
         level3.play();
     }
 
@@ -66,7 +112,7 @@ public class GameSound {
     }
 
     public static void playGameOver() {
-        gameOver.setVolume(soundVolume);
+        gameOver.setVolume(volume[SOUND]);
         gameOver.play();
     }
 
@@ -75,7 +121,7 @@ public class GameSound {
     }
 
     public static void playGameWin() {
-        gameWin.setVolume(soundVolume);
+        gameWin.setVolume(volume[SOUND]);
         gameWin.play();
     }
 
@@ -85,7 +131,7 @@ public class GameSound {
 
     public static void playSubMenu() {
         subMenu.setLooping(true);
-        subMenu.setVolume(musicVolume);
+        subMenu.setVolume(volume[MUSIC]);
         subMenu.play();
     }
 
@@ -94,34 +140,47 @@ public class GameSound {
     }
 
     public static void playBombTick() {
-        bombTick.play(soundVolume);
+        bombTick.play(volume[SOUND]);
     }
 
     public static void playEnemyDeath() {
-        enemyDeath.play(soundVolume);
+        enemyDeath.play(volume[SOUND]);
     }
 
     public static void playExplosion() {
-        explosion.play(soundVolume);
+        explosion.play(volume[SOUND]);
     }
 
     public static void playPlaceBomb() {
-        placeBomb.play(soundVolume);
+        placeBomb.play(volume[SOUND]);
     }
 
     public static void playPlayerDeath() {
-        playerDeath.play(soundVolume);
+        playerDeath.play(volume[SOUND]);
     }
 
     public static void playPowerUp() {
-        powerUp.play(soundVolume);
+        powerUp.play(volume[SOUND]);
     }
 
-    public static void setSoundVolume(float volume) {
-        soundVolume = volume;
+    public static float getSoundVolume() {
+        return volume[SOUND];
+    }
+    public static void setSoundVolume(float v) {
+        volume[SOUND] = v;
     }
 
-    public static void setMusicVolume(float volume) {
-        musicVolume = volume;
+    public static float getMusicVolume() {
+        return volume[MUSIC];
+    }
+    public static void setMusicVolume(float v) {
+        volume[MUSIC] = v;
+        mainMenu.setVolume(volume[MUSIC]);
+        level1.setVolume(volume[MUSIC]);
+        level2.setVolume(volume[MUSIC]);
+        level3.setVolume(volume[MUSIC]);
+        gameOver.setVolume(volume[SOUND]);
+        gameWin.setVolume(volume[SOUND]);
+        subMenu.setVolume(volume[MUSIC]);
     }
 }

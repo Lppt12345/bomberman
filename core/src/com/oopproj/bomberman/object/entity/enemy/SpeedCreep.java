@@ -2,7 +2,7 @@ package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
-import com.oopproj.bomberman.data.Map;
+import com.oopproj.bomberman.utils.Map;
 
 public class SpeedCreep extends Enemy {
     private int time = 60;

@@ -2,7 +2,7 @@ package com.oopproj.bomberman.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.oopproj.bomberman.utils.BombermanGame;
+import com.oopproj.bomberman.screen.BombermanGame;
 import com.oopproj.bomberman.ui.ScreenRes;
 
 public class DesktopLauncher {

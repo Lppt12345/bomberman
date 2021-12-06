@@ -35,7 +35,7 @@ public class Settings extends Scene {
     public void render(float delta) {
         super.render(delta);
 
-        font.setColor(1, 1, 0, game.renderAlpha);
+        font.setColor(1, 1, 0, musicSlider.getAlpha());
         game.batch.begin();
         font.draw(game.batch, "Music Volume", musicSlider.getX(), musicSlider.getCurrentY());
         game.batch.end();
@@ -48,6 +48,7 @@ public class Settings extends Scene {
             if ((boolean) back.process(uiElements)) {
                 if (this.state == State.STATIC) {
                     this.state = State.FADEOUT;
+                    GameSound.writeSettings();
                 }
                 if (this.state == State.DISAPPEARED) {
                     game.setScreen(new Menu(game));

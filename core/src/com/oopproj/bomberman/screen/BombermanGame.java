@@ -16,6 +16,7 @@ public class BombermanGame extends Game {
         renderAlpha = 0;
         batch = new SpriteBatch();
         assets = Assets.getInstance();
+        GameSound.readSettings();
         this.setScreen(new Menu(this));
     }
 

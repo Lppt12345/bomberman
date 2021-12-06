@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class GameSound {
@@ -39,21 +36,23 @@ public class GameSound {
             Scanner scan = new Scanner(file);
             String[] line = new String[2];
             for (int i = 0; i < 2; i++) {
-                line[i] = scan.nextLine();
-                line[i] = line[i].replace("\n", "");
-                if (line[i].isEmpty()) {
-                    switch (i) {
-                        case MUSIC: {
-                            line[i] = "music_volume = " + volume[MUSIC];
-                            break;
-                        }
-                        case SOUND: {
-                            line[i] = "sound_volume = " + volume[SOUND];
-                            break;
+                if (scan.hasNextLine()) {
+                    line[i] = scan.nextLine();
+                    line[i] = line[i].replace("\n", "");
+                    if (line[i].isEmpty()) {
+                        switch (i) {
+                            case MUSIC: {
+                                line[i] = "music_volume = " + volume[MUSIC];
+                                break;
+                            }
+                            case SOUND: {
+                                line[i] = "sound_volume = " + volume[SOUND];
+                                break;
+                            }
                         }
                     }
+                    volume[i] = Float.parseFloat(line[i].split(" ")[2]);
                 }
-                volume[i] = Float.parseFloat(line[i].split(" ")[2]);
             }
         } catch (FileNotFoundException e) {
             writeSettings();
@@ -61,11 +60,14 @@ public class GameSound {
     }
 
     public static void writeSettings() {
-        FileWriter file;
         try {
-            file = new FileWriter("settings.ini");
-            file.write("music_volume = " + volume[MUSIC] + "\n");
-            file.write("sound_volume = " + volume[SOUND] + "\n");
+            System.out.println("begin writing");
+            FileWriter file = new FileWriter("settings.ini");
+            BufferedWriter bw = new BufferedWriter(file);
+            bw.write("music_volume = " + volume[MUSIC] + "\n");
+            bw.write("sound_volume = " + volume[SOUND] + "\n");
+            bw.close();
+            System.out.println("finish writing");
         } catch (IOException ex) {
             System.out.println("cannot create settings file");
         }

@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Settings extends Scene {
     private Slider musicSlider;
+    private Slider soundSlider;
     private Font font;
     private Button back;
 
@@ -19,11 +20,13 @@ public class Settings extends Scene {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
         Texture slider = new Texture(Gdx.files.internal("ui/slider.png"));
         Texture slideBar = new Texture(Gdx.files.internal("ui/slidebar.png"));
-        musicSlider = new Slider(slideBar, slider, (float) ScreenRes.getWidth() / 2, 250, GameSound.getMusicVolume());
+        musicSlider = new Slider(slideBar, slider, (float) ScreenRes.getWidth() / 2, 300, GameSound.getMusicVolume());
+        soundSlider = new Slider(slideBar, slider, (float) ScreenRes.getWidth() / 2, 225, GameSound.getSoundVolume());
         font = new Font("fonts/whitrabt.ttf", 32);
-        back = new Button(new Texture(Gdx.files.internal("ui/back.png")), musicSlider.getX(), 100);
+        back = new Button(new Texture(Gdx.files.internal("ui/back.png")), musicSlider.getX(), 125);
         uiElements = new ArrayList<UIElement>() {{
             add(musicSlider);
+            add(soundSlider);
             add(back);
         }};
     }
@@ -35,15 +38,25 @@ public class Settings extends Scene {
     public void render(float delta) {
         super.render(delta);
 
-        font.setColor(1, 1, 0, musicSlider.getAlpha());
         game.batch.begin();
+
+        font.setColor(1, 1, 0, musicSlider.getAlpha());
         font.draw(game.batch, "Music Volume", musicSlider.getX(), musicSlider.getCurrentY());
+
+        font.setColor(1, 1, 0, soundSlider.getAlpha());
+        font.draw(game.batch, "Sound Volume", soundSlider.getX(), soundSlider.getCurrentY());
+
         game.batch.end();
 
         musicSlider.render();
         GameSound.setMusicVolume((float) musicSlider.process(null));
 
         if (musicSlider.isDoneRendering()) {
+            soundSlider.render();
+            GameSound.setSoundVolume((float) soundSlider.process(null));
+        }
+
+        if (soundSlider.isDoneRendering()) {
             back.render();
             if ((boolean) back.process(uiElements)) {
                 if (this.state == State.STATIC) {

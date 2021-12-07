@@ -3,6 +3,7 @@ package com.oopproj.bomberman.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.object.entity.Bomber;
@@ -26,6 +27,8 @@ public class Gameplay implements Screen {
     private OrthographicCamera camera;
     private State state;
     private List<Item> itemList;
+    private SpriteBatch hudBatch;
+
     public Gameplay(BombermanGame game) throws Exception {
         this.game = game;
         state = State.FADEIN;
@@ -37,6 +40,7 @@ public class Gameplay implements Screen {
         itemList = map.getItems();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
         GameSound.playLevel1();
+        hudBatch = new SpriteBatch();
     }
 
     public Long getScore() {
@@ -82,6 +86,7 @@ public class Gameplay implements Screen {
             a.move(map);
         }
         map.updateMap();
+
         game.batch.begin();
         map.render(game.batch);
         for (Item a : itemList) {
@@ -92,6 +97,11 @@ public class Gameplay implements Screen {
         }
         player.render(game.batch);
         game.batch.end();
+
+        hudBatch.setColor(1, 1, 1, game.renderAlpha);
+        hudBatch.begin();
+
+        hudBatch.end();
     }
 
     @Override

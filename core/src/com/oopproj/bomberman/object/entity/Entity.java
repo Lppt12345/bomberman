@@ -143,12 +143,6 @@ public abstract class Entity extends GameObject {
         return true;
     }
 
-    /**
-     * Hàm xác định khối chữ nhật tiếp theo tùy vào hướng di chuyển
-     *
-     * @param direction Hướng di chuyển
-     * @return
-     */
     public Rectangle getRec(int direction) {
         switch (direction) {
             case Direction.UP: {

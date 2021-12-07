@@ -13,6 +13,8 @@ import com.oopproj.bomberman.utils.Map;
 public class Ballom extends  Enemy{
     public Ballom(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
+        pos.x += (ScreenRes.scale - this.pos.width) / 2;
+        pos.y += (ScreenRes.scale - this.pos.height) / 2;
         movingSpeed = 150;
         score = 100;
         currentDirection = Direction.LEFT;

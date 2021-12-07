@@ -65,6 +65,15 @@ public class Button extends UIElement {
                 break;
             }
             case STATIC: {
+                boolean done = true;
+                for (UIElement e : uiElements) {
+                    if (!e.isDoneRendering()) {
+                        done = false;
+                    }
+                }
+                if (!done) {
+                    break;
+                }
                 if (Gdx.input.isTouched()) {
                     int mouseX = Gdx.input.getX();
                     int mouseY = ScreenRes.getHeight() - Gdx.input.getY();

@@ -5,23 +5,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.oopproj.bomberman.utils.Assets;
-import com.oopproj.bomberman.utils.Direction;
-import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
+import com.oopproj.bomberman.utils.Assets;
+import com.oopproj.bomberman.utils.Direction;
+import com.oopproj.bomberman.utils.Map;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends GameObject {
-    public enum BombState {
-        PLACED, BURNING, DISAPPEARED
-    }
-
+    int secondCounter = 0;
     private float timeToExplode = 3;
     private boolean isExploded = false;
     private List<Flame> flames = new ArrayList<>();
@@ -183,7 +180,7 @@ public class Bomb extends GameObject {
             }
         }
     }
-    int secondCounter = 0;
+
     @Override
     public void render(SpriteBatch batch) {
         stateTime += Gdx.graphics.getDeltaTime();
@@ -222,5 +219,9 @@ public class Bomb extends GameObject {
 
     public boolean isExploded() {
         return isExploded;
+    }
+
+    public enum BombState {
+        PLACED, BURNING, DISAPPEARED
     }
 }

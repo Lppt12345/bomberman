@@ -9,9 +9,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Font implements Disposable {
+    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private BitmapFont font;
     private FreeTypeFontGenerator generator;
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
     public Font(String font, int size) {
         generator = new FreeTypeFontGenerator(Gdx.files.internal(font));

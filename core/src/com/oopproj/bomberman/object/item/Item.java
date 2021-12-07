@@ -2,22 +2,18 @@ package com.oopproj.bomberman.object.item;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.oopproj.bomberman.utils.Assets;
-import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Brick;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
+import com.oopproj.bomberman.utils.Assets;
+import com.oopproj.bomberman.utils.Map;
 
 public abstract class Item extends GameObject {
-    public enum ItemState {
-        HIDE, SHOW , DESTROY
-    }
     protected boolean destroyed = false;
-    private ItemState state;
     protected Assets assets;
-
+    private ItemState state;
     public Item(Texture texture, float x, float y) {
         super(texture, x + Math.abs(ScreenRes.scale - (float) texture.getHeight()) / 2
                 , y + Math.abs(ScreenRes.scale - (float) texture.getHeight()) / 2);
@@ -27,7 +23,7 @@ public abstract class Item extends GameObject {
         assets = Assets.getInstance();
     }
 
-    public boolean isDestroyed(){
+    public boolean isDestroyed() {
         return destroyed;
     }
 
@@ -35,15 +31,15 @@ public abstract class Item extends GameObject {
         this.destroyed = destroyed;
     }
 
-    public void collisionWithBomBer(Map map){
-        if (getPos().overlaps(map.getPlayer().getPos())){
+    public void collisionWithBomBer(Map map) {
+        if (getPos().overlaps(map.getPlayer().getPos())) {
             powerUp(map);
             destroyed = true;
         }
-        if (map.getMap().get(getPositionAtMap(map)) instanceof Grass){
+        if (map.getMap().get(getPositionAtMap(map)) instanceof Grass) {
             state = ItemState.SHOW;
         }
-        if (map.getMap().get(getPositionAtMap(map)) instanceof Brick){
+        if (map.getMap().get(getPositionAtMap(map)) instanceof Brick) {
             state = ItemState.HIDE;
         }
     }
@@ -54,12 +50,17 @@ public abstract class Item extends GameObject {
 
     @Override
     public void render(SpriteBatch batch) {
-        if (state == ItemState.SHOW){
-            batch.draw(texture , pos.x , pos.y);
+        if (state == ItemState.SHOW) {
+            batch.draw(texture, pos.x, pos.y);
         }
     }
+
     public void powerUp(Map map) {
         GameSound.playPowerUp();
+    }
+
+    public enum ItemState {
+        HIDE, SHOW, DESTROY
     }
 
 }

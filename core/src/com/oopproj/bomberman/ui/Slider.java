@@ -3,7 +3,6 @@ package com.oopproj.bomberman.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Disposable;
 import com.oopproj.bomberman.utils.State;
 
 import java.util.List;
@@ -71,7 +70,7 @@ public class Slider extends UIElement {
                     int mouseY = ScreenRes.getHeight() - Gdx.input.getY();
                     if ((this.x <= mouseX && mouseX <= this.x + slideBar.getWidth()
                             && this.y <= mouseY && mouseY <= this.y + slideBar.getHeight())
-                        || sliderX <= mouseX && mouseX <= sliderX + slider.getWidth()
+                            || sliderX <= mouseX && mouseX <= sliderX + slider.getWidth()
                             && sliderY <= mouseY && mouseY <= sliderY + slider.getHeight()) {
                         sliderX = MathUtils.clamp(mouseX - 5, x + 4, x + slideBar.getWidth() - 14);
                     }

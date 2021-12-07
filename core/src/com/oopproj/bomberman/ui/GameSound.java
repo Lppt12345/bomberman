@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class GameSound {
     private static final int MUSIC = 0;
     private static final int SOUND = 1;
-    
+
     private static Music mainMenu = Gdx.audio.newMusic(Gdx.files.internal("sounds/01_music.wav"));
     private static Music level1 = Gdx.audio.newMusic(Gdx.files.internal("sounds/02_music.wav"));
     private static Music level2 = Gdx.audio.newMusic(Gdx.files.internal("sounds/03_music.wav"));
@@ -28,8 +28,8 @@ public class GameSound {
     private static Sound playerDeath = Gdx.audio.newSound(Gdx.files.internal("sounds/player_death.wav"));
     private static Sound powerUp = Gdx.audio.newSound(Gdx.files.internal("sounds/powerup.wav"));
 
-    private static float[] volume = new float[] {1f, 1f};
-    
+    private static float[] volume = new float[]{1f, 1f};
+
     public static void readSettings() {
         File file = new File("settings.ini");
         try {
@@ -168,6 +168,7 @@ public class GameSound {
     public static float getSoundVolume() {
         return volume[SOUND];
     }
+
     public static void setSoundVolume(float v) {
         volume[SOUND] = v;
     }
@@ -175,6 +176,7 @@ public class GameSound {
     public static float getMusicVolume() {
         return volume[MUSIC];
     }
+
     public static void setMusicVolume(float v) {
         volume[MUSIC] = v;
         mainMenu.setVolume(volume[MUSIC]);

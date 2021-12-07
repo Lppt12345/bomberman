@@ -1,15 +1,12 @@
 package com.oopproj.bomberman.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.oopproj.bomberman.ui.Button;
 import com.oopproj.bomberman.ui.GameSound;
+import com.oopproj.bomberman.ui.ScreenRes;
 import com.oopproj.bomberman.ui.UIElement;
 import com.oopproj.bomberman.utils.State;
-import com.oopproj.bomberman.ui.Button;
-import com.oopproj.bomberman.ui.ScreenRes;
 
 import java.util.ArrayList;
 import java.util.List;

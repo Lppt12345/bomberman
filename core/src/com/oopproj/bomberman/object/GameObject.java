@@ -3,9 +3,9 @@ package com.oopproj.bomberman.object;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.oopproj.bomberman.ui.ScreenRes;
 import com.oopproj.bomberman.utils.Assets;
 import com.oopproj.bomberman.utils.Map;
-import com.oopproj.bomberman.ui.ScreenRes;
 
 public abstract class GameObject {
     protected Rectangle pos;

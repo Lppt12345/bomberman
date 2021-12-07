@@ -16,7 +16,7 @@ public class Assets {
     public static final int BOMB_ITEM = 8;
     public static final int FLAME_ITEM = 9;
     public static final int SPEED_ITEM = 10;
-
+    private static Assets assets = null;
     private ArrayList<Texture> textures;
 
     private Assets() {
@@ -33,8 +33,6 @@ public class Assets {
         textures.add(new Texture("objects/flameitem.png"));
         textures.add(new Texture("objects/speeditem.png"));
     }
-
-    private static Assets assets = null;
 
     public static Assets getInstance() {
         if (assets == null) {

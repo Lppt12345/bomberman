@@ -1,6 +1,5 @@
 package com.oopproj.bomberman.ui;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 import com.oopproj.bomberman.utils.State;
@@ -17,14 +16,15 @@ public abstract class UIElement implements Disposable {
     protected SpriteBatch batch = new SpriteBatch();
     protected State state = State.SLIDEIN;
     protected boolean doneRendering = false;
-    
+
     public abstract void render();
-    
+
     public abstract Object process(List<UIElement> uiElements);
 
     public double parabol(double delta) {
         return (((-1) / Math.pow(DURATION, 2)) * Math.pow(delta, 2) + ((double) 2 / DURATION) * delta);
     }
+
     protected float invertParabol(long delta) {
         return (float) ((1 / Math.pow(DURATION, 2)) * Math.pow(delta, 2) - (2 / DURATION) * delta) + 1;
     }

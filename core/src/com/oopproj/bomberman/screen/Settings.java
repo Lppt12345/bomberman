@@ -22,7 +22,7 @@ public class Settings extends Scene {
         Texture slideBar = new Texture(Gdx.files.internal("ui/slidebar.png"));
         musicSlider = new Slider(slideBar, slider, (float) ScreenRes.getWidth() / 2, 300, GameSound.getMusicVolume());
         soundSlider = new Slider(slideBar, slider, (float) ScreenRes.getWidth() / 2, 225, GameSound.getSoundVolume());
-        font = new Font("fonts/whitrabt.ttf", 32);
+        font = new Font("fonts/whitrabt.ttf", 24);
         back = new Button(new Texture(Gdx.files.internal("ui/back.png")), musicSlider.getX(), 125);
         uiElements = new ArrayList<UIElement>() {{
             add(musicSlider);
@@ -41,10 +41,10 @@ public class Settings extends Scene {
 
         game.batch.begin();
 
-        font.setColor(1, 1, 0, musicSlider.getAlpha());
+        font.setColor(1 , 1, 1, musicSlider.getAlpha());
         font.draw(game.batch, "Music Volume", musicSlider.getX(), musicSlider.getCurrentY());
 
-        font.setColor(1, 1, 0, soundSlider.getAlpha());
+        font.setColor(1, 1, 1, soundSlider.getAlpha());
         font.draw(game.batch, "Sound Volume", soundSlider.getX(), soundSlider.getCurrentY());
 
         game.batch.end();

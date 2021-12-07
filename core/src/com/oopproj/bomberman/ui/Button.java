@@ -108,4 +108,11 @@ public class Button extends UIElement {
     public void dispose() {
         texture.dispose();
     }
+
+    @Override
+    public void reset() {
+        super.reset();
+        currentY = y - 50;
+        isTouched = false;
+    }
 }

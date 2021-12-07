@@ -54,4 +54,11 @@ public abstract class UIElement implements Disposable {
     public abstract float getHeight();
 
     public abstract float getX();
+
+    public void reset() {
+        delta = 0;
+        alpha = 0;
+        state = State.SLIDEIN;
+        doneRendering = false;
+    }
 }

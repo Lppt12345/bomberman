@@ -3,17 +3,21 @@ package com.oopproj.bomberman.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.object.item.Item;
+import com.oopproj.bomberman.ui.Button;
 import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
+import com.oopproj.bomberman.ui.UIElement;
 import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.utils.State;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Gameplay implements Screen {
@@ -29,6 +33,14 @@ public class Gameplay implements Screen {
     private List<Item> itemList;
     private SpriteBatch hudBatch;
 
+    private ArrayList<UIElement> uiElements;
+    private Button pause;
+
+    private Texture score_title;
+    private Texture score_holder;
+    private Texture heart_holder;
+    private Texture heart;
+
     public Gameplay(BombermanGame game) throws Exception {
         this.game = game;
         state = State.FADEIN;
@@ -40,7 +52,16 @@ public class Gameplay implements Screen {
         itemList = map.getItems();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
         GameSound.playLevel1();
+
         hudBatch = new SpriteBatch();
+        pause = new Button(new Texture(Gdx.files.internal("ui/pause.png")), 30, 30);
+        uiElements = new ArrayList<UIElement>() {{
+            add(pause);
+        }};
+
+        score_holder = new Texture(Gdx.files.internal("ui/score_holder.png"));
+        heart_holder = new Texture(Gdx.files.internal("ui/heart_holder.png"));
+        heart = new Texture(Gdx.files.internal("ui/heart.png"));
     }
 
     public Long getScore() {
@@ -100,6 +121,11 @@ public class Gameplay implements Screen {
 
         hudBatch.setColor(1, 1, 1, game.renderAlpha);
         hudBatch.begin();
+
+        hudBatch.draw(heart_holder, 5, ScreenRes.getHeight() - 80);
+        hudBatch.draw(score_holder, ScreenRes.getWidth() - 160, ScreenRes.getHeight() - 80);
+        pause.render();
+        pause.process(uiElements);
 
         hudBatch.end();
     }

@@ -5,28 +5,19 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.oopproj.bomberman.ui.GameSound;
-import com.oopproj.bomberman.utils.Map;
-import com.oopproj.bomberman.utils.State;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.object.item.Item;
+import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
+import com.oopproj.bomberman.utils.Map;
+import com.oopproj.bomberman.utils.State;
 
 import java.util.List;
 
 public class Gameplay implements Screen {
     private BombermanGame game;
     private Long score = (long) 1;
-
-    public Long getScore() {
-        return score;
-    }
-
-    public void setScore(Long score) {
-        this.score = score;
-    }
-
     private Bomber player;
     private Map map;
     private List<Enemy> enemyList;
@@ -35,7 +26,6 @@ public class Gameplay implements Screen {
     private OrthographicCamera camera;
     private State state;
     private List<Item> itemList;
-
     public Gameplay(BombermanGame game) throws Exception {
         this.game = game;
         state = State.FADEIN;
@@ -47,6 +37,14 @@ public class Gameplay implements Screen {
         itemList = map.getItems();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
         GameSound.playLevel1();
+    }
+
+    public Long getScore() {
+        return score;
+    }
+
+    public void setScore(Long score) {
+        this.score = score;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.oopproj.bomberman.utils;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.object.GameObject;
@@ -21,6 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Map {
+    public int level;
+    public int Scale = ScreenRes.scale;
     private Assets assets;
     private List<GameObject> map = new ArrayList<>(); // nhung doi tuong tinh
     private List<Enemy> enemies = new ArrayList<>();
@@ -29,72 +30,6 @@ public class Map {
     private int row;
     private long score = 0;
     private int column;
-    public int level;
-    public int Scale = ScreenRes.scale;
-
-    public long getScore() {
-        return score;
-    }
-
-    public void setScore(long score) {
-        this.score = score;
-    }
-
-    public List<GameObject> getMap() {
-        return map;
-    }
-
-    public void setMap(List<GameObject> map) {
-        this.map = map;
-    }
-
-    public List<Enemy> getEnemies() {
-        return enemies;
-    }
-
-    public void setEnemies(List<Enemy> enemies) {
-        this.enemies = enemies;
-    }
-
-    public Bomber getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Bomber player) {
-        this.player = player;
-    }
-
-    public int getRow() {
-        return this.row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int getColumn() {
-        return this.column;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
 
     /**
      * Tao map dươc lay tu file txt
@@ -175,18 +110,85 @@ public class Map {
             System.out.println();
         }
     }
-    public void resetPlayer (Bomber bomber){
+
+    public long getScore() {
+        return score;
+    }
+
+    public void setScore(long score) {
+        this.score = score;
+    }
+
+    public List<GameObject> getMap() {
+        return map;
+    }
+
+    public void setMap(List<GameObject> map) {
+        this.map = map;
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public Bomber getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Bomber player) {
+        this.player = player;
+    }
+
+    public int getRow() {
+        return this.row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return this.column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public void resetPlayer(Bomber bomber) {
         bomber.setLife(bomber.getLife() - 1);
         if (bomber.getLife() != 0) {
             bomber.resetPlayer(bomber.getLife());
             GameSound.playPlayerDeath();
         } else {
-            bomber.setState(Entity.EntityState.DEAD);;
+            bomber.setState(Entity.EntityState.DEAD);
+            ;
             // them phuong thuc xu li khi bi chet het mang
             bomber.resetPlayer(3);
             GameSound.playPlayerDeath();
         }
     }
+
     // Cap nhat this lien tuc
     public void updateMap() {
         // Xoa enemy neu no cham lua va va cham vs nguoi choi
@@ -198,11 +200,11 @@ public class Map {
                 enemy.setState(Entity.EntityState.DEAD);
                 iter.remove();
             }
-            if (enemy.getPos().overlaps(player.getPos()) && player.getState() == Entity.EntityState.ALIVE){
+            if (enemy.getPos().overlaps(player.getPos()) && player.getState() == Entity.EntityState.ALIVE) {
                 resetPlayer(player);
             }
         }
-        if (player.collisionWithFlame(this) && player.getState() == Entity.EntityState.ALIVE){
+        if (player.collisionWithFlame(this) && player.getState() == Entity.EntityState.ALIVE) {
             resetPlayer(player);
         }
         // Khi no chay thi check va cham brick
@@ -227,7 +229,7 @@ public class Map {
         for (Iterator<Item> iter = this.getItems().iterator(); iter.hasNext(); ) {
             Item item = iter.next();
             item.collisionWithBomBer(this);
-            if (item.isDestroyed()){
+            if (item.isDestroyed()) {
                 iter.remove();
             }
         }

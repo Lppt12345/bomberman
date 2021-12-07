@@ -2,9 +2,8 @@ package com.oopproj.bomberman.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.oopproj.bomberman.utils.Assets;
-import com.oopproj.bomberman.ui.Font;
 import com.oopproj.bomberman.ui.GameSound;
+import com.oopproj.bomberman.utils.Assets;
 
 public class BombermanGame extends Game {
     public SpriteBatch batch;

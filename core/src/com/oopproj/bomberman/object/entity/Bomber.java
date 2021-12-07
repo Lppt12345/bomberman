@@ -5,24 +5,26 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.oopproj.bomberman.utils.Assets;
-import com.oopproj.bomberman.utils.Direction;
-import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.item.Bomb;
 import com.oopproj.bomberman.ui.GameSound;
+import com.oopproj.bomberman.utils.Assets;
+import com.oopproj.bomberman.utils.Direction;
+import com.oopproj.bomberman.utils.Map;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class Bomber extends Entity {
-    protected List<Bomb> bombList = new ArrayList<>();
-    protected int bomRate = 1;
-    private int life = 3;
     private final float startX; // hoi sinh tai x,y
     private final float startY;
+    protected List<Bomb> bombList = new ArrayList<>();
+    protected int bomRate = 1;
+    float deltaTime = 0;
+    float blinkDuration = 0.1f;
+    private int life = 3;
     private int flameLength = 2;
 
     public Bomber(Texture texture, int numberOfFrame, float x, float y) {
@@ -86,7 +88,7 @@ public class Bomber extends Entity {
         movingSpeed += 50;
     }
 
-    public void increaseFlameLength(){
+    public void increaseFlameLength() {
         flameLength++;
     }
 
@@ -97,7 +99,6 @@ public class Bomber extends Entity {
     public void setLife(int life) {
         this.life = life;
     }
-
 
     @Override
     public void move(Map map) {
@@ -128,8 +129,6 @@ public class Bomber extends Entity {
         this.bombList = bombList;
     }
 
-    float deltaTime = 0;
-    float blinkDuration = 0.1f;
     @Override
     public void render(SpriteBatch batch) {
         for (Bomb bomb : bombList) {

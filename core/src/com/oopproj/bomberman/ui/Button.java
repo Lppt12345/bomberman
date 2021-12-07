@@ -2,11 +2,11 @@ package com.oopproj.bomberman.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.oopproj.bomberman.utils.State;
 
 import java.util.List;
+
 public class Button extends UIElement {
     private Texture texture;
     private boolean isTouched;
@@ -18,12 +18,14 @@ public class Button extends UIElement {
         this.texture = texture;
         this.isTouched = false;
     }
+
     public void render() {
         batch.setColor(1, 1, 1, alpha);
         batch.begin();
         batch.draw(texture, x, currentY);
         batch.end();
     }
+
     public Object process(List<UIElement> uiElements) {
         switch (state) {
             case SLIDEIN: {

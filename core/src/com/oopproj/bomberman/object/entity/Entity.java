@@ -7,20 +7,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.oopproj.bomberman.utils.Assets;
-import com.oopproj.bomberman.utils.Direction;
-import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.ground.Grass;
 import com.oopproj.bomberman.object.item.Bomb;
 import com.oopproj.bomberman.object.item.Flame;
+import com.oopproj.bomberman.utils.Assets;
+import com.oopproj.bomberman.utils.Direction;
+import com.oopproj.bomberman.utils.Map;
 
 
 public abstract class Entity extends GameObject {
-    public enum EntityState {
-        PROTECTED, ALIVE, DEAD, MOVING, BURNING
-    }
-
     protected TextureRegion[][] frame;
     protected TextureRegion currentFrame;
     protected Animation[] animation;
@@ -31,6 +27,8 @@ public abstract class Entity extends GameObject {
     protected int lastDirection = Direction.DOWN;
     protected EntityState state;
     protected Assets assets;
+    private float currentSpeed = 0;
+    private float accelerate = 450;
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
@@ -169,8 +167,6 @@ public abstract class Entity extends GameObject {
         return null;
     }
 
-    private float currentSpeed = 0;
-    private float accelerate = 450;
     public void move(Map map) {
         stateTime += Gdx.graphics.getDeltaTime();
         currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);
@@ -298,6 +294,10 @@ public abstract class Entity extends GameObject {
 
     public void render(SpriteBatch batch) {
         batch.draw(currentFrame, pos.x, pos.y);
+    }
+
+    public enum EntityState {
+        PROTECTED, ALIVE, DEAD, MOVING, BURNING
     }
 
 

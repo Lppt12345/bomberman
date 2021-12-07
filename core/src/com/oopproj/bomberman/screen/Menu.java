@@ -16,14 +16,14 @@ public class Menu extends Scene {
     private Button button_play;
     private Button button_exit;
     private Button button_settings;
-    private List<UIElement> buttons;
+    private List<UIElement> uiElements;
 
     public Menu(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
         this.button_play = new Button(new Texture(Gdx.files.internal("ui/play.png")), ScreenRes.getWidth() / 2, 225);
         this.button_settings = new Button(new Texture(Gdx.files.internal("ui/settings.png")), (ScreenRes.getWidth() / 2) - 10 - 75, 100);
         this.button_exit = new Button(new Texture(Gdx.files.internal("ui/exit.png")), (ScreenRes.getWidth() / 2) + 10 + 75, 100);
-        this.buttons = new ArrayList<UIElement>() {
+        this.uiElements = new ArrayList<UIElement>() {
             {
                 add(button_play);
                 add(button_exit);
@@ -41,7 +41,7 @@ public class Menu extends Scene {
     public void render(float delta) {
         super.render(delta);
         button_play.render();
-        if ((boolean) button_play.process(buttons)) {
+        if ((boolean) button_play.process(uiElements)) {
             try {
                 if (this.state == State.STATIC) {
                     this.state = State.FADEOUT;
@@ -57,7 +57,7 @@ public class Menu extends Scene {
 
         if (button_play.isDoneRendering()) {
             button_settings.render();
-            if ((boolean) button_settings.process(buttons)) {
+            if ((boolean) button_settings.process(uiElements)) {
                 if (this.state == State.STATIC) {
                     this.state = State.FADEOUT;
                 }
@@ -66,13 +66,16 @@ public class Menu extends Scene {
                     nextScene.setPrevScene(this);
                     game.setScreen(nextScene);
                     state = State.FADEIN;
+                    for (UIElement e : uiElements) {
+                        e.reset();
+                    }
                 }
             }
         }
 
         if (button_settings.isDoneRendering()) {
             button_exit.render();
-            if ((boolean) button_exit.process(buttons)) {
+            if ((boolean) button_exit.process(uiElements)) {
                 if (this.state == State.STATIC) {
                     this.state = State.FADEOUT;
                 }

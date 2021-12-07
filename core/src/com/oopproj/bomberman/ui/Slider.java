@@ -95,4 +95,10 @@ public class Slider extends UIElement {
     public float getX() {
         return this.x + (float) slideBar.getWidth() / 2;
     }
+
+    @Override
+    public void reset() {
+        super.reset();
+        currentY = y - 50;
+    }
 }

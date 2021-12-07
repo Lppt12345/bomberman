@@ -7,13 +7,15 @@ import com.oopproj.bomberman.object.entity.ai.AiLow;
 
 public class Ballom extends  Enemy{
     private int time ;
-    private AiLow aiLow;
+    private AiLow aiLow = null;
     public Ballom(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         movingSpeed = 150;
+        time = 120;
         score = 100;
         currentDirection = Direction.LEFT;
     }
+
     public void switchDir() {
         switch (lastDirection) {
             case Direction.UP:
@@ -34,8 +36,13 @@ public class Ballom extends  Enemy{
     }
     @Override
     public void move(Map map) {
-        if (!checkMove(map, lastDirection)){
-            switchDir();
+        time --;
+        aiLow = new AiLow(map , this);
+        if (!checkMove(map, lastDirection) || time == 0){
+            currentDirection = aiLow.calculateDir();
+        }
+        if (time == 0){
+            time = 120;
         }
         super.move(map);
     }

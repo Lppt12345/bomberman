@@ -15,26 +15,17 @@ public class AiLow extends AI{
         super(map, enemy);
     }
 
-    protected int randomDir(int lastDirection){
-        int ramdom = MathUtils.random(0,3);
-        while (ramdom == lastDirection){
-            ramdom = MathUtils.random(0,3);
-        }
-        return ramdom;
-    }
-
     @Override
-    public int calculateDir(Map map , Enemy enemy) {
-        int radom = randomDir(enemy.getLastDirection());
-        return calculateDir(radom);
+    public int calculateDir() {
+        return calculateDir(enemy.getLastDirection());
     }
 
     public int calculateDir(int ramdom){
         if (ramdom == Direction.UP || ramdom == Direction.DOWN){
-            return calculateRow(ramdom);
+            return calculateCol(ramdom);
         }
         if (ramdom == Direction.LEFT || ramdom == Direction.RIGHT){
-            return calculateCol(ramdom);
+            return calculateRow(ramdom);
         }
         return Direction.NOTMOVE;
     }

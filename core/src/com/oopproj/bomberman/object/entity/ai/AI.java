@@ -26,5 +26,5 @@ public abstract class AI {
      * Tinh toan huong di
      * @return huong di sau khi tinh toan
      */
-    public abstract int calculateDir(Map map ,Enemy enemy);
+    public abstract int calculateDir();
 }

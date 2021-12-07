@@ -151,24 +151,20 @@ public class Bomb extends GameObject {
         return sizeFlame;
     }
 
+
     public void checkCollisionWithBrick(Map map) {
-        List<GameObject> tmpMap = map.getMap();
         int col = map.getColumn();
-        if (tmpMap.get(getPositionAtMap(map) - col * (flameUpLength + 1)) instanceof Brick) {
-            ((Brick) tmpMap.get(getPositionAtMap(map) - col * (flameUpLength + 1))).setState(Brick.BrickState.DESTROYED);
-            map.setMap(tmpMap);
+        if (map.getMap().get(getPositionAtMap(map) - col * (flameUpLength + 1)) instanceof Brick) {
+            ((Brick) map.getMap().get(getPositionAtMap(map) - col * (flameUpLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
-        if (tmpMap.get(getPositionAtMap(map) + col * (flameDownLength + 1)) instanceof Brick) {
-            ((Brick) tmpMap.get(getPositionAtMap(map) + col * (flameDownLength + 1))).setState(Brick.BrickState.DESTROYED);
-            map.setMap(tmpMap);
+        if (map.getMap().get(getPositionAtMap(map) + col * (flameDownLength + 1)) instanceof Brick) {
+            ((Brick) map.getMap().get(getPositionAtMap(map) + col * (flameDownLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
-        if (tmpMap.get(getPositionAtMap(map) - (flameLeftLength + 1)) instanceof Brick) {
-            ((Brick) tmpMap.get(getPositionAtMap(map) - (flameLeftLength + 1))).setState(Brick.BrickState.DESTROYED);
-            map.setMap(tmpMap);
+        if (map.getMap().get(getPositionAtMap(map) - (flameLeftLength + 1)) instanceof Brick) {
+            ((Brick) map.getMap().get(getPositionAtMap(map) - (flameLeftLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
-        if (tmpMap.get(getPositionAtMap(map) + (flameRightLength + 1)) instanceof Brick) {
-            ((Brick) tmpMap.get(getPositionAtMap(map) + (flameRightLength + 1))).setState(Brick.BrickState.DESTROYED);
-            map.setMap(tmpMap);
+        if (map.getMap().get(getPositionAtMap(map) + (flameRightLength + 1)) instanceof Brick) {
+            ((Brick) map.getMap().get(getPositionAtMap(map) + (flameRightLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
     }
 

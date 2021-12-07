@@ -16,9 +16,6 @@ public abstract class Enemy extends Entity {
     }
 
     public void randomDir() {
-//        Random random =new Random();
-//        currentDirection = random.nextInt(3);
         currentDirection = MathUtils.random(0, 3);
-//        System.out.println(currentDirection);
     }
 }

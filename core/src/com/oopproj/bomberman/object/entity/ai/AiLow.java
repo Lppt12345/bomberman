@@ -48,6 +48,4 @@ public class AiLow extends AI{
         }
         return Direction.NOTMOVE;
     }
-
-
 }

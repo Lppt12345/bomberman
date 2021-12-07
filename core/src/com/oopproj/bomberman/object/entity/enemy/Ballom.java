@@ -30,7 +30,7 @@ public class Ballom extends  Enemy{
                 currentDirection = Direction.RIGHT;
                 break;
             case Direction.RIGHT:
-                currentDirection = Direction.RIGHT;
+                currentDirection = Direction.LEFT;
                 break;
             default:
                 break;
@@ -48,7 +48,6 @@ public class Ballom extends  Enemy{
         }
     }
     public double distance(Map map , int direction){
-        int posAtMap = getPositionAtMap(map);
         Rectangle obj = getRec(direction);
         Bomber bomber = map.getPlayer();
         return Math.sqrt(Math.pow(obj.x - bomber.getPos().x, 2) + Math.pow(obj.y - bomber.getPos().y, 2));

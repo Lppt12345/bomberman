@@ -61,13 +61,11 @@ public class GameSound {
 
     public static void writeSettings() {
         try {
-            System.out.println("begin writing");
             FileWriter file = new FileWriter("settings.ini");
             BufferedWriter bw = new BufferedWriter(file);
             bw.write("music_volume = " + volume[MUSIC] + "\n");
             bw.write("sound_volume = " + volume[SOUND] + "\n");
             bw.close();
-            System.out.println("finish writing");
         } catch (IOException ex) {
             System.out.println("cannot create settings file");
         }

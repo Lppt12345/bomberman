@@ -13,6 +13,7 @@ public class Settings extends Scene {
     private Slider soundSlider;
     private Font font;
     private Button back;
+    private Scene prevScene;
 
     private List<UIElement> uiElements;
 
@@ -29,6 +30,10 @@ public class Settings extends Scene {
             add(soundSlider);
             add(back);
         }};
+    }
+
+    public void setPrevScene(Scene prevScene) {
+        this.prevScene = prevScene;
     }
 
     @Override
@@ -65,7 +70,7 @@ public class Settings extends Scene {
                     GameSound.writeSettings();
                 }
                 if (this.state == State.DISAPPEARED) {
-                    game.setScreen(new Menu(game));
+                    game.setScreen(prevScene);
                 }
             }
         }

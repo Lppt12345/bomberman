@@ -10,6 +10,7 @@ import com.oopproj.bomberman.utils.State;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Menu extends Scene {
     private Button button_play;
@@ -61,7 +62,10 @@ public class Menu extends Scene {
                     this.state = State.FADEOUT;
                 }
                 if (this.state == State.DISAPPEARED) {
-                    game.setScreen(new Settings(game));
+                    Settings nextScene = new Settings(game);
+                    nextScene.setPrevScene(this);
+                    game.setScreen(nextScene);
+                    state = State.FADEIN;
                 }
             }
         }

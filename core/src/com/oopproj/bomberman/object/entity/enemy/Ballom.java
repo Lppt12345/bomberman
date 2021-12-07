@@ -1,25 +1,19 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.oopproj.bomberman.object.GameObject;
+
+import com.badlogic.gdx.math.Rectangle;
 import com.oopproj.bomberman.object.entity.Bomber;
-import com.oopproj.bomberman.object.entity.algorithm.astar.AStar;
-import com.oopproj.bomberman.object.entity.algorithm.astar.Square;
-import com.oopproj.bomberman.object.ground.Grass;
-import com.oopproj.bomberman.ui.ScreenRes;
+
 import com.oopproj.bomberman.utils.Direction;
 import com.oopproj.bomberman.utils.Map;
 
 public class Ballom extends  Enemy{
-    boolean check = true;
-    int position;
-    int destination;
-    int col;
+    int time;
     public Ballom(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
-//        pos.x += (ScreenRes.scale - this.pos.width) / 2;
-//        pos.y += (ScreenRes.scale - this.pos.height) / 2;
-        movingSpeed = 50;
+        time = 60;
+        movingSpeed = 150;
         score = 100;
         currentDirection = Direction.LEFT;
     }
@@ -44,39 +38,45 @@ public class Ballom extends  Enemy{
     }
     @Override
     public void move(Map map) {
-        if (!pos.overlaps(map.getPlayer().getPos())){
-            currentDirection = checkDir(map, getPositionAtMap(map) , map.getColumn(), map.getPlayer().getPositionAtMap(map));
+        time --;
+        if ((!pos.overlaps(map.getPlayer().getPos()) && time == 0) || !checkMove(map,lastDirection)){
+            currentDirection = checkDir(map);
+        }
+        super.move(map);
+        if (time == 0){
+            time = 60;
         }
     }
-    public double distance(Map map , int pos , int des){
-        GameObject obj = map.getMap().get(pos);
-        GameObject obj2 = map.getMap().get(des);
-        return Math.sqrt(Math.pow(obj.getPos().x - obj2.getPos().x, 2) + Math.pow(obj.getPos().y - obj2.getPos().y, 2));
+    public double distance(Map map , int direction){
+        int posAtMap = getPositionAtMap(map);
+        Rectangle obj = getRec(direction);
+        Bomber bomber = map.getPlayer();
+        return Math.sqrt(Math.pow(obj.x - bomber.getPos().x, 2) + Math.pow(obj.y - bomber.getPos().y, 2));
     }
 
-    public int checkDir(Map map , int pos , int col , int des){
+    public int checkDir(Map map){
         Double min = Double.MAX_VALUE;
         int dir = Direction.NOTMOVE;
-        if (pos - col > 0 && (map.getMap().get(pos -col) instanceof Grass)){ // check o tren
-            if (distance(map , pos - col , des) < min){
-                min = distance(map , pos - col, des);
+        if (checkMove(map , Direction.UP)){ // check o tren
+            if (distance(map , Direction.UP) < min){
+                min = distance(map , Direction.UP);
                 dir =  Direction.UP;
             }
         }
-        if (pos + col <map.getMap().size() && (map.getMap().get(pos + col) instanceof Grass)){ // check o duoi
-            if (distance(map , pos + col, des) < min){
-                min = distance(map , pos + col, des);
+        if (checkMove(map , Direction.DOWN)){ // check o duoi
+            if (distance(map , Direction.DOWN) < min){
+                min = distance(map , Direction.DOWN);
                 dir = Direction.DOWN;
             }
         }
-        if (pos - 1 > 0 && (map.getMap().get(pos -1) instanceof Grass)){ // check ben trai
-            if (distance(map , pos - 1, des) < min){
-                min = distance(map , pos - 1 , des);
+        if (checkMove(map,Direction.LEFT)){ // check ben trai
+            if (distance(map , Direction.LEFT) < min){
+                min = distance(map , Direction.LEFT);
                 dir = Direction.LEFT;
             }
         }
-        if (pos + 1 > 0 && (map.getMap().get(pos + 1) instanceof Grass)){ // check ben phai
-            if (distance(map , pos + 1 , des) < min){
+        if (checkMove(map,Direction.RIGHT)){ // check ben phai
+            if (distance(map , Direction.RIGHT) < min){
                 dir = Direction.RIGHT;
             }
         }

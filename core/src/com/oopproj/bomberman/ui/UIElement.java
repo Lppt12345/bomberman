@@ -7,7 +7,6 @@ import com.oopproj.bomberman.utils.State;
 import java.util.List;
 
 public abstract class UIElement implements Disposable {
-    protected static final double DURATION = 0.5;
     protected double delta = 0;
     protected float x;
     protected float y;
@@ -16,16 +15,17 @@ public abstract class UIElement implements Disposable {
     protected SpriteBatch batch = new SpriteBatch();
     protected State state = State.SLIDEIN;
     protected boolean doneRendering = false;
+    protected boolean renderCalled = false;
 
     public abstract void render();
 
     public abstract Object process(List<UIElement> uiElements);
 
-    public double parabol(double delta) {
+    public double parabol(double delta, double DURATION) {
         return (((-1) / Math.pow(DURATION, 2)) * Math.pow(delta, 2) + ((double) 2 / DURATION) * delta);
     }
 
-    protected float invertParabol(long delta) {
+    protected float invertParabol(long delta, double DURATION) {
         return (float) ((1 / Math.pow(DURATION, 2)) * Math.pow(delta, 2) - (2 / DURATION) * delta) + 1;
     }
 
@@ -60,5 +60,6 @@ public abstract class UIElement implements Disposable {
         alpha = 0;
         state = State.SLIDEIN;
         doneRendering = false;
+        renderCalled = false;
     }
 }

@@ -8,6 +8,7 @@ import com.oopproj.bomberman.utils.State;
 import java.util.List;
 
 public class Slider extends UIElement {
+    protected final double DURATION = 0.5;
     private Texture slideBar;
     private Texture slider;
     private float sliderX;
@@ -34,6 +35,7 @@ public class Slider extends UIElement {
 
     @Override
     public void render() {
+        renderCalled = true;
         batch.setColor(1, 1, 1, alpha);
         batch.begin();
         batch.draw(slideBar, x, currentY);
@@ -43,11 +45,14 @@ public class Slider extends UIElement {
 
     @Override
     public Object process(List<UIElement> uiElements) {
+        if (!renderCalled) {
+            return (sliderX - (x + 4)) / (slideBar.getWidth() - 14);
+        }
         switch (state) {
             case SLIDEIN: {
                 delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), 0, DURATION);
-                alpha = (float) parabol(delta);
-                currentY = (float) (y - 50 + 50 * parabol(delta));
+                alpha = (float) parabol(delta, DURATION);
+                currentY = (float) (y - 50 + 50 * parabol(delta, DURATION));
                 if (delta == DURATION) {
                     state = State.STATIC;
                     delta = 0;
@@ -57,7 +62,7 @@ public class Slider extends UIElement {
             }
             case FADEOUT: {
                 delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), DURATION, DURATION * 2);
-                alpha = (float) parabol(delta);
+                alpha = (float) parabol(delta, DURATION);
                 if (delta == DURATION * 2) {
                     state = State.DISAPPEARED;
                     delta = 0;

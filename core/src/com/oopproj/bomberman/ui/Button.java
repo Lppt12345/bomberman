@@ -8,6 +8,7 @@ import com.oopproj.bomberman.utils.State;
 import java.util.List;
 
 public class Button extends UIElement {
+    protected final double DURATION = 0.5;
     private Texture texture;
     private boolean isTouched;
 
@@ -20,6 +21,7 @@ public class Button extends UIElement {
     }
 
     public void render() {
+        renderCalled = true;
         batch.setColor(1, 1, 1, alpha);
         batch.begin();
         batch.draw(texture, x, currentY);
@@ -27,11 +29,14 @@ public class Button extends UIElement {
     }
 
     public Object process(List<UIElement> uiElements) {
+        if (!renderCalled) {
+            return false;
+        }
         switch (state) {
             case SLIDEIN: {
                 delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), 0, DURATION);
-                alpha = (float) parabol(delta);
-                currentY = (float) (y - 50 + 50 * parabol(delta));
+                alpha = (float) parabol(delta, DURATION);
+                currentY = (float) (y - 50 + 50 * parabol(delta, DURATION));
                 if (delta == DURATION) {
                     state = State.STATIC;
                     delta = 0;
@@ -41,8 +46,8 @@ public class Button extends UIElement {
             }
             case SLIDEOUT: {
                 delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), DURATION, DURATION * 2);
-                alpha = (float) parabol(delta);
-                currentY = (float) (y - 50 + 50 * parabol(delta));
+                alpha = (float) parabol(delta, DURATION);
+                currentY = (float) (y - 50 + 50 * parabol(delta, DURATION));
                 for (UIElement element : uiElements) {
                     if (element != this) {
                         element.setAlpha(this.getAlpha());
@@ -57,7 +62,7 @@ public class Button extends UIElement {
             }
             case FADEOUT: {
                 delta = MathUtils.clamp(delta + Gdx.graphics.getDeltaTime(), DURATION, DURATION * 2);
-                alpha = (float) parabol(delta);
+                alpha = (float) parabol(delta, DURATION);
                 if (delta == DURATION * 2) {
                     state = State.DISAPPEARED;
                     delta = 0;

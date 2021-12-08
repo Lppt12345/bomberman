@@ -196,7 +196,6 @@ public class Map {
             Enemy enemy = iter.next();
             if (enemy.collisionWithFlame(this)) {
                 score += enemy.getScore();
-                System.out.println("DIEM: " + score + " " + enemy.toString());
                 enemy.setState(Entity.EntityState.DEAD);
                 iter.remove();
             }

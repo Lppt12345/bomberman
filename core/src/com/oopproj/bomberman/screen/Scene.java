@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.utils.State;
 
 public abstract class Scene implements Screen {
+    protected Scene prevScene;
     protected BombermanGame game;
     protected Texture background;
     protected State state;
@@ -18,7 +19,6 @@ public abstract class Scene implements Screen {
         this.background = background;
     }
 
-    @Override
     public void render(float delta) {
         if (this.state == State.FADEIN) {
             game.renderAlpha = MathUtils.clamp(game.renderAlpha + Gdx.graphics.getDeltaTime(), 0, 1);
@@ -39,5 +39,9 @@ public abstract class Scene implements Screen {
         game.batch.begin();
         game.batch.draw(background, 0, 0);
         game.batch.end();
+    }
+
+    public void setPrevScene(Scene prevScene) {
+        this.prevScene = prevScene;
     }
 }

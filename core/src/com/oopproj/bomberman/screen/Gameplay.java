@@ -10,10 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.object.entity.enemy.Enemy;
 import com.oopproj.bomberman.object.item.Item;
-import com.oopproj.bomberman.ui.Button;
-import com.oopproj.bomberman.ui.GameSound;
-import com.oopproj.bomberman.ui.ScreenRes;
-import com.oopproj.bomberman.ui.UIElement;
+import com.oopproj.bomberman.ui.*;
 import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.utils.State;
 
@@ -31,8 +28,10 @@ public class Gameplay implements Screen {
     private OrthographicCamera camera;
     private State state;
     private List<Item> itemList;
-    private SpriteBatch hudBatch;
 
+
+    private SpriteBatch hudBatch;
+    private Font font;
     private ArrayList<UIElement> uiElements;
     private Button pause;
 
@@ -54,6 +53,7 @@ public class Gameplay implements Screen {
         GameSound.playLevel1();
 
         hudBatch = new SpriteBatch();
+        font = new Font("fonts/whitrabt.ttf", 30);
         pause = new Button(new Texture(Gdx.files.internal("ui/pause.png")), 30, 30);
         uiElements = new ArrayList<UIElement>() {{
             add(pause);
@@ -124,6 +124,12 @@ public class Gameplay implements Screen {
 
         hudBatch.draw(heart_holder, 5, ScreenRes.getHeight() - 80);
         hudBatch.draw(score_holder, ScreenRes.getWidth() - 160, ScreenRes.getHeight() - 80);
+        font.draw(hudBatch, Long.toString(map.getScore()),
+                ScreenRes.getWidth() - 160 + score_holder.getWidth() / 2f,
+                ScreenRes.getHeight() - 27);
+        for (int i = 0; i < player.getLife(); i++) {
+            hudBatch.draw(heart, 70 + 30 * i, ScreenRes.getHeight() - 65);
+        }
         pause.render();
         pause.process(uiElements);
 

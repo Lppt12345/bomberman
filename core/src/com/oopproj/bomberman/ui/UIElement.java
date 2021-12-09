@@ -55,6 +55,8 @@ public abstract class UIElement implements Disposable {
 
     public abstract float getX();
 
+    public abstract float getY();
+
     public void reset() {
         delta = 0;
         alpha = 0;

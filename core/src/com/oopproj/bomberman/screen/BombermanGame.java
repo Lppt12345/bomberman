@@ -4,11 +4,13 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.utils.Assets;
+import com.oopproj.bomberman.utils.LeaderboardLoader;
 
 public class BombermanGame extends Game {
     public SpriteBatch batch;
     public Assets assets;
     public float renderAlpha;
+    public LeaderboardLoader lboard = LeaderboardLoader.getInstance();
 
     @Override
     public void create() {
@@ -17,6 +19,7 @@ public class BombermanGame extends Game {
         assets = Assets.getInstance();
         GameSound.readSettings();
         this.setScreen(new Menu(this));
+        lboard.readLeaderboard();
     }
 
     @Override

@@ -98,7 +98,12 @@ public class Slider extends UIElement {
 
     @Override
     public float getX() {
-        return this.x + (float) slideBar.getWidth() / 2;
+        return this.x;
+    }
+
+    @Override
+    public float getY() {
+        return this.y;
     }
 
     @Override

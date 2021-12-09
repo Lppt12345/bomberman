@@ -106,7 +106,12 @@ public class Button extends UIElement {
 
     @Override
     public float getX() {
-        return this.x + (float) texture.getWidth() / 2;
+        return this.x;
+    }
+
+    @Override
+    public float getY() {
+        return this.y;
     }
 
     @Override

@@ -1,11 +1,12 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.oopproj.bomberman.utils.Map;
 
 public class SpeedCreep extends Enemy {
-    private int time = 60;
+    private float time = 3;
 
     public SpeedCreep(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
@@ -19,7 +20,7 @@ public class SpeedCreep extends Enemy {
 
     @Override
     public void move(Map map) {
-        time--;
+        time -= Gdx.graphics.getDeltaTime();
         if (time == 0 || !checkMove(map, lastDirection)) {
             randomDir();
         }
@@ -28,7 +29,7 @@ public class SpeedCreep extends Enemy {
         }
         super.move(map);
         if (time == 0) {
-            time = 200;
+            time = 3;
         }
     }
 }

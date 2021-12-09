@@ -18,6 +18,10 @@ public class SpeedCreep extends Enemy {
         return MathUtils.random(50, 200);
     }
 
+    public void randomDir() {
+        currentDirection = MathUtils.random(0, 3);
+    }
+
     @Override
     public void move(Map map) {
         time -= Gdx.graphics.getDeltaTime();

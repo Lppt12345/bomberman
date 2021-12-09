@@ -3,7 +3,7 @@ package com.oopproj.bomberman.object.entity.algorithm.astar;
 import java.util.Stack;
 
 public class AStar {
-    private  Stack<Square> stackPos = new Stack<>();
+    private Stack<Square> stackPos = new Stack<>();
 
     private static class Node implements Comparable<Node> {
         private final Square square;
@@ -40,7 +40,7 @@ public class AStar {
         findNodesPQ.insert(init);
         while (true) {
             Node node = findNodesPQ.min();
-            if (node.square.isGoal()){
+            if (node.square.isGoal()) {
                 break;
             }
             Node getNode = findNodesPQ.delMin();
@@ -48,8 +48,8 @@ public class AStar {
             for (Square square : neighbors) {
                 if (getNode.pre == null) {
                     findNodesPQ.insert(new Node(square, getNode));
-                }else {
-                    if (!square.equals(getNode.pre.square)){
+                } else {
+                    if (!square.equals(getNode.pre.square)) {
                         findNodesPQ.insert(new Node(square, getNode));
                     }
                 }
@@ -62,7 +62,7 @@ public class AStar {
         }
     }
 
-    public Stack<Square> getStack(){
+    public Stack<Square> getStack() {
         return stackPos;
     }
 

@@ -1,6 +1,7 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.oopproj.bomberman.utils.Map;
 
 
@@ -12,6 +13,10 @@ public class Oneal extends Enemy {
         movingSpeed = 100;
         score = 200;
         time = 60;
+    }
+
+    public void randomDir() {
+        currentDirection = MathUtils.random(0, 3);
     }
 
     @Override

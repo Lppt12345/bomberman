@@ -3,11 +3,12 @@ package com.oopproj.bomberman.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.oopproj.bomberman.ui.*;
-import com.oopproj.bomberman.utils.LeaderboardLoader;
 import com.oopproj.bomberman.utils.State;
 
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class Leaderboard extends Scene {
     private Button back;
@@ -83,20 +84,26 @@ public class Leaderboard extends Scene {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+    }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+    }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 }

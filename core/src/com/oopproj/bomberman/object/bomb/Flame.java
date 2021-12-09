@@ -1,4 +1,4 @@
-package com.oopproj.bomberman.object.item;
+package com.oopproj.bomberman.object.bomb;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

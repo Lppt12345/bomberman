@@ -3,6 +3,7 @@ package com.oopproj.bomberman.utils;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.object.GameObject;
+import com.oopproj.bomberman.object.bomb.Bomb;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.object.entity.Entity;
 import com.oopproj.bomberman.object.entity.enemy.*;

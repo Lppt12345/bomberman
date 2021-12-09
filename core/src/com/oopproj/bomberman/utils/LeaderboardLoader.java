@@ -1,7 +1,9 @@
 package com.oopproj.bomberman.utils;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeSet;
 
 public class LeaderboardLoader {
     public class Score implements Comparable<Score> {

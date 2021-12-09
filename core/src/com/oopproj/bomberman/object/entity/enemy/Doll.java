@@ -1,6 +1,7 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.entity.Bomber;
 import com.oopproj.bomberman.utils.Direction;
@@ -14,6 +15,10 @@ public class Doll extends Enemy {
         movingSpeed = 150;
         score = 100;
         currentDirection = Direction.LEFT;
+    }
+
+    public void randomDir() {
+        currentDirection = MathUtils.random(0, 3);
     }
 
     @Override

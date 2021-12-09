@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.oopproj.bomberman.ui.*;
 import com.oopproj.bomberman.utils.State;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class Settings extends Scene {
     private Slider musicSlider;
@@ -56,7 +59,7 @@ public class Settings extends Scene {
 
         game.batch.begin();
 
-        font.setColor(1 , 1, 1, musicSlider.getAlpha());
+        font.setColor(1, 1, 1, musicSlider.getAlpha());
         font.draw(game.batch, "Music Volume", musicSlider.getX(), musicSlider.getCurrentY());
 
         font.setColor(1, 1, 1, soundSlider.getAlpha());

@@ -14,6 +14,7 @@ public abstract class Item extends GameObject {
     protected boolean destroyed = false;
     protected Assets assets;
     private ItemState state;
+
     public Item(Texture texture, float x, float y) {
         super(texture, x + Math.abs(ScreenRes.scale - (float) texture.getHeight()) / 2
                 , y + Math.abs(ScreenRes.scale - (float) texture.getHeight()) / 2);

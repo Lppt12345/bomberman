@@ -1,5 +1,6 @@
 package com.oopproj.bomberman.object.entity.algorithm.astar;
 
+import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class AStar {
@@ -35,27 +36,27 @@ public class AStar {
             throw new IllegalArgumentException("Dau vao bi null");
         }
 
-        MinPQ<Node> findNodesPQ = new MinPQ<>();
+        PriorityQueue<Node> findNodesPQ = new PriorityQueue<>();
         Node init = new Node(initial, null);
-        findNodesPQ.insert(init);
-        while (true) {
-            Node node = findNodesPQ.min();
-            if (node.square.isGoal()) {
-                break;
-            }
-            Node getNode = findNodesPQ.delMin();
-            Iterable<Square> neighbors = getNode.square.neighbors();
-            for (Square square : neighbors) {
-                if (getNode.pre == null) {
-                    findNodesPQ.insert(new Node(square, getNode));
-                } else {
-                    if (!square.equals(getNode.pre.square)) {
-                        findNodesPQ.insert(new Node(square, getNode));
-                    }
-                }
-            }
-        }
-        Node node = findNodesPQ.min();
+//        findNodesPQ.insert(init);
+//        while (true) {
+//            Node node = findNodesPQ.min();
+//            if (node.square.isGoal()) {
+//                break;
+//            }
+//            Node getNode = findNodesPQ.delMin();
+//            Iterable<Square> neighbors = getNode.square.neighbors();
+//            for (Square square : neighbors) {
+//                if (getNode.pre == null) {
+//                    findNodesPQ.insert(new Node(square, getNode));
+//                } else {
+//                    if (!square.equals(getNode.pre.square)) {
+//                        findNodesPQ.insert(new Node(square, getNode));
+//                    }
+//                }
+//            }
+//        }
+//        Node node = findNodesPQ.min();
         while (node.pre != null) {
             stackPos.push(node.square);
             node = node.pre;

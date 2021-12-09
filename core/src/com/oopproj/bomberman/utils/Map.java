@@ -69,7 +69,7 @@ public class Map {
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '2':
-                        enemy = new Oneal(assets.get(Assets.CREEP), 6, colM, rowM);
+                        enemy = new Yugi(assets.get(Assets.CREEP), 6, colM, rowM);
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '3':
@@ -77,7 +77,7 @@ public class Map {
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '4':
-                        enemy = new Ballom(assets.get(Assets.CREEP), 6, colM, rowM);
+                        enemy = new Oneal(assets.get(Assets.CREEP), 6, colM, rowM);
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '*':

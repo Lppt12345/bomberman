@@ -11,7 +11,7 @@ public class Creep extends Enemy {
         super(texture, numberOfFrame, x, y);
         movingSpeed = 150;
         score = 100;
-        currentDirection = Direction.LEFT;
+        randomDir();
     }
 
     public void randomDir() {

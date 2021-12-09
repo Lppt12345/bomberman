@@ -1,5 +1,6 @@
 package com.oopproj.bomberman.object.entity.enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.math.Rectangle;
@@ -9,10 +10,10 @@ import com.oopproj.bomberman.utils.Direction;
 import com.oopproj.bomberman.utils.Map;
 
 public class Ballom extends  Enemy{
-    int time;
+    float time;
     public Ballom(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
-        time = 60;
+        time = 1;
         movingSpeed = 150;
         score = 100;
         currentDirection = Direction.LEFT;
@@ -38,13 +39,13 @@ public class Ballom extends  Enemy{
     }
     @Override
     public void move(Map map) {
-        time --;
+        time -= Gdx.graphics.getDeltaTime();
         if ((!pos.overlaps(map.getPlayer().getPos()) && time == 0) || !checkMove(map,lastDirection)){
             currentDirection = checkDir(map);
         }
         super.move(map);
-        if (time == 0){
-            time = 60;
+        if (time <= 0){
+            time = 1;
         }
     }
     public double distance(Map map , int direction){

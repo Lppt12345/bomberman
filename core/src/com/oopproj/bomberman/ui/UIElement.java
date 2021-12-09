@@ -41,6 +41,11 @@ public abstract class UIElement implements Disposable {
         return this.state;
     }
 
+    public void setState(State state) {
+        this.state = state;
+        delta = 0;
+    }
+
     public boolean isDoneRendering() {
         return doneRendering;
     }

@@ -7,7 +7,6 @@ import com.oopproj.bomberman.utils.Assets;
 import com.oopproj.bomberman.utils.LeaderboardLoader;
 
 public class BombermanGame extends Game {
-    public SpriteBatch batch;
     public Assets assets;
     public float renderAlpha;
     public LeaderboardLoader lboard = LeaderboardLoader.getInstance();
@@ -15,7 +14,6 @@ public class BombermanGame extends Game {
     @Override
     public void create() {
         renderAlpha = 0;
-        batch = new SpriteBatch();
         assets = Assets.getInstance();
         GameSound.readSettings();
         this.setScreen(new Menu(this));
@@ -28,7 +26,5 @@ public class BombermanGame extends Game {
     }
 
     @Override
-    public void dispose() {
-        batch.dispose();
-    }
+    public void dispose() {}
 }

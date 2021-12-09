@@ -8,7 +8,7 @@ import com.oopproj.bomberman.utils.State;
 import java.util.List;
 
 public class Slider extends UIElement {
-    protected final double DURATION = 0.5;
+    protected final double DURATION = 0.3;
     private Texture slideBar;
     private Texture slider;
     private float sliderX;
@@ -98,12 +98,12 @@ public class Slider extends UIElement {
 
     @Override
     public float getX() {
-        return this.x;
+        return this.x + (float) slideBar.getWidth() / 2;
     }
 
     @Override
     public float getY() {
-        return this.y;
+        return this.y + (float) slideBar.getHeight() / 2;
     }
 
     @Override

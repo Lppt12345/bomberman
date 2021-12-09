@@ -57,15 +57,15 @@ public class Settings extends Scene {
             uiElements.add(renderOrder.poll());
         }
 
-        game.batch.begin();
+        batch.begin();
 
         font.setColor(1, 1, 1, musicSlider.getAlpha());
-        font.draw(game.batch, "Music Volume", musicSlider.getX(), musicSlider.getCurrentY());
+        font.draw(batch, "Music Volume", musicSlider.getX(), musicSlider.getCurrentY());
 
         font.setColor(1, 1, 1, soundSlider.getAlpha());
-        font.draw(game.batch, "Sound Volume", soundSlider.getX(), soundSlider.getCurrentY());
+        font.draw(batch, "Sound Volume", soundSlider.getX(), soundSlider.getCurrentY());
 
-        game.batch.end();
+        batch.end();
 
         GameSound.setMusicVolume((float) musicSlider.process(null));
         GameSound.setSoundVolume((float) soundSlider.process(null));

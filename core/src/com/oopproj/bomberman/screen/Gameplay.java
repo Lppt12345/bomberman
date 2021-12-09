@@ -95,7 +95,7 @@ public class Gameplay extends Scene {
                 0
         );
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.combined);
 
         player.move(map);
         for (Enemy a : enemyList) {
@@ -104,16 +104,16 @@ public class Gameplay extends Scene {
         map.updateMap();
 
         // hud
-        game.batch.begin();
-        map.render(game.batch);
+        batch.begin();
+        map.render(batch);
         for (Item a : itemList) {
-            a.render(game.batch);
+            a.render(batch);
         }
         for (Enemy a : enemyList) {
-            a.render(game.batch);
+            a.render(batch);
         }
-        player.render(game.batch);
-        game.batch.end();
+        player.render(batch);
+        batch.end();
 
         hudBatch.setColor(1, 1, 1, game.renderAlpha);
         hudBatch.begin();
@@ -140,10 +140,22 @@ public class Gameplay extends Scene {
             uiElements.add(renderOrder.poll());
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            button_pause.setState(State.SLIDEOUT);
+        }
         if ((boolean) button_pause.process(uiElements)) {
-            Pause pauseScene = new Pause(game, null);
-            pauseScene.setPrevScene(this);
-            game.setScreen(pauseScene);
+            if (this.state == State.STATIC) {
+                this.state = State.FADEOUT;
+            }
+            if (this.state == State.DISAPPEARED) {
+                Pause pauseScene = new Pause(game, new Texture(Gdx.files.internal("ui/background.png")));
+                pauseScene.setPrevScene(this);
+                game.setScreen(pauseScene);
+                this.state = State.FADEIN;
+                for (UIElement e : uiElements) {
+                    e.reset();
+                }
+            }
         }
     }
 

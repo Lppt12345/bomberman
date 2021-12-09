@@ -39,19 +39,19 @@ public class Leaderboard extends Scene {
     public void render(float delta) {
         super.render(delta);
 
-        game.batch.begin();
+        batch.begin();
         boolean isDoneRendering = true;
         for (int i = 0; i < uiElements.size(); i++) {
             if (i < game.lboard.get10HighestScore().size()) {
                 font.setColor(1, 1, 1, uiElements.get(i).getAlpha());
                 font.draw(
-                        game.batch,
+                        batch,
                         game.lboard.get10HighestScore().get(i).name,
                         uiElements.get(i).getX() + 137,
                         uiElements.get(i).getCurrentY() + 35
                 );
                 font.draw(
-                        game.batch,
+                        batch,
                         Long.toString(game.lboard.get10HighestScore().get(i).score),
                         uiElements.get(i).getX() + 350,
                         uiElements.get(i).getCurrentY() + 35
@@ -63,7 +63,7 @@ public class Leaderboard extends Scene {
                 break;
             }
         }
-        game.batch.end();
+        batch.end();
 
         if (isDoneRendering && !renderOrder.isEmpty()) {
             uiElements.add(renderOrder.poll());

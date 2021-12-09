@@ -8,7 +8,7 @@ import com.oopproj.bomberman.utils.State;
 import java.util.List;
 
 public class Button extends UIElement {
-    protected final double DURATION = 0.5;
+    protected final double DURATION = 0.3;
     private Texture texture;
     private boolean isTouched;
 
@@ -106,12 +106,12 @@ public class Button extends UIElement {
 
     @Override
     public float getX() {
-        return this.x;
+        return this.x + (float) texture.getWidth() / 2;
     }
 
     @Override
     public float getY() {
-        return this.y;
+        return this.y + (float) texture.getHeight() / 2;
     }
 
     @Override

@@ -22,16 +22,16 @@ public class SpeedCreep extends Enemy {
     private float dTime = time;
     @Override
     public void move(Map map) {
-        time -= Gdx.graphics.getDeltaTime();
-        if (time == 0 || !checkMove(map, lastDirection)) {
+        dTime -= Gdx.graphics.getDeltaTime();
+        if (dTime <= 0 || !checkMove(map, lastDirection)) {
             randomDir();
         }
         if (dTime <= 0) {
             movingSpeed = changeSpeed();
         }
         super.move(map);
-        if (time == 0) {
-            time = 3;
+        if (dTime <= 0) {
+            dTime = time;
         }
     }
 }

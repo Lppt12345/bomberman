@@ -1,6 +1,7 @@
 package com.oopproj.bomberman.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,34 +16,36 @@ import com.oopproj.bomberman.utils.Map;
 import com.oopproj.bomberman.utils.State;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
-public class Gameplay implements Screen {
-    private BombermanGame game;
+public class Gameplay extends Scene {
+    private int WORLD_WIDTH;
+    private int WORLD_HEIGHT;
+    private OrthographicCamera camera;
+    private List<Item> itemList;
+
     private Long score = (long) 1;
     private Bomber player;
     private Map map;
     private List<Enemy> enemyList;
-    private int WORLD_WIDTH;
-    private int WORLD_HEIGHT;
-    private OrthographicCamera camera;
-    private State state;
-    private List<Item> itemList;
-
 
     private SpriteBatch hudBatch;
     private Font font;
     private ArrayList<UIElement> uiElements;
-    private Button pause;
+    private Queue<UIElement> renderOrder;
+    private Button button_pause;
 
     private Texture score_title;
     private Texture score_holder;
     private Texture heart_holder;
     private Texture heart;
 
+    private Banner pause_background;
+
     public Gameplay(BombermanGame game) throws Exception {
-        this.game = game;
-        state = State.FADEIN;
+        super(game, null);
         map = new Map("maptest.txt");
         WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
         WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
@@ -54,14 +57,19 @@ public class Gameplay implements Screen {
 
         hudBatch = new SpriteBatch();
         font = new Font("fonts/whitrabt.ttf", 30);
-        pause = new Button(new Texture(Gdx.files.internal("ui/pause.png")), 30, 30);
-        uiElements = new ArrayList<UIElement>() {{
-            add(pause);
-        }};
+        button_pause = new Button(new Texture(Gdx.files.internal("ui/pause.png")), 30, 30);
+        uiElements = new ArrayList<UIElement>();
+        renderOrder = new LinkedList<UIElement>() {
+            {
+                add(button_pause);
+            }
+        };
 
         score_holder = new Texture(Gdx.files.internal("ui/score_holder.png"));
         heart_holder = new Texture(Gdx.files.internal("ui/heart_holder.png"));
         heart = new Texture(Gdx.files.internal("ui/heart.png"));
+
+        pause_background = new Banner(new Texture(Gdx.files.internal("ui/pause_background.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f);
     }
 
     public Long getScore() {
@@ -78,22 +86,9 @@ public class Gameplay implements Screen {
 
     @Override
     public void render(float delta) {
-        if (state == State.FADEIN) {
-            game.renderAlpha = MathUtils.clamp(game.renderAlpha + Gdx.graphics.getDeltaTime(), 0, 1);
-            if (game.renderAlpha == 1) {
-                state = State.STATIC;
-            }
-        }
-        if (state == State.FADEOUT) {
-            game.renderAlpha = MathUtils.clamp(game.renderAlpha - Gdx.graphics.getDeltaTime(), 0, 1);
-            if (game.renderAlpha == 0) {
-                state = State.DISAPPEARED;
-            }
-        }
+        super.render(delta);
 
-        ScreenUtils.clear(0, 0, 0, 1);
-        game.batch.setColor(1, 1, 1, game.renderAlpha);
-
+        // game
         camera.position.set(
                 MathUtils.clamp(player.getPos().x, camera.viewportWidth / 2f, WORLD_WIDTH - camera.viewportWidth / 2f),
                 MathUtils.clamp(player.getPos().y, camera.viewportHeight / 2f, WORLD_HEIGHT - camera.viewportHeight / 2f),
@@ -108,6 +103,7 @@ public class Gameplay implements Screen {
         }
         map.updateMap();
 
+        // hud
         game.batch.begin();
         map.render(game.batch);
         for (Item a : itemList) {
@@ -130,34 +126,39 @@ public class Gameplay implements Screen {
         for (int i = 0; i < player.getLife(); i++) {
             hudBatch.draw(heart, 70 + 30 * i, ScreenRes.getHeight() - 65);
         }
-        pause.render();
-        pause.process(uiElements);
-
         hudBatch.end();
+
+        boolean isDoneRendering = true;
+        for (UIElement e : uiElements) {
+            e.render();
+            if (!e.isDoneRendering()) {
+                isDoneRendering = false;
+                break;
+            }
+        }
+        if (isDoneRendering && !renderOrder.isEmpty()) {
+            uiElements.add(renderOrder.poll());
+        }
+
+        if ((boolean) button_pause.process(uiElements)) {
+            Pause pauseScene = new Pause(game, null);
+            pauseScene.setPrevScene(this);
+            game.setScreen(pauseScene);
+        }
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void resize(int width, int height) {}
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 }

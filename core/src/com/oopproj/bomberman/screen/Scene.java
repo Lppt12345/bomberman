@@ -37,7 +37,9 @@ public abstract class Scene implements Screen {
         game.batch.setColor(1, 1, 1, game.renderAlpha);
 
         game.batch.begin();
-        game.batch.draw(background, 0, 0);
+        if (background != null) {
+            game.batch.draw(background, 0, 0);
+        }
         game.batch.end();
     }
 

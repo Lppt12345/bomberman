@@ -1,7 +1,7 @@
 package com.oopproj.bomberman.utils;
 
 public enum State {
-    PLAY, PAUSE, SWITCH,
+    PAUSE, SWITCH,
     SLIDEIN, SLIDEOUT,
     FADEIN, FADEOUT,
     HOVER,

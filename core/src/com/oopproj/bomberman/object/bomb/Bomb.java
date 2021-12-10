@@ -75,10 +75,10 @@ public class Bomb extends GameObject {
     }
 
     /**
-     * Hàm đặt chiều dài cho lửa sau khi tìm được chiều dài thực tế
+     * Hàm đặt chiều dài cho lửa sau khi tìm được chiều dài thực tế.
      *
-     * @param map       Map đối tượng tĩnh
-     * @param sizeFlame độ dài ngọn lửa nếu MAX
+     * @param map       Map đối tượng tĩnh.
+     * @param sizeFlame độ dài ngọn lửa nếu MAX.
      */
     public void setLengthFlame(Map map, int sizeFlame) {
         Texture t = assets.get(Assets.FLAME);
@@ -101,12 +101,12 @@ public class Bomb extends GameObject {
     }
 
     /**
-     * Tìm chiều dài thực tế của lửa theo 4 hướng
+     * Tìm chiều dài thực tế của lửa theo 4 hướng.
      *
-     * @param map       Map đối tượng tĩnh
-     * @param direction hướng của ngọn lửa
-     * @param sizeFlame độ dài ngọn lửa nếu MAX
-     * @return độ dài ngọn lửa thực tế
+     * @param map       Map đối tượng tĩnh.
+     * @param direction hướng của ngọn lửa.
+     * @param sizeFlame độ dài ngọn lửa nếu MAX.
+     * @return độ dài ngọn lửa thực tế.
      */
     public int findLengthFlame(Map map, int direction, int sizeFlame) {
         int pos = getPositionAtMap(map);
@@ -148,23 +148,34 @@ public class Bomb extends GameObject {
         return sizeFlame;
     }
 
-
+    /**
+     * Kiểm tra lửa của bom va chạm với tường.
+     * @param map Map ánh xạ.
+     */
     public void checkCollisionWithBrick(Map map) {
         int col = map.getColumn();
-        if (map.getMap().get(getPositionAtMap(map) - col * (flameUpLength + 1)) instanceof Brick) {
+        if ((map.getMap().get(getPositionAtMap(map) - col * (flameUpLength + 1)) instanceof Brick)
+                && map.getPlayer().getFlameLength() > flameUpLength) {
             ((Brick) map.getMap().get(getPositionAtMap(map) - col * (flameUpLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
-        if (map.getMap().get(getPositionAtMap(map) + col * (flameDownLength + 1)) instanceof Brick) {
+        if ((map.getMap().get(getPositionAtMap(map) + col * (flameDownLength + 1)) instanceof Brick)
+                && map.getPlayer().getFlameLength() > flameDownLength) {
             ((Brick) map.getMap().get(getPositionAtMap(map) + col * (flameDownLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
-        if (map.getMap().get(getPositionAtMap(map) - (flameLeftLength + 1)) instanceof Brick) {
+        if ((map.getMap().get(getPositionAtMap(map) - (flameLeftLength + 1)) instanceof Brick)
+                && map.getPlayer().getFlameLength() > flameLeftLength) {
             ((Brick) map.getMap().get(getPositionAtMap(map) - (flameLeftLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
-        if (map.getMap().get(getPositionAtMap(map) + (flameRightLength + 1)) instanceof Brick) {
+        if ((map.getMap().get(getPositionAtMap(map) + (flameRightLength + 1)) instanceof Brick)
+                && map.getPlayer().getFlameLength() > flameRightLength) {
             ((Brick) map.getMap().get(getPositionAtMap(map) + (flameRightLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
     }
 
+    /**
+     * Kiểm tra bomb va chạm với lửa.
+     * @param map Map ánh xạ.
+     */
     public void collisionWithFlame(Map map) {
         for (Bomb bomb : map.getPlayer().getBombList()) {
             if (bomb.getState() == Bomb.BombState.BURNING) {

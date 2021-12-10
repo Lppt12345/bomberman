@@ -62,12 +62,12 @@ public abstract class Entity extends GameObject {
      */
     public boolean checkMove(Map map, int direction) {
         int posAtMap = getPositionAtMap(map);
-        Rectangle entity = null;
-        GameObject tmp1 = null, tmp2 = null;
+        Rectangle entity;
+        GameObject tmp1, tmp2;
         int col = map.getColumn();
         switch (direction) {
             case Direction.UP: {
-                entity = getRec(direction);
+                entity = nextRec(direction);
                 if (posAtMap - col < 0) {
                     return false;
                 }
@@ -82,7 +82,7 @@ public abstract class Entity extends GameObject {
                 break;
             }
             case Direction.DOWN: {
-                entity = getRec(direction);
+                entity = nextRec(direction);
                 if (posAtMap + col + 1 > map.getMap().size()) {
                     return false;
                 }
@@ -98,7 +98,7 @@ public abstract class Entity extends GameObject {
                 break;
             }
             case Direction.LEFT: {
-                entity = getRec(direction);
+                entity = nextRec(direction);
                 if (posAtMap - 1 - col < 0) {
                     return false;
                 }
@@ -114,7 +114,7 @@ public abstract class Entity extends GameObject {
                 break;
             }
             case Direction.RIGHT: {
-                entity = getRec(direction);
+                entity = nextRec(direction);
                 if (posAtMap + 1 - col < 0) {
                     return false;
                 }
@@ -134,7 +134,7 @@ public abstract class Entity extends GameObject {
         // Check va cham vs bom
         for (Bomb bomb : map.getPlayer().bombList) {
             if (!bomb.getPos().overlaps(getPos())) {
-                Rectangle tmp = getRec(direction);
+                Rectangle tmp = nextRec(direction);
                 if (tmp.overlaps(bomb.getPos())) {
                     return false;
                 }
@@ -143,7 +143,7 @@ public abstract class Entity extends GameObject {
         return true;
     }
 
-    public Rectangle getRec(int direction) {
+    public Rectangle nextRec(int direction) {
         switch (direction) {
             case Direction.UP: {
                 return new Rectangle(pos.x, pos.y + movingSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), pos.width, pos.height);

@@ -10,6 +10,7 @@ public abstract class Enemy extends Entity {
     public Enemy(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
     }
+
     public void randomDir() {
         currentDirection = MathUtils.random(0, 3);
     }

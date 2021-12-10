@@ -18,6 +18,7 @@ public class Oneal extends Enemy {
     }
 
     private float dTime = time;
+
     @Override
     public void move(Map map) {
         dTime -= Gdx.graphics.getDeltaTime();
@@ -31,7 +32,7 @@ public class Oneal extends Enemy {
     }
 
     public double distance(Map map, int direction) {
-        Rectangle obj = getRec(direction);
+        Rectangle obj = nextRec(direction);
         Bomber bomber = map.getPlayer();
         return Math.sqrt(Math.pow(obj.x - bomber.getPos().x, 2) + Math.pow(obj.y - bomber.getPos().y, 2));
     }

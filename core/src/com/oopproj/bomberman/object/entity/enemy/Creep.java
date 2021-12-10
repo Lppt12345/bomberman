@@ -2,7 +2,6 @@ package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
-import com.oopproj.bomberman.utils.Direction;
 import com.oopproj.bomberman.utils.Map;
 
 public class Creep extends Enemy {

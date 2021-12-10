@@ -2,7 +2,6 @@ package com.oopproj.bomberman.object.entity.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.oopproj.bomberman.utils.Direction;
 import com.oopproj.bomberman.utils.Map;
 
@@ -35,7 +34,9 @@ public class Yugi extends Enemy {
                 break;
         }
     }
+
     float dTime = time;
+
     @Override
     public void move(Map map) {
         dTime -= Gdx.graphics.getDeltaTime();

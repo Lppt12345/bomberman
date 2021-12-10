@@ -26,6 +26,7 @@ public class Bomber extends Entity {
     float blinkDuration = 0.1f;
     private int life = 3;
     private int flameLength = 2;
+
     public Bomber(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         pos.width = (float) texture.getWidth() / numberOfFrame;
@@ -48,6 +49,12 @@ public class Bomber extends Entity {
         flameLength = 2;
     }
 
+    /**
+     * Đặt bom tại vị trí chỉ định (đã căn giữa)
+     * @param x tọa độ x.
+     * @param y tọa độ y.
+     * @param map Map ánh xạ.
+     */
     public void placeBomB(float x, float y, Map map) {
         if ((state == EntityState.PROTECTED || state == EntityState.ALIVE) && bombList.size() <= bomRate) {
             Rectangle bomTmp = new Rectangle(x, y, pos.width, pos.height);
@@ -58,10 +65,9 @@ public class Bomber extends Entity {
                 }
             }
             Texture t = assets.get(Assets.BOMB);
-            // Tim o ma 1/2 nguoi dang dung
-            GameObject tmp = new Grass(t, pos.x + pos.width / 2, pos.y + pos.height / 2);
-            GameObject grass = map.getMap().get(tmp.getPositionAtMap(map)); // co chua bom trong class
-            // vi tri bomb:
+            GameObject tmp = new Grass(t, pos.x + pos.width / 2, pos.y + pos.height / 2);// Tìm ô mà x,y là tọa độ trọng tâm người đang đứng
+            GameObject grass = map.getMap().get(tmp.getPositionAtMap(map)); // ô cỏ sẽ đặt bom dựa theo trọng tâm người đang đứng
+            // vi tri bomb
             float bombX = grass.getPos().x + Math.abs((grass.getPos().getWidth() - (float) t.getWidth() / 3) / 2);
             float bombY = grass.getPos().y + Math.abs((grass.getPos().getHeight() - t.getHeight()) / 2);
             Bomb bomb = new Bomb(t, bombX, bombY, flameLength, map);
@@ -82,9 +88,11 @@ public class Bomber extends Entity {
     public int getFlameLength() {
         return flameLength;
     }
+
     public void setFlameLength(int flameLength) {
         this.flameLength = flameLength;
     }
+
     public void increaseBomb() {
         bomRate++;
     }

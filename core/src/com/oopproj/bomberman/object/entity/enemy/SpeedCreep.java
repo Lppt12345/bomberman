@@ -20,6 +20,7 @@ public class SpeedCreep extends Enemy {
     }
 
     private float dTime = time;
+
     @Override
     public void move(Map map) {
         dTime -= Gdx.graphics.getDeltaTime();

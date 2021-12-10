@@ -26,7 +26,6 @@ public class Bomber extends Entity {
     float blinkDuration = 0.1f;
     private int life = 3;
     private int flameLength = 2;
-
     public Bomber(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         pos.width = (float) texture.getWidth() / numberOfFrame;
@@ -80,6 +79,12 @@ public class Bomber extends Entity {
         }
     }
 
+    public int getFlameLength() {
+        return flameLength;
+    }
+    public void setFlameLength(int flameLength) {
+        this.flameLength = flameLength;
+    }
     public void increaseBomb() {
         bomRate++;
     }

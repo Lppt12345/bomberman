@@ -12,7 +12,7 @@ public class Yugi extends Enemy {
 
     public Yugi(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
-        movingSpeed = 100;
+        movingSpeed = 200;
         score = 200;
         randomDir();
     }

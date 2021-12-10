@@ -8,12 +8,12 @@ import com.oopproj.bomberman.utils.Direction;
 import com.oopproj.bomberman.utils.Map;
 
 public class Oneal extends Enemy {
-    private final float time = 1;
+    private final float time = 0.5f;
 
     public Oneal(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         movingSpeed = 100;
-        score = 100;
+        score = 300;
         randomDir();
     }
 

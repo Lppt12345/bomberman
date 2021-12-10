@@ -151,16 +151,20 @@ public class Bomb extends GameObject {
 
     public void checkCollisionWithBrick(Map map) {
         int col = map.getColumn();
-        if (map.getMap().get(getPositionAtMap(map) - col * (flameUpLength + 1)) instanceof Brick) {
+        if ((map.getMap().get(getPositionAtMap(map) - col * (flameUpLength + 1)) instanceof Brick)
+                && map.getPlayer().getFlameLength() > flameUpLength) {
             ((Brick) map.getMap().get(getPositionAtMap(map) - col * (flameUpLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
-        if (map.getMap().get(getPositionAtMap(map) + col * (flameDownLength + 1)) instanceof Brick) {
+        if ((map.getMap().get(getPositionAtMap(map) + col * (flameDownLength + 1)) instanceof Brick)
+                && map.getPlayer().getFlameLength() > flameDownLength){
             ((Brick) map.getMap().get(getPositionAtMap(map) + col * (flameDownLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
-        if (map.getMap().get(getPositionAtMap(map) - (flameLeftLength + 1)) instanceof Brick) {
+        if ((map.getMap().get(getPositionAtMap(map) - (flameLeftLength + 1)) instanceof Brick)
+                && map.getPlayer().getFlameLength() > flameLeftLength){
             ((Brick) map.getMap().get(getPositionAtMap(map) - (flameLeftLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
-        if (map.getMap().get(getPositionAtMap(map) + (flameRightLength + 1)) instanceof Brick) {
+        if ((map.getMap().get(getPositionAtMap(map) + (flameRightLength + 1)) instanceof Brick)
+                && map.getPlayer().getFlameLength() > flameRightLength){
             ((Brick) map.getMap().get(getPositionAtMap(map) + (flameRightLength + 1))).setState(Brick.BrickState.DESTROYED);
         }
     }

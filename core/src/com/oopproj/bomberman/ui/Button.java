@@ -26,7 +26,6 @@ public class Button extends UIElement {
         batch.begin();
         batch.draw(texture, x, currentY);
         batch.end();
-        System.out.println(this.alpha);
     }
 
     public Object process(List<UIElement> uiElements) {

@@ -16,9 +16,6 @@ public class Settings extends Scene {
     private Font font;
     private Button back;
 
-    private List<UIElement> uiElements;
-    private Queue<UIElement> renderOrder;
-
     public Settings(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
         Texture slider = new Texture(Gdx.files.internal("ui/slider.png"));
@@ -45,25 +42,13 @@ public class Settings extends Scene {
     public void render(float delta) {
         super.render(delta);
 
-        boolean isDoneRendering = true;
-        for (UIElement e : uiElements) {
-            e.render();
-            if (!e.isDoneRendering()) {
-                isDoneRendering = false;
-                break;
-            }
-        }
-        if (isDoneRendering && !renderOrder.isEmpty()) {
-            uiElements.add(renderOrder.poll());
-        }
-
         batch.begin();
 
         font.setColor(1, 1, 1, musicSlider.getAlpha());
-        font.draw(batch, "Music Volume", musicSlider.getX(), musicSlider.getCurrentY());
+        font.draw("Music Volume", musicSlider.getX(), musicSlider.getCurrentY() - 10);
 
         font.setColor(1, 1, 1, soundSlider.getAlpha());
-        font.draw(batch, "Sound Volume", soundSlider.getX(), soundSlider.getCurrentY());
+        font.draw("Sound Volume", soundSlider.getX(), soundSlider.getCurrentY() - 10);
 
         batch.end();
 

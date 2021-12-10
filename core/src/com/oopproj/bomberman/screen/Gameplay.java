@@ -33,16 +33,13 @@ public class Gameplay extends Scene {
 
     private SpriteBatch hudBatch;
     private Font font;
-    private ArrayList<UIElement> uiElements;
-    private Queue<UIElement> renderOrder;
+
     private Button button_pause;
 
     private Texture score_title;
     private Texture score_holder;
     private Texture heart_holder;
     private Texture heart;
-
-    private Banner pause_background;
 
     public Gameplay(BombermanGame game) throws Exception {
         super(game, null);
@@ -68,8 +65,6 @@ public class Gameplay extends Scene {
         score_holder = new Texture(Gdx.files.internal("ui/score_holder.png"));
         heart_holder = new Texture(Gdx.files.internal("ui/heart_holder.png"));
         heart = new Texture(Gdx.files.internal("ui/heart.png"));
-
-        pause_background = new Banner(new Texture(Gdx.files.internal("ui/pause_background.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f);
     }
 
     public Long getScore() {
@@ -86,9 +81,11 @@ public class Gameplay extends Scene {
 
     @Override
     public void render(float delta) {
-        super.render(delta);
+        ScreenUtils.clear(0, 0, 0, 1);
+        batch.setColor(1, 1, 1, game.renderAlpha);
 
-        // game
+        sceneTransition();
+
         camera.position.set(
                 MathUtils.clamp(player.getPos().x, camera.viewportWidth / 2f, WORLD_WIDTH - camera.viewportWidth / 2f),
                 MathUtils.clamp(player.getPos().y, camera.viewportHeight / 2f, WORLD_HEIGHT - camera.viewportHeight / 2f),
@@ -103,7 +100,6 @@ public class Gameplay extends Scene {
         }
         map.updateMap();
 
-        // hud
         batch.begin();
         map.render(batch);
         for (Item a : itemList) {
@@ -115,30 +111,20 @@ public class Gameplay extends Scene {
         player.render(batch);
         batch.end();
 
+        drawUIElements();
         hudBatch.setColor(1, 1, 1, game.renderAlpha);
         hudBatch.begin();
 
         hudBatch.draw(heart_holder, 5, ScreenRes.getHeight() - 80);
         hudBatch.draw(score_holder, ScreenRes.getWidth() - 160, ScreenRes.getHeight() - 80);
-        font.draw(hudBatch, Long.toString(map.getScore()),
+        game.totalScore = map.getScore();
+        font.draw(Long.toString(game.totalScore),
                 ScreenRes.getWidth() - 160 + score_holder.getWidth() / 2f,
                 ScreenRes.getHeight() - 27);
         for (int i = 0; i < player.getLife(); i++) {
             hudBatch.draw(heart, 70 + 30 * i, ScreenRes.getHeight() - 65);
         }
         hudBatch.end();
-
-        boolean isDoneRendering = true;
-        for (UIElement e : uiElements) {
-            e.render();
-            if (!e.isDoneRendering()) {
-                isDoneRendering = false;
-                break;
-            }
-        }
-        if (isDoneRendering && !renderOrder.isEmpty()) {
-            uiElements.add(renderOrder.poll());
-        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             button_pause.setState(State.SLIDEOUT);
@@ -148,7 +134,7 @@ public class Gameplay extends Scene {
                 this.state = State.FADEOUT;
             }
             if (this.state == State.DISAPPEARED) {
-                Pause pauseScene = new Pause(game, new Texture(Gdx.files.internal("ui/background.png")));
+                Pause pauseScene = new Pause(game);
                 pauseScene.setPrevScene(this);
                 game.setScreen(pauseScene);
                 this.state = State.FADEIN;

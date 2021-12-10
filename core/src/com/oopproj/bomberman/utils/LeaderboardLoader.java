@@ -22,7 +22,7 @@ public class LeaderboardLoader {
             } else if (this.score > o.score) {
                 return -1;
             } else {
-                return 0;
+                return this.name.compareTo(o.name);
             }
         }
 
@@ -87,5 +87,9 @@ public class LeaderboardLoader {
         } catch (IndexOutOfBoundsException e) {
             return result;
         }
+    }
+
+    public void addNewRecord(String name, long score) {
+        leaderboard.add(new Score(name, score));
     }
 }

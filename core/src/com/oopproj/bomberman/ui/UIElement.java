@@ -50,9 +50,7 @@ public abstract class UIElement implements Disposable {
         return doneRendering;
     }
 
-    public float getCurrentY() {
-        return currentY;
-    }
+    public abstract float getCurrentY();
 
     public abstract float getWidth();
 

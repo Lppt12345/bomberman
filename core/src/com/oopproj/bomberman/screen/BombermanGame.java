@@ -10,6 +10,7 @@ public class BombermanGame extends Game {
     public Assets assets;
     public float renderAlpha;
     public LeaderboardLoader lboard = LeaderboardLoader.getInstance();
+    public long totalScore;
 
     @Override
     public void create() {

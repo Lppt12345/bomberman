@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Button extends UIElement {
     protected final double DURATION = 0.25;
-    private Texture texture;
+    protected Texture texture;
     private boolean isTouched;
 
     public Button(Texture texture, float x, float y) {
@@ -26,6 +26,7 @@ public class Button extends UIElement {
         batch.begin();
         batch.draw(texture, x, currentY);
         batch.end();
+        System.out.println(this.alpha);
     }
 
     public Object process(List<UIElement> uiElements) {
@@ -92,6 +93,11 @@ public class Button extends UIElement {
             }
         }
         return isTouched;
+    }
+
+    @Override
+    public float getCurrentY() {
+        return this.currentY + (float) texture.getHeight() / 2;
     }
 
     @Override

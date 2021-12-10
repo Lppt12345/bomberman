@@ -15,9 +15,6 @@ public class Leaderboard extends Scene {
     private Banner[] leaderboard_banner;
     private Font font;
 
-    private List<UIElement> uiElements;
-    private Queue<UIElement> renderOrder;
-
     public Leaderboard(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
         back = new Button(new Texture(Gdx.files.internal("ui/back.png")), ScreenRes.getWidth() / 2f, 50);
@@ -45,29 +42,18 @@ public class Leaderboard extends Scene {
             if (i < game.lboard.get10HighestScore().size()) {
                 font.setColor(1, 1, 1, uiElements.get(i).getAlpha());
                 font.draw(
-                        batch,
                         game.lboard.get10HighestScore().get(i).name,
-                        uiElements.get(i).getX() + 137,
-                        uiElements.get(i).getCurrentY() + 35
+                        uiElements.get(i).getX() - 80,
+                        uiElements.get(i).getCurrentY() + 11
                 );
                 font.draw(
-                        batch,
                         Long.toString(game.lboard.get10HighestScore().get(i).score),
-                        uiElements.get(i).getX() + 350,
-                        uiElements.get(i).getCurrentY() + 35
+                        uiElements.get(i).getX() + 135,
+                        uiElements.get(i).getCurrentY() + 11
                 );
-            }
-            uiElements.get(i).render();
-            if (!uiElements.get(i).isDoneRendering()) {
-                isDoneRendering = false;
-                break;
             }
         }
         batch.end();
-
-        if (isDoneRendering && !renderOrder.isEmpty()) {
-            uiElements.add(renderOrder.poll());
-        }
 
         if ((boolean) back.process(uiElements)) {
             if (this.state == State.STATIC) {

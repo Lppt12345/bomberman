@@ -17,11 +17,8 @@ public class Pause extends Scene {
     private Button button_settings;
     private Button button_menu;
 
-    private ArrayList<UIElement> uiElements;
-    private Queue<UIElement> renderOrder;
-
-    public Pause(BombermanGame game, Texture background) {
-        super(game, background);
+    public Pause(BombermanGame game) {
+        super(game, new Texture(Gdx.files.internal("ui/background.png")));
         button_resume = new Button(new Texture(Gdx.files.internal("ui/resume.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f);
         button_settings = new Button(new Texture(Gdx.files.internal("ui/settings.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 100);
         button_menu = new Button(new Texture(Gdx.files.internal("ui/main_menu.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 200);
@@ -39,17 +36,6 @@ public class Pause extends Scene {
     @Override
     public void render(float delta) {
         super.render(delta);
-        boolean isDoneRendering = true;
-        for (UIElement e : uiElements) {
-            e.render();
-            if (!e.isDoneRendering()) {
-                isDoneRendering = false;
-                break;
-            }
-        }
-        if (isDoneRendering && !renderOrder.isEmpty()) {
-            uiElements.add(renderOrder.poll());
-        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             button_resume.setState(State.SLIDEOUT);

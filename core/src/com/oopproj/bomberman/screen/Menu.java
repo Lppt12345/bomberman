@@ -18,9 +18,6 @@ public class Menu extends Scene {
     private Button button_exit;
     private Button button_settings;
     private Button button_leaderboard;
-    private List<UIElement> uiElements;
-    private Queue<UIElement> renderOrder;
-
 
     public Menu(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
@@ -47,18 +44,6 @@ public class Menu extends Scene {
     @Override
     public void render(float delta) {
         super.render(delta);
-
-        boolean isDoneRendering = true;
-        for (UIElement e : uiElements) {
-            e.render();
-            if (!e.isDoneRendering()) {
-                isDoneRendering = false;
-                break;
-            }
-        }
-        if (isDoneRendering && !renderOrder.isEmpty()) {
-            uiElements.add(renderOrder.poll());
-        }
 
         if ((boolean) button_leaderboard.process(uiElements)) {
             if (this.state == State.STATIC) {

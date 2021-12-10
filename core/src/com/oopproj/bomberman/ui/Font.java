@@ -9,9 +9,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Font implements Disposable {
-    FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private BitmapFont font;
     private FreeTypeFontGenerator generator;
+    private static SpriteBatch batch;
 
     public Font(String font, int size) {
         generator = new FreeTypeFontGenerator(Gdx.files.internal(font));
@@ -20,6 +21,9 @@ public class Font implements Disposable {
         parameter.minFilter = Texture.TextureFilter.Linear;
         parameter.magFilter = Texture.TextureFilter.Linear;
         this.font = generator.generateFont(parameter);
+        if (batch == null) {
+            batch = new SpriteBatch();
+        }
     }
 
     public void chageSize(int size) {
@@ -31,9 +35,11 @@ public class Font implements Disposable {
         this.font.setColor(r, b, g, a);
     }
 
-    public void draw(SpriteBatch batch, String text, float x, float y) {
+    public void draw(String text, float x, float y) {
         GlyphLayout gl = new GlyphLayout(this.font, text);
+        batch.begin();
         font.draw(batch, text, x - gl.width / 2, y - gl.height / 2);
+        batch.end();
     }
 
     @Override

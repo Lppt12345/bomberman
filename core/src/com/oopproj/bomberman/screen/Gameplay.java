@@ -31,15 +31,13 @@ public class Gameplay extends Scene {
     private Map map;
     private List<Enemy> enemyList;
 
-    private SpriteBatch hudBatch;
     private Font font;
 
     private Button button_pause;
 
-    private Texture score_title;
-    private Texture score_holder;
-    private Texture heart_holder;
-    private Texture heart;
+    private Banner score_holder;
+    private Banner heart_holder;
+    private Banner[] heart;
 
     public Gameplay(BombermanGame game) throws Exception {
         super(game, null);
@@ -52,19 +50,36 @@ public class Gameplay extends Scene {
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
         GameSound.playLevel1();
 
-        hudBatch = new SpriteBatch();
         font = new Font("fonts/whitrabt.ttf", 30);
+
+        heart_holder = new Banner(
+                new Texture(Gdx.files.internal("ui/heart_holder.png")),
+                90,
+                ScreenRes.getHeight() - 38
+        );
+        heart = new Banner[3];
+        Texture heartTexture = new Texture(Gdx.files.internal("ui/heart.png"));
+        for (int i = 0; i < 3; i++) {
+            heart[i] = new Banner(heartTexture, 84 + i * 30, ScreenRes.getHeight() - 47);
+        }
+        score_holder = new Banner(
+                new Texture(Gdx.files.internal("ui/score_holder.png")),
+                ScreenRes.getWidth() - 80,
+                ScreenRes.getHeight() - 38
+        );
         button_pause = new Button(new Texture(Gdx.files.internal("ui/pause.png")), 30, 30);
+
         uiElements = new ArrayList<UIElement>();
         renderOrder = new LinkedList<UIElement>() {
             {
+                add(heart_holder);
+                for (int i = 0 ; i < 3; i++) {
+                    add(heart[i]);
+                }
+                add(score_holder);
                 add(button_pause);
             }
         };
-
-        score_holder = new Texture(Gdx.files.internal("ui/score_holder.png"));
-        heart_holder = new Texture(Gdx.files.internal("ui/heart_holder.png"));
-        heart = new Texture(Gdx.files.internal("ui/heart.png"));
     }
 
     public Long getScore() {
@@ -112,19 +127,25 @@ public class Gameplay extends Scene {
         batch.end();
 
         drawUIElements();
-        hudBatch.setColor(1, 1, 1, game.renderAlpha);
-        hudBatch.begin();
-
-        hudBatch.draw(heart_holder, 5, ScreenRes.getHeight() - 80);
-        hudBatch.draw(score_holder, ScreenRes.getWidth() - 160, ScreenRes.getHeight() - 80);
         game.totalScore = map.getScore();
-        font.draw(Long.toString(game.totalScore),
-                ScreenRes.getWidth() - 160 + score_holder.getWidth() / 2f,
-                ScreenRes.getHeight() - 27);
-        for (int i = 0; i < player.getLife(); i++) {
-            hudBatch.draw(heart, 70 + 30 * i, ScreenRes.getHeight() - 65);
+        font.setColor(1, 1, 1, score_holder.getAlpha());
+        font.draw(
+                Long.toString(game.totalScore),
+                score_holder.getX(),
+                score_holder.getCurrentY() + 11
+        );
+
+        heart_holder.process(null);
+        for (int i = 0; i < 3; i++) {
+            heart[i].process(null);
         }
-        hudBatch.end();
+        if (player.getLife() < 3) {
+            if (heart[player.getLife()].getState() == State.STATIC) {
+                heart[player.getLife()].setState(State.FADEOUT);
+            }
+        }
+        System.out.println(player.getLife());
+        score_holder.process(null);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             button_pause.setState(State.SLIDEOUT);

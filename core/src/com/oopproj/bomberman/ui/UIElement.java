@@ -12,7 +12,7 @@ public abstract class UIElement implements Disposable {
     protected float y;
     protected float currentY;
     protected float alpha = 0;
-    protected SpriteBatch batch = new SpriteBatch();
+    protected static SpriteBatch batch = new SpriteBatch();
     protected State state = State.SLIDEIN;
     protected boolean doneRendering = false;
     protected boolean renderCalled = false;

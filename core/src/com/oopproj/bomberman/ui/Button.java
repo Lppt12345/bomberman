@@ -8,7 +8,7 @@ import com.oopproj.bomberman.utils.State;
 import java.util.List;
 
 public class Button extends UIElement {
-    protected final double DURATION = 0.3;
+    protected final double DURATION = 0.25;
     private Texture texture;
     private boolean isTouched;
 

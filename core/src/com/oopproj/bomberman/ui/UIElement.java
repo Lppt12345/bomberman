@@ -21,11 +21,11 @@ public abstract class UIElement implements Disposable {
 
     public abstract Object process(List<UIElement> uiElements);
 
-    public double parabol(double delta, double DURATION) {
+    public static double parabol(double delta, double DURATION) {
         return (((-1) / Math.pow(DURATION, 2)) * Math.pow(delta, 2) + ((double) 2 / DURATION) * delta);
     }
 
-    protected float invertParabol(long delta, double DURATION) {
+    public static float invertParabol(long delta, double DURATION) {
         return (float) ((1 / Math.pow(DURATION, 2)) * Math.pow(delta, 2) - (2 / DURATION) * delta) + 1;
     }
 

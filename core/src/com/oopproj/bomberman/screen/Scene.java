@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.oopproj.bomberman.ui.Button;
 import com.oopproj.bomberman.utils.State;
 
 public abstract class Scene implements Screen {
+    protected static final double DURATION = 0.25;
+    protected double d = 0;
     protected Scene prevScene;
     protected BombermanGame game;
     protected Texture background;
@@ -24,15 +27,19 @@ public abstract class Scene implements Screen {
 
     public void render(float delta) {
         if (this.state == State.FADEIN) {
-            game.renderAlpha = MathUtils.clamp(game.renderAlpha + Gdx.graphics.getDeltaTime(), 0, 1);
-            if (game.renderAlpha == 1) {
+            d = MathUtils.clamp(d + Gdx.graphics.getDeltaTime(), 0, DURATION);
+            game.renderAlpha = (float) Button.parabol(d, DURATION);
+            if (d == DURATION) {
                 this.state = State.STATIC;
+                d = 0;
             }
         }
         if (this.state == State.FADEOUT) {
-            game.renderAlpha = MathUtils.clamp(game.renderAlpha - Gdx.graphics.getDeltaTime(), 0, 1);
-            if (game.renderAlpha == 0) {
+            d = MathUtils.clamp(d + Gdx.graphics.getDeltaTime(), DURATION, DURATION * 2);
+            game.renderAlpha = (float) Button.parabol(d, DURATION);
+            if (d == DURATION * 2) {
                 this.state = State.DISAPPEARED;
+                d = 0;
             }
         }
 

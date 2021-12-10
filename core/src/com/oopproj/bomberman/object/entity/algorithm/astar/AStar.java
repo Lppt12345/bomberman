@@ -57,10 +57,12 @@ public class AStar {
 //            }
 //        }
 //        Node node = findNodesPQ.min();
+        /*
         while (node.pre != null) {
             stackPos.push(node.square);
             node = node.pre;
         }
+        */
     }
 
     public Stack<Square> getStack() {

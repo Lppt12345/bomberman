@@ -144,7 +144,6 @@ public class Gameplay extends Scene {
                 heart[player.getLife()].setState(State.FADEOUT);
             }
         }
-        System.out.println(player.getLife());
         score_holder.process(null);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {

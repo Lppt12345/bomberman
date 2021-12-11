@@ -2,10 +2,7 @@ package com.oopproj.bomberman.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.oopproj.bomberman.ui.Button;
-import com.oopproj.bomberman.ui.GameSound;
-import com.oopproj.bomberman.ui.ScreenRes;
-import com.oopproj.bomberman.ui.UIElement;
+import com.oopproj.bomberman.ui.*;
 import com.oopproj.bomberman.utils.State;
 
 import java.util.ArrayList;
@@ -18,6 +15,7 @@ public class Menu extends Scene {
     private Button button_exit;
     private Button button_settings;
     private Button button_leaderboard;
+    private Banner main_title;
 
     public Menu(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
@@ -25,8 +23,10 @@ public class Menu extends Scene {
         this.button_settings = new Button(new Texture(Gdx.files.internal("ui/settings.png")), (ScreenRes.getWidth() / 2f) - 10 - 75, 50);
         this.button_exit = new Button(new Texture(Gdx.files.internal("ui/exit.png")), (ScreenRes.getWidth() / 2f) + 10 + 75, 50);
         this.button_leaderboard = new Button(new Texture(Gdx.files.internal("ui/leaderboard.png")), ScreenRes.getWidth() / 2f, 140);
+        this.main_title = new Banner(new Texture(Gdx.files.internal("ui/main_title.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f + 170);
         renderOrder = new LinkedList<UIElement>() {
             {
+                add(main_title);
                 add(button_play);
                 add(button_leaderboard);
                 add(button_settings);

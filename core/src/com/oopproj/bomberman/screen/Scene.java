@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.oopproj.bomberman.ui.Banner;
 import com.oopproj.bomberman.ui.Button;
 import com.oopproj.bomberman.ui.UIElement;
 import com.oopproj.bomberman.utils.State;
@@ -75,6 +76,9 @@ public abstract class Scene implements Screen {
             boolean isDoneRendering = true;
             for (UIElement e : uiElements) {
                 e.render();
+                if (e instanceof Banner) {
+                    e.process(null);
+                }
                 if (!e.isDoneRendering()) {
                     isDoneRendering = false;
                     break;

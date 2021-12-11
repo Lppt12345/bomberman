@@ -182,11 +182,7 @@ public class Map {
             bomber.resetPlayer(bomber.getLife());
             GameSound.playPlayerDeath();
         } else {
-            bomber.setState(Entity.EntityState.DEAD);
-            ;
-            // them phuong thuc xu li khi bi chet het mang
-            bomber.resetPlayer(3);
-            GameSound.playPlayerDeath();
+            GameSound.playGameOver();
         }
     }
 

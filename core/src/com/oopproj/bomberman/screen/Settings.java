@@ -15,6 +15,7 @@ public class Settings extends Scene {
     private Slider soundSlider;
     private Font font;
     private Button back;
+    private Banner settings_title;
 
     public Settings(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
@@ -24,9 +25,11 @@ public class Settings extends Scene {
         soundSlider = new Slider(slideBar, slider, (float) ScreenRes.getWidth() / 2, 200, GameSound.getSoundVolume());
         font = new Font("fonts/whitrabt.ttf", 24);
         back = new Button(new Texture(Gdx.files.internal("ui/back.png")), ScreenRes.getWidth() / 2f, 50);
+        settings_title = new Banner(new Texture(Gdx.files.internal("ui/settings_title.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f + 170);
         uiElements = new ArrayList<UIElement>();
         renderOrder = new LinkedList<UIElement>() {
             {
+                add(settings_title);
                 add(musicSlider);
                 add(soundSlider);
                 add(back);

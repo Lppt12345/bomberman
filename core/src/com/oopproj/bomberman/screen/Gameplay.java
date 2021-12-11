@@ -67,7 +67,7 @@ public class Gameplay extends Scene {
                 ScreenRes.getWidth() - 80,
                 ScreenRes.getHeight() - 38
         );
-        button_pause = new Button(new Texture(Gdx.files.internal("ui/pause.png")), 30, 30);
+        button_pause = new Button(new Texture(Gdx.files.internal("ui/pause_button.png")), 30, 30);
 
         uiElements = new ArrayList<UIElement>();
         renderOrder = new LinkedList<UIElement>() {
@@ -123,7 +123,16 @@ public class Gameplay extends Scene {
         for (Enemy a : enemyList) {
             a.render(batch);
         }
-        player.render(batch);
+        if (player.getLife() >= 0) {
+            player.render(batch);
+        } else {
+            if (this.state == State.STATIC) {
+                this.state = State.FADEOUT;
+            }
+            if (this.state == State.DISAPPEARED) {
+                game.setScreen(new Lose(game));
+            }
+        }
         batch.end();
 
         drawUIElements();
@@ -135,16 +144,11 @@ public class Gameplay extends Scene {
                 score_holder.getCurrentY() + 11
         );
 
-        heart_holder.process(null);
-        for (int i = 0; i < 3; i++) {
-            heart[i].process(null);
-        }
-        if (player.getLife() < 3) {
+        if (0 <= player.getLife() && player.getLife() < 3) {
             if (heart[player.getLife()].getState() == State.STATIC) {
                 heart[player.getLife()].setState(State.FADEOUT);
             }
         }
-        score_holder.process(null);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             button_pause.setState(State.SLIDEOUT);

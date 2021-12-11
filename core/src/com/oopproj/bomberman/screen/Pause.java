@@ -3,6 +3,7 @@ package com.oopproj.bomberman.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.oopproj.bomberman.ui.Banner;
 import com.oopproj.bomberman.ui.Button;
 import com.oopproj.bomberman.ui.ScreenRes;
 import com.oopproj.bomberman.ui.UIElement;
@@ -16,16 +17,18 @@ public class Pause extends Scene {
     private Button button_resume;
     private Button button_settings;
     private Button button_menu;
+    private Banner pause_title;
 
     public Pause(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
         button_resume = new Button(new Texture(Gdx.files.internal("ui/resume.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f);
         button_settings = new Button(new Texture(Gdx.files.internal("ui/settings.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 100);
         button_menu = new Button(new Texture(Gdx.files.internal("ui/main_menu.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 200);
-
+        pause_title = new Banner(new Texture(Gdx.files.internal("ui/pause_title.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f + 170);
         uiElements = new ArrayList<>();
         renderOrder = new LinkedList<UIElement>() {
             {
+                add(pause_title);
                 add(button_resume);
                 add(button_settings);
                 add(button_menu);

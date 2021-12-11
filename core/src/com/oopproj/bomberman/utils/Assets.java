@@ -7,15 +7,17 @@ import java.util.ArrayList;
 public class Assets {
     public static final int BMAN = 0;
     public static final int CREEP = 1;
-    public static final int GRASS = 2;
-    public static final int WALL = 3;
-    public static final int BRICK = 4;
-    public static final int PORTAL = 5;
-    public static final int BOMB = 6;
-    public static final int FLAME = 7;
-    public static final int BOMB_ITEM = 8;
-    public static final int FLAME_ITEM = 9;
-    public static final int SPEED_ITEM = 10;
+    public static final int SPEED_CREEP = 2;
+    public static final int ONEAL = 3;
+    public static final int GRASS = 4;
+    public static final int WALL = 5;
+    public static final int BRICK = 6;
+    public static final int PORTAL = 7;
+    public static final int BOMB = 8;
+    public static final int FLAME = 9;
+    public static final int BOMB_ITEM = 10;
+    public static final int FLAME_ITEM = 11;
+    public static final int SPEED_ITEM = 12;
     private static Assets assets = null;
     private ArrayList<Texture> textures;
 
@@ -23,6 +25,8 @@ public class Assets {
         textures = new ArrayList<>();
         textures.add(new Texture("objects/bman.png"));
         textures.add(new Texture("objects/creep.png"));
+        textures.add(new Texture("objects/speed_creep.png"));
+        textures.add(new Texture("objects/oneal.png"));
         textures.add(new Texture("objects/grass.png"));
         textures.add(new Texture("objects/wall.png"));
         textures.add(new Texture("objects/brick.png"));

@@ -26,15 +26,14 @@ public class Gameplay extends Scene {
     private OrthographicCamera camera;
     private List<Item> itemList;
 
-    private Long score = (long) 1;
+    private int level = 0;
+    private int maxLevel = 3;
+    private Map[] map;
     private Bomber player;
-    private Map map;
     private List<Enemy> enemyList;
 
     private Font font;
-
     private Button button_pause;
-
     private Banner score_holder;
     private Banner heart_holder;
     private Banner[] heart;
@@ -85,25 +84,21 @@ public class Gameplay extends Scene {
         };
     }
 
-    public Long getScore() {
-        return score;
-    }
-
-    public void setScore(Long score) {
-        this.score = score;
-    }
-
     @Override
-    public void show() {
-    }
+    public void show() {}
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         batch.setColor(1, 1, 1, game.renderAlpha);
-
         sceneTransition();
 
+        // Gameplay
+        WORLD_WIDTH = map[level].getColumn() * ScreenRes.scale;
+        WORLD_HEIGHT = map[level].getRow() * ScreenRes.scale;
+        player = map[level].getPlayer();
+        enemyList = map[level].getEnemies();
+        itemList = map[level].getItems();
         camera.position.set(
                 MathUtils.clamp(player.getPos().x, camera.viewportWidth / 2f, WORLD_WIDTH - camera.viewportWidth / 2f),
                 MathUtils.clamp(player.getPos().y, camera.viewportHeight / 2f, WORLD_HEIGHT - camera.viewportHeight / 2f),
@@ -112,14 +107,14 @@ public class Gameplay extends Scene {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
-        player.move(map);
+        player.move(map[level]);
         for (Enemy a : enemyList) {
-            a.move(map);
+            a.move(map[level]);
         }
-        map.updateMap();
+        map[level].updateMap();
 
         batch.begin();
-        map.render(batch);
+        map[level].render(batch);
         for (Item a : itemList) {
             a.render(batch);
         }
@@ -138,8 +133,29 @@ public class Gameplay extends Scene {
         }
         batch.end();
 
+        if (player.isCheckWin()) {
+            level++;
+            if (level >= maxLevel) {
+                if (this.state == State.STATIC) {
+                    this.state = State.FADEOUT;
+                }
+                if (this.state == State.DISAPPEARED) {
+                    game.setScreen(new Win(game));
+                }
+            } else {
+                if (this.state == State.STATIC) {
+                    this.state = State.FADEOUT;
+                }
+                if (this.state == State.DISAPPEARED) {
+                    map[level].setScore(map[level].getScore());
+                    this.state = State.FADEIN;
+                }
+            }
+        }
+
+        // HUD
         drawUIElements();
-        game.totalScore = map.getScore();
+        game.totalScore = map[level].getScore();
         font.setColor(1, 1, 1, score_holder.getAlpha());
         font.draw(
                 Long.toString(game.totalScore),

@@ -6,10 +6,10 @@ import com.oopproj.bomberman.utils.Direction;
 import com.oopproj.bomberman.utils.Map;
 
 
-public class Yugi extends Enemy {
+public class Doll extends Enemy {
     private final float time = 4;
 
-    public Yugi(Texture texture, int numberOfFrame, float x, float y) {
+    public Doll(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         movingSpeed = 200;
         score = 200;

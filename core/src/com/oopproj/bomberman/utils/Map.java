@@ -69,7 +69,7 @@ public class Map {
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '2':
-                        enemy = new Yugi(assets.get(Assets.CREEP), 6, colM, rowM);
+                        enemy = new Doll(assets.get(Assets.CREEP), 6, colM, rowM);
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '3':
@@ -78,6 +78,10 @@ public class Map {
                         break;
                     case '4':
                         enemy = new Oneal(assets.get(Assets.ONEAL), 6, colM, rowM);
+                        obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
+                        break;
+                    case '5':
+                        enemy = new Demon(assets.get(Assets.ONEAL), 6, colM, rowM);
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '*':

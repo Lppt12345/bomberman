@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class AStar {
-    private Stack<Square> stackPos = new Stack<>();
+    private Stack <Square> stackPos = new Stack<>();
 
     private static class Node implements Comparable<Node> {
         private final Square square;
@@ -24,10 +24,12 @@ public class AStar {
             this.manhattan = square.manhattan();
             priority = step + manhattan;
         }
-
         @Override
         public int compareTo(Node o) {
-            return Integer.compare(this.priority, o.priority);
+//            return Integer.compare(this.priority, o.priority);
+            if (this.priority > o.priority) return -1;
+            if (this.priority < o.priority) return 1;
+            return 0;
         }
     }
 
@@ -38,34 +40,32 @@ public class AStar {
 
         PriorityQueue<Node> findNodesPQ = new PriorityQueue<>();
         Node init = new Node(initial, null);
-//        findNodesPQ.insert(init);
-//        while (true) {
-//            Node node = findNodesPQ.min();
-//            if (node.square.isGoal()) {
-//                break;
-//            }
-//            Node getNode = findNodesPQ.delMin();
-//            Iterable<Square> neighbors = getNode.square.neighbors();
-//            for (Square square : neighbors) {
-//                if (getNode.pre == null) {
-//                    findNodesPQ.insert(new Node(square, getNode));
-//                } else {
-//                    if (!square.equals(getNode.pre.square)) {
-//                        findNodesPQ.insert(new Node(square, getNode));
-//                    }
-//                }
-//            }
-//        }
-//        Node node = findNodesPQ.min();
-        /*
+        findNodesPQ.add(init);
+        while (true) {
+            Node node = findNodesPQ.peek();
+            if (node.square.isGoal()) {
+                break;
+            }
+            Node getNode = findNodesPQ.poll();
+            Stack <Square> neighbors = getNode.square.neighbors();
+            for (Square square : neighbors) {
+                if (getNode.pre == null) {
+                    findNodesPQ.add(new Node(square, getNode));
+                } else {
+                    if (!square.equals(getNode.pre.square)) {
+                        findNodesPQ.add(new Node(square, getNode));
+                    }
+                }
+            }
+        }
+        Node node = findNodesPQ.peek();
         while (node.pre != null) {
             stackPos.push(node.square);
             node = node.pre;
         }
-        */
     }
 
-    public Stack<Square> getStack() {
+    public Stack <Square> getStack() {
         return stackPos;
     }
 

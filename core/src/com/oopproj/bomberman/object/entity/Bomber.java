@@ -26,6 +26,7 @@ public class Bomber extends Entity {
     float blinkDuration = 0.1f;
     private int life = 3;
     private int flameLength = 2;
+    private boolean checkWin = false;
 
     public Bomber(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
@@ -46,6 +47,14 @@ public class Bomber extends Entity {
         pos.y = startY;
         currentDirection = Direction.RIGHT;
         flameLength = 2;
+    }
+
+    public boolean isCheckWin() {
+        return checkWin;
+    }
+
+    public void setCheckWin(boolean checkWin) {
+        this.checkWin = checkWin;
     }
 
     public void placeBomB(float x, float y, Map map) {

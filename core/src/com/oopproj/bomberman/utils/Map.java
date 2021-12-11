@@ -140,24 +140,12 @@ public class Map {
         return player;
     }
 
-    public void setPlayer(Bomber player) {
-        this.player = player;
-    }
-
     public int getRow() {
         return this.row;
     }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
-
     public int getColumn() {
         return this.column;
-    }
-
-    public void setColumn(int column) {
-        this.column = column;
     }
 
     public int getLevel() {

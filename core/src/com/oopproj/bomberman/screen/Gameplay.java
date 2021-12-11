@@ -41,12 +41,15 @@ public class Gameplay extends Scene {
 
     public Gameplay(BombermanGame game) throws Exception {
         super(game, null);
-        map = new Map("maptest.txt");
-        WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
-        WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
-        player = map.getPlayer();
-        enemyList = map.getEnemies();
-        itemList = map.getItems();
+        map = new Map[maxLevel];
+        for (int i = 0; i < maxLevel; i++) {
+            map[i] = new Map("map" + (i + 1) + ".txt");
+        }
+        WORLD_WIDTH = map[level].getColumn() * ScreenRes.scale;
+        WORLD_HEIGHT = map[level].getRow() * ScreenRes.scale;
+        player = map[level].getPlayer();
+        enemyList = map[level].getEnemies();
+        itemList = map[level].getItems();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
         GameSound.playLevel1();
 

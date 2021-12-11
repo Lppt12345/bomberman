@@ -28,14 +28,9 @@ public abstract class Item extends GameObject {
         return destroyed;
     }
 
-    public void setDestroyed(boolean destroyed) {
-        this.destroyed = destroyed;
-    }
-
     public void collisionWithBomBer(Map map) {
         if (getPos().overlaps(map.getPlayer().getPos())) {
             powerUp(map);
-            destroyed = true;
         }
         if (map.getMap().get(getPositionAtMap(map)) instanceof Grass) {
             state = ItemState.SHOW;
@@ -61,7 +56,7 @@ public abstract class Item extends GameObject {
     }
 
     public enum ItemState {
-        HIDE, SHOW, DESTROY
+        HIDE, SHOW
     }
 
 }

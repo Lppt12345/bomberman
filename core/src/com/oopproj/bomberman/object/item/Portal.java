@@ -11,6 +11,10 @@ public class Portal extends Item {
     @Override
     public void powerUp(Map map) {
         super.powerUp(map);
+        if (map.getEnemies().isEmpty()){
+            destroyed = true;
+            map.getPlayer().setCheckWin(true);
+        }
     }
 
 }

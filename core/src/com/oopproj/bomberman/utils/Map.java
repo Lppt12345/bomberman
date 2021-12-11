@@ -197,14 +197,24 @@ public class Map {
             Enemy enemy = iter.next();
             if (enemy.collisionWithFlame(this)) {
                 score += enemy.getScore();
-                enemy.setState(Entity.EntityState.DEAD);
-                iter.remove();
+                if (enemy.getState() == Entity.EntityState.ALIVE) {
+                    enemy.setState(Entity.EntityState.BURNING);
+                    enemy.resetStateTime();
+                }
+                if (enemy.getState() == Entity.EntityState.DEAD) {
+                    iter.remove();
+                }
             }
             if (enemy.getPos().overlaps(player.getPos()) && player.getState() == Entity.EntityState.ALIVE) {
-                resetPlayer(player);
+                player.setState(Entity.EntityState.BURNING);
+                player.resetStateTime();
             }
         }
         if (player.collisionWithFlame(this) && player.getState() == Entity.EntityState.ALIVE) {
+            player.setState(Entity.EntityState.BURNING);
+            player.resetStateTime();
+        }
+        if (player.getState() == Entity.EntityState.DEAD) {
             resetPlayer(player);
         }
         // Khi no chay thi check va cham brick

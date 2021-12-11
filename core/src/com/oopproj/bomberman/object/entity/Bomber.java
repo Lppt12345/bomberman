@@ -38,7 +38,6 @@ public class Bomber extends Entity {
     }
 
     public void resetPlayer(int life) {
-        System.out.println("MANG HIEN TAI: " + life);
         this.life = life;
         movingSpeed = 200;
         bomRate = 1;
@@ -49,12 +48,6 @@ public class Bomber extends Entity {
         flameLength = 2;
     }
 
-    /**
-     * Đặt bom tại vị trí chỉ định (đã căn giữa)
-     * @param x tọa độ x.
-     * @param y tọa độ y.
-     * @param map Map ánh xạ.
-     */
     public void placeBomB(float x, float y, Map map) {
         if ((state == EntityState.PROTECTED || state == EntityState.ALIVE) && bombList.size() <= bomRate) {
             Rectangle bomTmp = new Rectangle(x, y, pos.width, pos.height);
@@ -75,9 +68,6 @@ public class Bomber extends Entity {
         }
     }
 
-    /**
-     * Xoa bom neu no qua gio
-     */
     public void destroyBomb() {
         for (Iterator<Bomb> iter = bombList.iterator(); iter.hasNext(); ) {
             Bomb bomb = iter.next();

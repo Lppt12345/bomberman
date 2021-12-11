@@ -36,9 +36,9 @@ public abstract class Entity extends GameObject {
         pos.height = (float) texture.getWidth() / numberOfFrame;
         frame = TextureRegion.split(texture,
                 texture.getWidth() / numberOfFrame,
-                texture.getHeight() / 4);
-        animation = new Animation[4];
-        for (int i = 0; i < 4; i++) {
+                texture.getHeight() / 5);
+        animation = new Animation[5];
+        for (int i = 0; i < 5; i++) {
             animation[i] = new Animation<TextureRegion>(animationSpeed, frame[i]);
         }
         this.state = EntityState.ALIVE;
@@ -53,13 +53,6 @@ public abstract class Entity extends GameObject {
         this.animationSpeed = speed;
     }
 
-    /**
-     * Hàm kiểm tra xem có di chuyển được hay không
-     *
-     * @param map       Đối tượng map ánh xạ
-     * @param direction Hướng di chuyển
-     * @return Nếu di chuyển được thì trả về true và ngược lại trả về false
-     */
     public boolean checkMove(Map map, int direction) {
         int posAtMap = getPositionAtMap(map);
         Rectangle entity;
@@ -163,99 +156,101 @@ public abstract class Entity extends GameObject {
 
     public void move(Map map) {
         stateTime += MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
-        currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);
-        if (currentFrame == null) {
-            currentFrame = frame[0][0];
-        }
-        switch (currentDirection) {
-            case Direction.UP: {
-                currentSpeed = MathUtils.clamp(currentSpeed + accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
-                lastDirection = Direction.UP;
-                animation[Direction.UP].setFrameDuration(animationSpeed);
-                if (!checkMove(map, lastDirection)) {
-                    return;
-                }
-                pos.y += currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
-                break;
+        if (state == EntityState.ALIVE || state == EntityState.PROTECTED) {
+            currentFrame = (TextureRegion) animation[lastDirection].getKeyFrame(stateTime, true);
+            if (currentFrame == null) {
+                currentFrame = frame[0][0];
             }
-            case Direction.DOWN: {
-                currentSpeed = MathUtils.clamp(currentSpeed + accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
-                lastDirection = Direction.DOWN;
-                animation[Direction.DOWN].setFrameDuration(animationSpeed);
-                if (!checkMove(map, lastDirection)) {
-                    return;
+            switch (currentDirection) {
+                case Direction.UP: {
+                    currentSpeed = MathUtils.clamp(currentSpeed + accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
+                    lastDirection = Direction.UP;
+                    animation[Direction.UP].setFrameDuration(animationSpeed);
+                    if (!checkMove(map, lastDirection)) {
+                        return;
+                    }
+                    pos.y += currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
+                    break;
                 }
-                pos.y -= currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
-                break;
+                case Direction.DOWN: {
+                    currentSpeed = MathUtils.clamp(currentSpeed + accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
+                    lastDirection = Direction.DOWN;
+                    animation[Direction.DOWN].setFrameDuration(animationSpeed);
+                    if (!checkMove(map, lastDirection)) {
+                        return;
+                    }
+                    pos.y -= currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
+                    break;
+                }
+                case Direction.LEFT: {
+                    currentSpeed = MathUtils.clamp(currentSpeed + accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
+                    lastDirection = Direction.LEFT;
+                    animation[Direction.LEFT].setFrameDuration(animationSpeed);
+                    if (!checkMove(map, lastDirection)) {
+                        return;
+                    }
+                    pos.x -= currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
+                    break;
+                }
+                case Direction.RIGHT: {
+                    currentSpeed = MathUtils.clamp(currentSpeed + accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
+                    lastDirection = Direction.RIGHT;
+                    animation[Direction.RIGHT].setFrameDuration(animationSpeed);
+                    if (!checkMove(map, lastDirection)) {
+                        return;
+                    }
+                    pos.x += currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
+                    break;
+                }
+                default: {
+                    animation[0].setFrameDuration(0);
+                    animation[1].setFrameDuration(0);
+                    animation[2].setFrameDuration(0);
+                    animation[3].setFrameDuration(0);
+                    currentFrame = frame[lastDirection][0];
+                    currentSpeed = MathUtils.clamp(currentSpeed - accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
+                    switch (lastDirection) {
+                        case Direction.UP: {
+                            if (!checkMove(map, lastDirection)) {
+                                return;
+                            }
+                            pos.y += currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
+                            break;
+                        }
+                        case Direction.DOWN: {
+                            if (!checkMove(map, lastDirection)) {
+                                return;
+                            }
+                            pos.y -= currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
+                            break;
+                        }
+                        case Direction.LEFT: {
+                            if (!checkMove(map, lastDirection)) {
+                                return;
+                            }
+                            pos.x -= currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
+                            break;
+                        }
+                        case Direction.RIGHT: {
+                            if (!checkMove(map, lastDirection)) {
+                                return;
+                            }
+                            pos.x += currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
+                            break;
+                        }
+                    }
+                    break;
+                }
             }
-            case Direction.LEFT: {
-                currentSpeed = MathUtils.clamp(currentSpeed + accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
-                lastDirection = Direction.LEFT;
-                animation[Direction.LEFT].setFrameDuration(animationSpeed);
-                if (!checkMove(map, lastDirection)) {
-                    return;
-                }
-                pos.x -= currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
-                break;
-            }
-            case Direction.RIGHT: {
-                currentSpeed = MathUtils.clamp(currentSpeed + accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
-                lastDirection = Direction.RIGHT;
-                animation[Direction.RIGHT].setFrameDuration(animationSpeed);
-                if (!checkMove(map, lastDirection)) {
-                    return;
-                }
-                pos.x += currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
-                break;
-            }
-            default: {
-                animation[0].setFrameDuration(0);
-                animation[1].setFrameDuration(0);
-                animation[2].setFrameDuration(0);
-                animation[3].setFrameDuration(0);
-                currentFrame = frame[lastDirection][0];
-                currentSpeed = MathUtils.clamp(currentSpeed - accelerate * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f), 0, movingSpeed);
-                switch (lastDirection) {
-                    case Direction.UP: {
-                        if (!checkMove(map, lastDirection)) {
-                            return;
-                        }
-                        pos.y += currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
-                        break;
-                    }
-                    case Direction.DOWN: {
-                        if (!checkMove(map, lastDirection)) {
-                            return;
-                        }
-                        pos.y -= currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
-                        break;
-                    }
-                    case Direction.LEFT: {
-                        if (!checkMove(map, lastDirection)) {
-                            return;
-                        }
-                        pos.x -= currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
-                        break;
-                    }
-                    case Direction.RIGHT: {
-                        if (!checkMove(map, lastDirection)) {
-                            return;
-                        }
-                        pos.x += currentSpeed * MathUtils.clamp(Gdx.graphics.getDeltaTime(), 0, 1 / 60f);
-                        break;
-                    }
-                }
-                break;
+        } else if (state == EntityState.BURNING) {
+            animation[4].setFrameDuration(animationSpeed * 1.5f);
+            currentFrame = (TextureRegion) animation[4].getKeyFrame(stateTime, false);
+            if (animation[4].isAnimationFinished(stateTime)) {
+                this.state = EntityState.DEAD;
             }
         }
     }
 
-    /**
-     * Check va chạm với lửa
-     *
-     * @param map Map ánh xạ
-     * @return nếu va chạm thì true không thì flase
-     */
     public boolean collisionWithFlame(Map map) {
         for (Bomb bomb : map.getPlayer().bombList) {
             if (bomb.getState() == Bomb.BombState.BURNING) {
@@ -290,9 +285,11 @@ public abstract class Entity extends GameObject {
         batch.draw(currentFrame, pos.x, pos.y);
     }
 
-    public enum EntityState {
-        PROTECTED, ALIVE, DEAD, MOVING, BURNING
+    public void resetStateTime() {
+        stateTime = 0;
     }
 
-
+    public enum EntityState {
+        PROTECTED, ALIVE, DEAD, BURNING
+    }
 }

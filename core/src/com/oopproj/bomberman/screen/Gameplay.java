@@ -26,9 +26,9 @@ public class Gameplay extends Scene {
     private OrthographicCamera camera;
     private List<Item> itemList;
 
-    private int level = 0;
-    private int maxLevel = 3;
-    private Map[] map;
+    private int level;
+    private static final int numberOfMap = 3;
+    private Map map;
     private Bomber player;
     private List<Enemy> enemyList;
 
@@ -38,17 +38,15 @@ public class Gameplay extends Scene {
     private Banner heart_holder;
     private Banner[] heart;
 
-    public Gameplay(BombermanGame game) throws Exception {
+    public Gameplay(BombermanGame game, int level) throws Exception {
         super(game, null);
-        map = new Map[maxLevel];
-        for (int i = 0; i < maxLevel; i++) {
-            map[i] = new Map("map" + (i + 1) + ".txt");
-        }
-        WORLD_WIDTH = map[level].getColumn() * ScreenRes.scale;
-        WORLD_HEIGHT = map[level].getRow() * ScreenRes.scale;
-        player = map[level].getPlayer();
-        enemyList = map[level].getEnemies();
-        itemList = map[level].getItems();
+        this.level = level;
+        map = new Map("map" + level + ".txt");
+        WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
+        WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
+        player = map.getPlayer();
+        enemyList = map.getEnemies();
+        itemList = map.getItems();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
         GameSound.playLevel1();
 
@@ -94,11 +92,6 @@ public class Gameplay extends Scene {
         sceneTransition();
 
         // Gameplay
-        WORLD_WIDTH = map[level].getColumn() * ScreenRes.scale;
-        WORLD_HEIGHT = map[level].getRow() * ScreenRes.scale;
-        player = map[level].getPlayer();
-        enemyList = map[level].getEnemies();
-        itemList = map[level].getItems();
         camera.position.set(
                 MathUtils.clamp(player.getPos().x, camera.viewportWidth / 2f, WORLD_WIDTH - camera.viewportWidth / 2f),
                 MathUtils.clamp(player.getPos().y, camera.viewportHeight / 2f, WORLD_HEIGHT - camera.viewportHeight / 2f),
@@ -107,14 +100,14 @@ public class Gameplay extends Scene {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
-        player.move(map[level]);
+        player.move(map);
         for (Enemy a : enemyList) {
-            a.move(map[level]);
+            a.move(map);
         }
-        map[level].updateMap();
+        map.updateMap();
 
         batch.begin();
-        map[level].render(batch);
+        map.render(batch);
         for (Item a : itemList) {
             a.render(batch);
         }
@@ -134,28 +127,25 @@ public class Gameplay extends Scene {
         batch.end();
 
         if (player.isCheckWin()) {
-            level++;
-            if (level >= maxLevel) {
-                if (this.state == State.STATIC) {
-                    this.state = State.FADEOUT;
-                }
-                if (this.state == State.DISAPPEARED) {
+            if (this.state == State.STATIC) {
+                this.state = State.FADEOUT;
+            }
+            if (this.state == State.DISAPPEARED) {
+                if (level + 1 > numberOfMap) {
                     game.setScreen(new Win(game));
-                }
-            } else {
-                if (this.state == State.STATIC) {
-                    this.state = State.FADEOUT;
-                }
-                if (this.state == State.DISAPPEARED) {
-                    map[level].setScore(map[level].getScore());
-                    this.state = State.FADEIN;
+                } else {
+                    try {
+                        game.setScreen(new Gameplay(game, level + 1));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
 
         // HUD
         drawUIElements();
-        game.totalScore = map[level].getScore();
+        game.totalScore = map.getScore();
         font.setColor(1, 1, 1, score_holder.getAlpha());
         font.draw(
                 Long.toString(game.totalScore),

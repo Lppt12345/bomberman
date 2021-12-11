@@ -67,7 +67,7 @@ public class Menu extends Scene {
                 }
                 if (this.state == State.DISAPPEARED) {
                     GameSound.stopMainMenu();
-                    game.setScreen(new Gameplay(game));
+                    game.setScreen(new Gameplay(game, 1));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

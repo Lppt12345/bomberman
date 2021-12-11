@@ -26,8 +26,8 @@ public class Gameplay extends Scene {
     private OrthographicCamera camera;
     private List<Item> itemList;
 
-    private int level;
-    private static final int numberOfMap = 3;
+    public int level;
+    private static final int numberOfMap = 1;
     private Map map;
     private Bomber player;
     private List<Enemy> enemyList;
@@ -48,7 +48,7 @@ public class Gameplay extends Scene {
         enemyList = map.getEnemies();
         itemList = map.getItems();
         camera = new OrthographicCamera(700 * ScreenRes.getRatio(), 700);
-        GameSound.playLevel1();
+        GameSound.playLevel(level);
 
         font = new Font("fonts/whitrabt.ttf", 30);
 
@@ -121,6 +121,7 @@ public class Gameplay extends Scene {
                 this.state = State.FADEOUT;
             }
             if (this.state == State.DISAPPEARED) {
+                GameSound.stopLevel(level);
                 game.setScreen(new Lose(game));
             }
         }
@@ -132,9 +133,11 @@ public class Gameplay extends Scene {
             }
             if (this.state == State.DISAPPEARED) {
                 if (level + 1 > numberOfMap) {
+                    GameSound.stopLevel(level);
                     game.setScreen(new Win(game));
                 } else {
                     try {
+                        GameSound.stopLevel(level);
                         Gameplay newLevel = new Gameplay(game, level + 1);
                         newLevel.setScore(this.map.getScore());
                         game.setScreen(newLevel);
@@ -147,6 +150,9 @@ public class Gameplay extends Scene {
 
         // HUD
         drawUIElements();
+//        if (!GameSound.isLevelPlaying(level)) {
+//            GameSound.playLevel(level);
+//        }
         game.totalScore = map.getScore();
         font.setColor(1, 1, 1, score_holder.getAlpha());
         font.draw(
@@ -172,6 +178,7 @@ public class Gameplay extends Scene {
                 Pause pauseScene = new Pause(game);
                 pauseScene.setPrevScene(this);
                 game.setScreen(pauseScene);
+                GameSound.pauseLevel(level);
                 this.state = State.FADEIN;
                 for (UIElement e : uiElements) {
                     e.reset();

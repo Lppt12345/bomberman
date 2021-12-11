@@ -16,6 +16,7 @@ public class Lose extends Scene {
 
     public Lose(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
+        GameSound.playGameOver();
         main_menu = new Button(new Texture(Gdx.files.internal("ui/main_menu.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 100);
         you_lose = new Banner(new Texture(Gdx.files.internal("ui/you_lose.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f + 170);
         score_holder = new Banner(new Texture(Gdx.files.internal("ui/score_holder.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f);
@@ -46,6 +47,7 @@ public class Lose extends Scene {
                 this.state = State.FADEOUT;
             }
             if (this.state == State.DISAPPEARED) {
+                GameSound.stopGameOver();
                 game.setScreen(new Menu(game));
             }
         }

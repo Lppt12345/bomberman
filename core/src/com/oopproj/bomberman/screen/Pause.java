@@ -3,10 +3,7 @@ package com.oopproj.bomberman.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.oopproj.bomberman.ui.Banner;
-import com.oopproj.bomberman.ui.Button;
-import com.oopproj.bomberman.ui.ScreenRes;
-import com.oopproj.bomberman.ui.UIElement;
+import com.oopproj.bomberman.ui.*;
 import com.oopproj.bomberman.utils.State;
 
 import java.util.ArrayList;
@@ -21,6 +18,7 @@ public class Pause extends Scene {
 
     public Pause(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
+        GameSound.playSubMenu();
         button_resume = new Button(new Texture(Gdx.files.internal("ui/resume.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f);
         button_settings = new Button(new Texture(Gdx.files.internal("ui/settings.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 100);
         button_menu = new Button(new Texture(Gdx.files.internal("ui/main_menu.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 200);
@@ -49,6 +47,8 @@ public class Pause extends Scene {
             }
             if (this.state == State.DISAPPEARED) {
                 game.setScreen(prevScene);
+                GameSound.stopSubMenu();
+                GameSound.playLevel(((Gameplay) prevScene).level);
             }
         }
 
@@ -73,6 +73,7 @@ public class Pause extends Scene {
             }
             if (this.state == State.DISAPPEARED) {
                 game.setScreen(new Menu(game));
+                GameSound.stopSubMenu();
             }
         }
     }

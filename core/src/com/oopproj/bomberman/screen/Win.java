@@ -18,6 +18,7 @@ public class Win extends Scene {
 
     public Win(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
+        GameSound.playGameWin();
         nameInput = new TextInput(new Texture(Gdx.files.internal("ui/text_input.png")), "Enter your name", ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 150);
         you_win = new Banner(new Texture(Gdx.files.internal("ui/you_win.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f + 170);
         score_holder = new Banner(new Texture(Gdx.files.internal("ui/score_holder.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f);
@@ -51,6 +52,7 @@ public class Win extends Scene {
                 game.lboard.addNewRecord(name, game.totalScore);
                 game.totalScore = 0;
                 game.lboard.writeLeaderboard();
+                GameSound.stopGameWin();
                 game.setScreen(new Menu(game));
             }
         }

@@ -41,7 +41,7 @@ public class Gameplay extends Scene {
     public Gameplay(BombermanGame game, int level) throws Exception {
         super(game, null);
         this.level = level;
-        map = new Map("map" + level + ".txt");
+        map = new Map("map" + this.level + ".txt");
         WORLD_WIDTH = map.getColumn() * ScreenRes.scale;
         WORLD_HEIGHT = map.getRow() * ScreenRes.scale;
         player = map.getPlayer();
@@ -135,7 +135,9 @@ public class Gameplay extends Scene {
                     game.setScreen(new Win(game));
                 } else {
                     try {
-                        game.setScreen(new Gameplay(game, level + 1));
+                        Gameplay newLevel = new Gameplay(game, level + 1);
+                        newLevel.setScore(this.map.getScore());
+                        game.setScreen(newLevel);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -192,4 +194,8 @@ public class Gameplay extends Scene {
 
     @Override
     public void dispose() {}
+
+    public void setScore(long score) {
+        map.setScore(score);
+    }
 }

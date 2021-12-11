@@ -48,12 +48,12 @@ public class Win extends Scene {
                 this.state = State.FADEOUT;
             }
             if (this.state == State.DISAPPEARED) {
-                game.lboard.addNewRecord(name, 5000000);
+                game.lboard.addNewRecord(name, game.totalScore);
+                game.totalScore = 0;
                 game.lboard.writeLeaderboard();
                 game.setScreen(new Menu(game));
             }
         }
-        System.out.println(this.state);
     }
 
     @Override

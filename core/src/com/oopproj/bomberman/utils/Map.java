@@ -184,12 +184,12 @@ public class Map {
         for (Iterator<Enemy> iter = enemies.iterator(); iter.hasNext(); ) {
             Enemy enemy = iter.next();
             if (enemy.collisionWithFlame(this)) {
-                score += enemy.getScore();
                 if (enemy.getState() == Entity.EntityState.ALIVE) {
                     enemy.setState(Entity.EntityState.BURNING);
                     enemy.resetStateTime();
                 }
                 if (enemy.getState() == Entity.EntityState.DEAD) {
+                    score += enemy.getScore();
                     iter.remove();
                 }
             }

@@ -31,7 +31,7 @@ public class LeaderboardLoader {
             }
             br.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            writeLeaderboard();
         }
     }
 

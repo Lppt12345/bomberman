@@ -244,7 +244,7 @@ public abstract class Entity extends GameObject {
             }
         } else if (state == EntityState.BURNING) {
             animation[4].setFrameDuration(animationSpeed * 1.25f);
-            currentFrame = (TextureRegion) animation[4].getKeyFrame(stateTime, true);
+            currentFrame = (TextureRegion) animation[4].getKeyFrame(stateTime, false);
             if (animation[4].isAnimationFinished(stateTime)) {
                 this.state = EntityState.DEAD;
             }

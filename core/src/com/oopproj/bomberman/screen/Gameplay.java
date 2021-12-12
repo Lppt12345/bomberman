@@ -147,9 +147,6 @@ public class Gameplay extends Scene {
 
         // HUD
         drawUIElements();
-//        if (!GameSound.isLevelPlaying(level)) {
-//            GameSound.playLevel(level);
-//        }
         game.totalScore = map.getScore();
         font.setColor(1, 1, 1, score_holder.getAlpha());
         font.draw(
@@ -158,9 +155,16 @@ public class Gameplay extends Scene {
                 score_holder.getCurrentY() + 11
         );
 
-        if (0 <= player.getLife() && player.getLife() < 3) {
-            if (heart[player.getLife()].getState() == State.STATIC) {
-                heart[player.getLife()].setState(State.FADEOUT);
+        if (0 < player.getLife() && player.getLife() <= 3) {
+            for (int i = 0; i < player.getLife(); i++) {
+                if (heart[i].getState() == State.DISAPPEARED) {
+                    heart[i].setState(State.SLIDEIN);
+                }
+            }
+            for (int i = player.getLife(); i < 3; i++) {
+                if (heart[i].getState() == State.STATIC) {
+                    heart[i].setState(State.FADEOUT);
+                }
             }
         }
 

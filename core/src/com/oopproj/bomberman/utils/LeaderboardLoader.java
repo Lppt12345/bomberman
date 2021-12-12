@@ -27,11 +27,6 @@ public class LeaderboardLoader {
         }
 
         @Override
-        public int hashCode() {
-            return name.hashCode();
-        }
-
-        @Override
         public String toString() {
             return this.name + " " + this.score;
         }

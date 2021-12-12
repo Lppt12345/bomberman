@@ -18,13 +18,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Gameplay extends Scene {
+    private static final int numberOfMap = 3;
+    public int level;
     private int WORLD_WIDTH;
     private int WORLD_HEIGHT;
     private OrthographicCamera camera;
     private List<Item> itemList;
-
-    public int level;
-    private static final int numberOfMap = 3;
     private Map map;
     private Bomber player;
     private List<Enemy> enemyList;
@@ -76,7 +75,7 @@ public class Gameplay extends Scene {
         renderOrder = new LinkedList<UIElement>() {
             {
                 add(heart_holder);
-                for (int i = 0 ; i < 3; i++) {
+                for (int i = 0; i < 3; i++) {
                     add(heart[i]);
                 }
                 add(level_indicator);
@@ -87,7 +86,8 @@ public class Gameplay extends Scene {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+    }
 
     @Override
     public void render(float delta) {
@@ -196,19 +196,24 @@ public class Gameplay extends Scene {
     }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+    }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 
     public void setScore(long score) {
         map.setScore(score);

@@ -8,6 +8,7 @@ import com.oopproj.bomberman.utils.Map;
 
 public class Doll extends Enemy {
     private final float time = 4;
+    float dTime = time;
 
     public Doll(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
@@ -34,8 +35,6 @@ public class Doll extends Enemy {
                 break;
         }
     }
-
-    float dTime = time;
 
     @Override
     public void move(Map map) {

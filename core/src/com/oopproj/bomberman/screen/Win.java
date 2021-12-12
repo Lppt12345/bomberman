@@ -3,7 +3,6 @@ package com.oopproj.bomberman.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.oopproj.bomberman.ui.*;
-import com.oopproj.bomberman.utils.LeaderboardLoader;
 import com.oopproj.bomberman.utils.State;
 
 import java.util.ArrayList;
@@ -59,20 +58,26 @@ public class Win extends Scene {
     }
 
     @Override
-    public void show() {}
+    public void show() {
+    }
 
     @Override
-    public void resize(int width, int height) {}
+    public void resize(int width, int height) {
+    }
 
     @Override
-    public void pause() {}
+    public void pause() {
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+    }
 
     @Override
-    public void hide() {}
+    public void hide() {
+    }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 }

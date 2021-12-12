@@ -150,6 +150,7 @@ public class Bomb extends GameObject {
 
     /**
      * Kiểm tra lửa của bom va chạm với tường.
+     *
      * @param map Map ánh xạ.
      */
     public void checkCollisionWithBrick(Map map) {
@@ -174,6 +175,7 @@ public class Bomb extends GameObject {
 
     /**
      * Kiểm tra bomb va chạm với lửa.
+     *
      * @param map Map ánh xạ.
      */
     public void collisionWithFlame(Map map) {

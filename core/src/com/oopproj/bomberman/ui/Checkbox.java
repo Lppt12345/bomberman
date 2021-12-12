@@ -10,11 +10,11 @@ import java.util.List;
 
 public class Checkbox extends UIElement {
     private final double DURATION = 0.25;
+    boolean isChecked;
     private Font font;
     private String title;
     private Texture texture;
     private TextureRegion[] textureRegion;
-    boolean isChecked;
 
     public Checkbox(Texture texture, String title, boolean isChecked, float x, float y) {
         this.x = x - (float) texture.getWidth() / 4;

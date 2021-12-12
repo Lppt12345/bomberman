@@ -4,34 +4,7 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 
 public class AStar {
-    private Stack <Square> stackPos = new Stack<>();
-
-    private static class Node implements Comparable<Node> {
-        private final Square square;
-        private int step;
-        private final int priority;
-        private int manhattan;
-        private final Node pre;
-
-        public Node(Square square, Node pre) {
-            this.square = square;
-            this.pre = pre;
-            if (pre == null) {
-                step = 0;
-            } else {
-                step = pre.step + 1;
-            }
-            this.manhattan = square.manhattan();
-            priority = step + manhattan;
-        }
-        @Override
-        public int compareTo(Node o) {
-//            return Integer.compare(this.priority, o.priority);
-            if (this.priority > o.priority) return -1;
-            if (this.priority < o.priority) return 1;
-            return 0;
-        }
-    }
+    private Stack<Square> stackPos = new Stack<>();
 
     public AStar(Square initial) {
         if (initial == null) {
@@ -47,7 +20,7 @@ public class AStar {
                 break;
             }
             Node getNode = findNodesPQ.poll();
-            Stack <Square> neighbors = getNode.square.neighbors();
+            Stack<Square> neighbors = getNode.square.neighbors();
             for (Square square : neighbors) {
                 if (getNode.pre == null) {
                     findNodesPQ.add(new Node(square, getNode));
@@ -65,8 +38,36 @@ public class AStar {
         }
     }
 
-    public Stack <Square> getStack() {
+    public Stack<Square> getStack() {
         return stackPos;
+    }
+
+    private static class Node implements Comparable<Node> {
+        private final Square square;
+        private final int priority;
+        private final Node pre;
+        private int step;
+        private int manhattan;
+
+        public Node(Square square, Node pre) {
+            this.square = square;
+            this.pre = pre;
+            if (pre == null) {
+                step = 0;
+            } else {
+                step = pre.step + 1;
+            }
+            this.manhattan = square.manhattan();
+            priority = step + manhattan;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+//            return Integer.compare(this.priority, o.priority);
+            if (this.priority > o.priority) return -1;
+            if (this.priority < o.priority) return 1;
+            return 0;
+        }
     }
 
 

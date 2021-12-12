@@ -7,6 +7,7 @@ import com.oopproj.bomberman.utils.Map;
 
 public class SpeedCreep extends Enemy {
     private final float time = 2;
+    private float dTime = time;
 
     public SpeedCreep(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
@@ -18,8 +19,6 @@ public class SpeedCreep extends Enemy {
     public int changeSpeed() {
         return MathUtils.random(100, 300);
     }
-
-    private float dTime = time;
 
     @Override
     public void move(Map map) {

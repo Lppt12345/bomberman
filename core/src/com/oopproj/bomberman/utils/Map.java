@@ -180,10 +180,10 @@ public class Map {
                     enemy.setState(Entity.EntityState.BURNING);
                     enemy.resetStateTime();
                 }
-                if (enemy.getState() == Entity.EntityState.DEAD) {
-                    score += enemy.getScore();
-                    iter.remove();
-                }
+            }
+            if (enemy.getState() == Entity.EntityState.DEAD) {
+                score += enemy.getScore();
+                iter.remove();
             }
             if (enemy.getPos().overlaps(player.getPos()) && player.getState() == Entity.EntityState.ALIVE) {
                 player.setState(Entity.EntityState.BURNING);

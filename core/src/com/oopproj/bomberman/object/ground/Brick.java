@@ -5,11 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.object.GameObject;
 
 public class Brick extends GameObject {
-    public enum BrickState {
-        DESTROYED, NORMAL
-    }
-
     private BrickState state = BrickState.NORMAL;
+
+    public Brick(Texture texture, int x, int y) {
+        super(texture, x, y);
+    }
 
     public BrickState getState() {
         return state;
@@ -19,13 +19,13 @@ public class Brick extends GameObject {
         this.state = state;
     }
 
-    public Brick(Texture texture, int x, int y) {
-        super(texture, x, y);
-    }
-
     @Override
     public void render(SpriteBatch batch) {
         batch.draw(texture, pos.x, pos.y);
+    }
+
+    public enum BrickState {
+        DESTROYED, NORMAL
     }
 
 

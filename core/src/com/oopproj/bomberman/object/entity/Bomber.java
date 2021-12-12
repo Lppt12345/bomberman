@@ -100,9 +100,10 @@ public class Bomber extends Entity {
         flameLength++;
     }
 
-    public void increaseLife(){
-        life ++;
+    public void increaseLife() {
+        life++;
     }
+
     public int getLife() {
         return life;
     }
@@ -135,6 +136,7 @@ public class Bomber extends Entity {
         destroyBomb();
         super.move(map);
     }
+
     @Override
     public void render(SpriteBatch batch) {
         for (Bomb bomb : bombList) {

@@ -2,9 +2,7 @@ package com.oopproj.bomberman.screen;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.oopproj.bomberman.ui.Font;
-import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.ui.ScreenRes;
 import com.oopproj.bomberman.utils.Assets;
 import com.oopproj.bomberman.utils.LeaderboardLoader;
@@ -16,6 +14,8 @@ public class BombermanGame extends Game {
     public long totalScore;
     public boolean showFps = false;
     private Font font;
+    private float deltaTime = 0;
+    private int currentFps = 0;
 
     @Override
     public void create() {
@@ -27,8 +27,6 @@ public class BombermanGame extends Game {
         font = new Font("fonts/whitrabt.ttf", 15);
     }
 
-    private float deltaTime = 0;
-    private int currentFps = 0;
     @Override
     public void render() {
         super.render();
@@ -43,5 +41,6 @@ public class BombermanGame extends Game {
     }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+    }
 }

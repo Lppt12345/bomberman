@@ -9,6 +9,7 @@ import com.oopproj.bomberman.utils.Map;
 
 public class Oneal extends Enemy {
     private final float time = 0.5f;
+    private float dTime = time;
 
     public Oneal(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
@@ -16,8 +17,6 @@ public class Oneal extends Enemy {
         score = 300;
         randomDir();
     }
-
-    private float dTime = time;
 
     @Override
     public void move(Map map) {

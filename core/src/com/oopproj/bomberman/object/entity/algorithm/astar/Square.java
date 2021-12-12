@@ -11,6 +11,13 @@ public class Square {
     private int destination;   // o ket thuc
     private int col;
 
+    public Square(Map map, int position, int des) {
+        this.map = map;
+        col = map.getColumn();
+        this.destination = des;
+        this.position = position;
+    }
+
     public int getPosition() {
         return position;
     }
@@ -25,13 +32,6 @@ public class Square {
 
     public void setDestination(int destination) {
         this.destination = destination;
-    }
-
-    public Square(Map map, int position, int des) {
-        this.map = map;
-        col = map.getColumn();
-        this.destination = des;
-        this.position = position;
     }
 
     public boolean equals(Object y) {
@@ -58,7 +58,7 @@ public class Square {
         return colC + rowC;
     }
 
-    public Stack <Square> neighbors() {
+    public Stack<Square> neighbors() {
         Stack<Square> neighB = new Stack<>();
         if (position - col > 0 && (map.getMap().get(position - col) instanceof Grass)) { // check o tren
             neighB.push(new Square(map, position - col, destination));

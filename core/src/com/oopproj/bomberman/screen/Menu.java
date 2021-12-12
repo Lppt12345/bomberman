@@ -7,8 +7,6 @@ import com.oopproj.bomberman.utils.State;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 
 public class Menu extends Scene {
     private Button button_play;

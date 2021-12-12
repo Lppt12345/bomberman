@@ -2,12 +2,13 @@ package com.oopproj.bomberman.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.oopproj.bomberman.ui.*;
 import com.oopproj.bomberman.utils.State;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Settings extends Scene {
     private Slider musicSlider;

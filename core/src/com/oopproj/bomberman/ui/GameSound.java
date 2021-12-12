@@ -3,10 +3,6 @@ package com.oopproj.bomberman.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.MathUtils;
-
-import java.io.*;
-import java.util.Scanner;
 
 public class GameSound {
     private static final int MUSIC = 0;

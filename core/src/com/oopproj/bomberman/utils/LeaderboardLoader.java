@@ -6,35 +6,8 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class LeaderboardLoader {
-    public class Score implements Comparable<Score> {
-        public String name;
-        public long score;
-
-        public Score(String name, long score) {
-            this.name = name;
-            this.score = score;
-        }
-
-        @Override
-        public int compareTo(Score o) {
-            if (this.score < o.score) {
-                return 1;
-            } else if (this.score > o.score) {
-                return -1;
-            } else {
-                return this.name.compareTo(o.name);
-            }
-        }
-
-        @Override
-        public String toString() {
-            return this.name + " " + this.score;
-        }
-    }
-
-    private TreeSet<Score> leaderboard;
     private static LeaderboardLoader instance;
-
+    private TreeSet<Score> leaderboard;
     private LeaderboardLoader() {
         leaderboard = new TreeSet<>();
     }
@@ -86,5 +59,31 @@ public class LeaderboardLoader {
 
     public void addNewRecord(String name, long score) {
         leaderboard.add(new Score(name, score));
+    }
+
+    public class Score implements Comparable<Score> {
+        public String name;
+        public long score;
+
+        public Score(String name, long score) {
+            this.name = name;
+            this.score = score;
+        }
+
+        @Override
+        public int compareTo(Score o) {
+            if (this.score < o.score) {
+                return 1;
+            } else if (this.score > o.score) {
+                return -1;
+            } else {
+                return this.name.compareTo(o.name);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return this.name + " " + this.score;
+        }
     }
 }

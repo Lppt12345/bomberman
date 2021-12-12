@@ -32,6 +32,7 @@ public class Gameplay extends Scene {
     private Font font;
     private Button button_pause;
     private Banner score_holder;
+    private Banner level_indicator;
     private Banner heart_holder;
     private Banner[] heart;
 
@@ -64,6 +65,11 @@ public class Gameplay extends Scene {
                 ScreenRes.getWidth() - 80,
                 ScreenRes.getHeight() - 38
         );
+        level_indicator = new Banner(
+                new Texture(Gdx.files.internal("ui/level" + level + ".png")),
+                ScreenRes.getWidth() - 200,
+                ScreenRes.getHeight() - 45
+        );
         button_pause = new Button(new Texture(Gdx.files.internal("ui/pause_button.png")), 30, 30);
 
         uiElements = new ArrayList<UIElement>();
@@ -73,6 +79,7 @@ public class Gameplay extends Scene {
                 for (int i = 0 ; i < 3; i++) {
                     add(heart[i]);
                 }
+                add(level_indicator);
                 add(score_holder);
                 add(button_pause);
             }

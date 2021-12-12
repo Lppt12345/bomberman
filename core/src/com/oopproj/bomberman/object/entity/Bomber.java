@@ -21,7 +21,7 @@ public class Bomber extends Entity {
     private final float startX; // hoi sinh tai x,y
     private final float startY;
     protected List<Bomb> bombList = new ArrayList<>();
-    protected int bomRate = 1;
+    protected int bomRate = 2;
     float deltaTime = 0;
     float blinkDuration = 0.1f;
     private int life = 3;
@@ -41,7 +41,7 @@ public class Bomber extends Entity {
     public void resetPlayer(int life) {
         this.life = life;
         movingSpeed = 200;
-        bomRate = 1;
+        bomRate = 2;
         state = EntityState.PROTECTED;
         pos.x = startX;
         pos.y = startY;
@@ -58,7 +58,7 @@ public class Bomber extends Entity {
     }
 
     public void placeBomB(float x, float y, Map map) {
-        if ((state == EntityState.PROTECTED || state == EntityState.ALIVE) && bombList.size() <= bomRate) {
+        if ((state == EntityState.PROTECTED || state == EntityState.ALIVE) && bombList.size() < bomRate) {
             Rectangle bomTmp = new Rectangle(x, y, pos.width, pos.height);
             for (Bomb bomb : bombList) {
                 if (bomb.getPos().overlaps(bomTmp)) {
@@ -88,10 +88,6 @@ public class Bomber extends Entity {
         return flameLength;
     }
 
-    public void setFlameLength(int flameLength) {
-        this.flameLength = flameLength;
-    }
-
     public void increaseBomb() {
         bomRate++;
     }
@@ -104,12 +100,19 @@ public class Bomber extends Entity {
         flameLength++;
     }
 
+    public void increaseLife(){
+        life ++;
+    }
     public int getLife() {
         return life;
     }
 
     public void setLife(int life) {
         this.life = life;
+    }
+
+    public List<Bomb> getBombList() {
+        return bombList;
     }
 
     @Override
@@ -132,15 +135,6 @@ public class Bomber extends Entity {
         destroyBomb();
         super.move(map);
     }
-
-    public List<Bomb> getBombList() {
-        return bombList;
-    }
-
-    public void setBombList(List<Bomb> bombList) {
-        this.bombList = bombList;
-    }
-
     @Override
     public void render(SpriteBatch batch) {
         for (Bomb bomb : bombList) {

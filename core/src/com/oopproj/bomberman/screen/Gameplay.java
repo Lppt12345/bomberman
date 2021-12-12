@@ -2,10 +2,8 @@ package com.oopproj.bomberman.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.oopproj.bomberman.object.entity.Bomber;
@@ -18,7 +16,6 @@ import com.oopproj.bomberman.utils.State;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class Gameplay extends Scene {
     private int WORLD_WIDTH;
@@ -27,7 +24,7 @@ public class Gameplay extends Scene {
     private List<Item> itemList;
 
     public int level;
-    private static final int numberOfMap = 1;
+    private static final int numberOfMap = 3;
     private Map map;
     private Bomber player;
     private List<Enemy> enemyList;

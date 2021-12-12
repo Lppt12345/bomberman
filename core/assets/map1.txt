@@ -1,8 +1,8 @@
 1 13 31
 ###############################
-#         x*     *  * * * *   #
-# # s      f*    *  *  *#*#*# #
-#      f f   f    **      * * #
+#   p     x*     *  * * * *   #
+# # h  3   f*    *  *  *#*#*# #
+#    2 f f   f    **      * * #
 # #  ****        4    # # # #*#
 #f   #   * p   *****          #
 # #     #                   # #
@@ -29,11 +29,15 @@ x - Portal
 Character:
 p - Bomber
 1 - Creep
-2 - Oneal
+2 - Doll
+3 - SpeedCreep
+4 - Oneal
+5 - Demon
 
 Items:
 b - Bomb Item
 f - Flame Item
 s - Speed Item
+h - Heart Item
 
 Kí tự khác các kí tự trên - Grass

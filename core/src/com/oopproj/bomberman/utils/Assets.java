@@ -18,6 +18,8 @@ public class Assets {
     public static final int BOMB_ITEM = 10;
     public static final int FLAME_ITEM = 11;
     public static final int SPEED_ITEM = 12;
+    public static final int HEART_ITEM = 13;
+    public static final int DOLL = 14;
     private static Assets assets = null;
     private ArrayList<Texture> textures;
 
@@ -36,6 +38,8 @@ public class Assets {
         textures.add(new Texture("objects/bombitem.png"));
         textures.add(new Texture("objects/flameitem.png"));
         textures.add(new Texture("objects/speeditem.png"));
+        textures.add(new Texture("objects/heartitem.png"));
+        textures.add(new Texture("objects/doll.png"));
     }
 
     public static Assets getInstance() {

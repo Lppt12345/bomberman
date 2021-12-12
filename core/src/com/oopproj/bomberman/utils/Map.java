@@ -69,7 +69,7 @@ public class Map {
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '2':
-                        enemy = new Doll(assets.get(Assets.CREEP), 6, colM, rowM);
+                        enemy = new Doll(assets.get(Assets.DOLL), 6, colM, rowM);
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
                     case '3':
@@ -97,6 +97,10 @@ public class Map {
                         break;
                     case 's':
                         items.add(new SpeedItem(assets.get(Assets.SPEED_ITEM), colM, rowM));
+                        obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
+                        break;
+                    case 'h':
+                        items.add(new HeartItem(assets.get(Assets.HEART_ITEM), colM, rowM));
                         obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
                         break;
                     case 'x':
@@ -136,10 +140,6 @@ public class Map {
         return enemies;
     }
 
-    public void setEnemies(List<Enemy> enemies) {
-        this.enemies = enemies;
-    }
-
     public Bomber getPlayer() {
         return player;
     }
@@ -156,16 +156,8 @@ public class Map {
         return level;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
     public List<Item> getItems() {
         return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
     }
 
     public void resetPlayer(Bomber bomber) {

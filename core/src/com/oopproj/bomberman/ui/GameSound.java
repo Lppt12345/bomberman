@@ -31,47 +31,6 @@ public class GameSound {
 
     private static float[] volume = new float[]{1f, 1f};
 
-    public static void readSettings() {
-        File file = new File("settings.ini");
-        try {
-            Scanner scan = new Scanner(file);
-            String[] line = new String[2];
-            for (int i = 0; i < 2; i++) {
-                if (scan.hasNextLine()) {
-                    line[i] = scan.nextLine();
-                    line[i] = line[i].replace("\n", "");
-                    if (line[i].isEmpty()) {
-                        switch (i) {
-                            case MUSIC: {
-                                line[i] = "music_volume = " + volume[MUSIC];
-                                break;
-                            }
-                            case SOUND: {
-                                line[i] = "sound_volume = " + volume[SOUND];
-                                break;
-                            }
-                        }
-                    }
-                    volume[i] = MathUtils.clamp(Float.parseFloat(line[i].split(" ")[2]), 0, 1);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            writeSettings();
-        }
-    }
-
-    public static void writeSettings() {
-        try {
-            FileWriter file = new FileWriter("settings.ini");
-            BufferedWriter bw = new BufferedWriter(file);
-            bw.write("music_volume = " + volume[MUSIC] + "\n");
-            bw.write("sound_volume = " + volume[SOUND] + "\n");
-            bw.close();
-        } catch (IOException ex) {
-            System.out.println("cannot create settings file");
-        }
-    }
-
     public static void playMainMenu() {
         mainMenu.setLooping(true);
         mainMenu.setVolume(volume[MUSIC]);

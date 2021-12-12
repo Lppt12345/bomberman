@@ -27,11 +27,18 @@ public class BombermanGame extends Game {
         font = new Font("fonts/whitrabt.ttf", 15);
     }
 
+    private float deltaTime = 0;
+    private int currentFps = 0;
     @Override
     public void render() {
         super.render();
         if (showFps) {
-            font.draw(Integer.toString(Math.round(1 / Gdx.graphics.getDeltaTime())), 30, ScreenRes.getHeight() - 10);
+            deltaTime += Gdx.graphics.getDeltaTime();
+            font.draw(Integer.toString(currentFps), 30, ScreenRes.getHeight() - 10);
+            if (deltaTime >= 1) {
+                currentFps = Math.round(1 / Gdx.graphics.getDeltaTime());
+                deltaTime = 0;
+            }
         }
     }
 

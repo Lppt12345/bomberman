@@ -164,7 +164,6 @@ public class Map {
         bomber.setLife(bomber.getLife() - 1);
         if (bomber.getLife() != 0) {
             bomber.resetPlayer(bomber.getLife());
-            GameSound.playPlayerDeath();
         } else {
             GameSound.playGameOver();
         }

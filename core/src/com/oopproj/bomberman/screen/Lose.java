@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Lose extends Scene {
-    private Button main_menu;
+    private String name;
+    private TextInput nameInput;
     private Banner you_lose;
     private Banner score_holder;
     private Font font;
@@ -17,7 +18,7 @@ public class Lose extends Scene {
     public Lose(BombermanGame game) {
         super(game, new Texture(Gdx.files.internal("ui/background.png")));
         GameSound.playGameOver();
-        main_menu = new Button(new Texture(Gdx.files.internal("ui/main_menu.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 100);
+        nameInput = new TextInput(new Texture(Gdx.files.internal("ui/text_input.png")), "Enter your name", ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f - 150);
         you_lose = new Banner(new Texture(Gdx.files.internal("ui/you_lose.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f + 170);
         score_holder = new Banner(new Texture(Gdx.files.internal("ui/score_holder.png")), ScreenRes.getWidth() / 2f, ScreenRes.getHeight() / 2f);
         font = new Font("fonts/whitrabt.ttf", 30);
@@ -26,7 +27,7 @@ public class Lose extends Scene {
             {
                 add(you_lose);
                 add(score_holder);
-                add(main_menu);
+                add(nameInput);
             }
         };
     }
@@ -42,11 +43,14 @@ public class Lose extends Scene {
                 score_holder.getCurrentY() + 11
         );
 
-        if ((boolean) main_menu.process(uiElements)) {
+        if ((name = (String) nameInput.process(uiElements)) != null) {
             if (this.state == State.STATIC) {
                 this.state = State.FADEOUT;
             }
             if (this.state == State.DISAPPEARED) {
+                game.lboard.addNewRecord(name, game.totalScore);
+                game.totalScore = 0;
+                game.lboard.writeLeaderboard();
                 GameSound.stopGameOver();
                 game.setScreen(new Menu(game));
             }

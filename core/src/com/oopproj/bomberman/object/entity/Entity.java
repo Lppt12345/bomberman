@@ -29,7 +29,7 @@ public abstract class Entity extends GameObject {
     protected EntityState state;
     protected Assets assets;
     private float currentSpeed = 0;
-    private final float accelerate = 450;
+    private final float accelerate = 100;
     private boolean isDeadSoundPlayed = false;
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {

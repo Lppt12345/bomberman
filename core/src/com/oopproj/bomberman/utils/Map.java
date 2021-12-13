@@ -80,10 +80,6 @@ public class Map {
                         enemy = new Oneal(assets.get(Assets.ONEAL), 6, colM, rowM);
                         obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
                         break;
-                    case '5':
-                        enemy = new Demon(assets.get(Assets.ONEAL), 6, colM, rowM);
-                        obj = new Grass(assets.get(Assets.GRASS), colM, rowM);
-                        break;
                     case '*':
                         obj = new Brick(assets.get(Assets.BRICK), colM, rowM);
                         break;

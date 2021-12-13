@@ -52,7 +52,9 @@ public abstract class Item extends GameObject {
     }
 
     public void powerUp(Map map) {
-        GameSound.playPowerUp();
+        if (!(this instanceof Portal)) {
+            GameSound.playPowerUp();
+        }
     }
 
     public enum ItemState {

@@ -21,7 +21,7 @@ Người chơi sử dụng các phím mũi tên để di chuyển nhân vật, n
 Mục tiêu là loại bỏ được toàn bộ các kẻ địch và tìm được cổng đến màn chơi tiếp theo<br />
 ![portal](https://user-images.githubusercontent.com/78075693/145772367-d700816f-fef1-4001-b17d-6dd41cf541a5.png)
 <br />
-Các Item người chơi có thể ăn để nâng cấp bomb hoặc chính bản thân
+Các Item người chơi có thể ăn để nâng cấp bomb hoặc chính bản thân<br />
 ![heartitem](https://user-images.githubusercontent.com/78075693/145772472-05894728-a79c-425b-8303-3a8a0f8c8b58.png) ![bombitem](https://user-images.githubusercontent.com/78075693/145772490-29a5331d-cade-49d5-ba83-b44880a27590.png) ![flameitem](https://user-images.githubusercontent.com/78075693/145772579-2af0a12e-a9fb-479b-adb2-1b0e20b06fa8.png)![speeditem](https://user-images.githubusercontent.com/78075693/145772611-879daad8-d52d-4aee-b9e7-0efa4a9f1e31.png)
 <br />
 Người chơi nhập tên để lưu lại số điểm mỗi khi thua hoặc thắng<br />

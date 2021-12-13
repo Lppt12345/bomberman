@@ -13,7 +13,7 @@ public class Doll extends Enemy {
     public Doll(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, numberOfFrame, x, y);
         movingSpeed = 200;
-        score = 200;
+        score = 150;
         randomDir();
     }
 

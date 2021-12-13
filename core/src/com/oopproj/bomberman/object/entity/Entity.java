@@ -11,6 +11,7 @@ import com.oopproj.bomberman.object.GameObject;
 import com.oopproj.bomberman.object.bomb.Bomb;
 import com.oopproj.bomberman.object.bomb.Flame;
 import com.oopproj.bomberman.object.ground.Grass;
+import com.oopproj.bomberman.ui.GameSound;
 import com.oopproj.bomberman.utils.Assets;
 import com.oopproj.bomberman.utils.Direction;
 import com.oopproj.bomberman.utils.Map;
@@ -28,7 +29,8 @@ public abstract class Entity extends GameObject {
     protected EntityState state;
     protected Assets assets;
     private float currentSpeed = 0;
-    private float accelerate = 450;
+    private final float accelerate = 450;
+    private boolean isDeadSoundPlayed = false;
 
     public Entity(Texture texture, int numberOfFrame, float x, float y) {
         super(texture, x, y);
@@ -243,11 +245,20 @@ public abstract class Entity extends GameObject {
                 }
             }
         } else if (state == EntityState.BURNING) {
+            if (!isDeadSoundPlayed) {
+                if (this instanceof Bomber) {
+                    GameSound.playPlayerDeath();
+                } else {
+                    GameSound.playEnemyDeath();
+                }
+                isDeadSoundPlayed = true;
+            }
             animation[4].setFrameDuration(animationSpeed * 1.25f);
             animation[4].setPlayMode(Animation.PlayMode.NORMAL);
             currentFrame = (TextureRegion) animation[4].getKeyFrame(stateTime, false);
             if (animation[4].isAnimationFinished(stateTime)) {
                 this.state = EntityState.DEAD;
+                isDeadSoundPlayed = false;
             }
         }
     }
